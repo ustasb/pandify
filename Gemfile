@@ -30,8 +30,11 @@ gem 'spring',        group: :development
 
 gem 'angularjs-rails'
 
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
+
 group :development, :test do
-    gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0.0'
 end
 
 # Use ActiveModel has_secure_password
