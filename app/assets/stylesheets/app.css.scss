@@ -1,2 +1,85 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+// Colors
+$background-color: #ECEDEA;
+$text-color: #333333;
+$spotify-green: #85C318;
+$pandora-blue: #33659D;
+$divider-color: #B8BAB6;
+
+// Sizes
+$min-container-width: 690px;
+$side-padding: 15px;
+
+body {
+  background-color: $background-color;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  color: $pandora-blue;
+  text-decoration: none;
+}
+
+body, a {
+  font-family: 'Noto Sans', sans-serif;
+  color: $text-color;
+}
+
+header {
+  padding: 20px 0;
+
+  img {
+    display: block;
+    float: right;
+    margin-right: -200px;
+  }
+}
+
+nav, section {
+  padding: 10px 0px;
+}
+
+nav {
+  ul {
+    list-style-type: none;
+    float: right;
+    padding: 0;
+    margin: 0 $side-padding 0 0;
+  }
+
+  li {
+    padding-bottom: 15px;
+  }
+}
+
+.container {
+  min-width: $min-container-width;
+}
+
+.pandify section {
+  border-left: 1px solid transparent; // So that the section:before gradient sits where the border-left would be.
+  min-height: 120px
+}
+
+.pandify section:before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: -1px;
+  width: 1px;
+  background-image: -webkit-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+  background-image: -moz-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+  background-image: -ms-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+  background-image: -o-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+  background-image: linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+}
+
+.pandify section > div {
+  margin-left: $side-padding;
+}
