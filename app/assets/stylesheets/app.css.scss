@@ -12,6 +12,14 @@ $divider-color: #B8BAB6;
 $min-container-width: 690px;
 $side-padding: 15px;
 
+.spotify {
+  color: $spotify-green;
+}
+
+.pandora {
+  color: $pandora-blue;
+}
+
 body {
   background-color: $background-color;
 }
@@ -82,4 +90,23 @@ nav {
 
 .pandify section > div {
   margin-left: $side-padding;
+}
+
+#configure-menu {
+  button {
+    background-color: $pandora-blue;
+    color: white;
+  }
+
+  form {
+    margin-top: 15px;
+
+    .form-group, button {
+      margin-left: 20px;
+    }
+  }
+
+  input, select {
+    width: 350px;
+  }
 }

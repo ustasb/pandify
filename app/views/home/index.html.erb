@@ -16,7 +16,48 @@
     </nav>
 
     <section class="col-xs-10">
-      <div>Test</div>
+
+      <div id="configure-menu">
+        <p>
+          Pandify can create a
+          <span class="spotify">Spotify</span>
+          playlist from your favorite
+          <span class="pandora">Pandora.com</span>
+          tracks.
+        </p>
+
+        <p>
+          First, it'll need to retreive your Pandora data.
+          Ensure that your Pandora profile is public.
+        </p>
+
+        <form role="form">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Your Pandora.com email">
+          </div>
+          <p>What data would you like to retrieve?</p>
+          <div class="form-group checkbox">
+            <label>
+              <input type="checkbox"> Liked Tracks
+            </label>
+          </div>
+          <div class="form-group checkbox">
+            <label>
+              <input type="checkbox"> Bookmarked Tracks
+            </label>
+          </div>
+          <p>What region should the tracks be playable in?</p>
+          <select class="form-group form-control">
+            <option>US</option>
+            <option>UK</option>
+            <option>NG</option>
+            <option>FO</option>
+            <option>FK</option>
+          </select>
+          <button type="submit" class="btn btn-default">Retrieve Data</button>
+        </form>
+      </div>
+
     </section>
   </main>
 
