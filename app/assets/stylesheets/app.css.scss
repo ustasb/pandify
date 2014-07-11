@@ -171,3 +171,21 @@ nav {
     margin: 0;
   }
 }
+
+#credit {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: $divider-color;
+  font-size: 0.8em;
+
+  a {
+    color: $divider-color;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
