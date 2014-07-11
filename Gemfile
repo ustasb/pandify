@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 gem 'angularjs-rails'
 
 gem 'autoprefixer-rails'
+gem "selectize-rails"
 gem 'bootstrap-sass'
 
 group :development, :test do

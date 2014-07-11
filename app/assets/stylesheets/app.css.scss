@@ -33,9 +33,9 @@ a:hover {
   text-decoration: none;
 }
 
-body, a {
-  font-family: 'Noto Sans', sans-serif;
-  color: $text-color;
+body, a, input {
+  font-family: 'Noto Sans', sans-serif !important;
+  color: $text-color !important;
 }
 
 header {
@@ -108,5 +108,41 @@ nav {
 
   input, select {
     width: 350px;
+  }
+}
+
+#customize-menu {
+  .glyphicon {
+    cursor: pointer;
+  }
+
+  .selectize-input {
+    line-height: 30px;
+    padding-right: 5px !important;
+    margin: 0;
+  }
+
+  .selectize-input > div {
+    background-color: $spotify-green;
+    padding-right: 20px !important;
+    padding-left: 7px !important;
+    margin-right: 5px;
+
+    // Close button
+    a {
+      font-size: 1.1em;
+    }
+  }
+
+  table {
+    margin-top: 10px;
+
+    th {
+      color: $pandora-blue;
+    }
+
+    .glyphicon-play {
+      margin-left: 10px;
+    }
   }
 }
