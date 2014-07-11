@@ -58,11 +58,10 @@
           <button type="submit" class="btn btn-default">Retrieve Data</button>
         </form>
       </div>
-      -->
 
       <div id="customize-menu">
         <p>
-          Next, filter your Pandora data by genre.
+        Next, filter your Pandora data by genre.
         </p>
 
         <input id="select-genre" class="form-control" type="text" placeholder="e.g. Classic Rock" value="awesome,neat">
@@ -97,6 +96,60 @@
             <td>Morning Sci-Fi</td>
           </tr>
         </table>
+      </div>
+      -->
+
+      <div id="create-menu">
+        <p>Finally, export your playlist into Spotify. You have two options:</p>
+
+        <hr>
+
+        <p><u>Automatic:</u> Let Pandify export the playlist for you.</p>
+
+        <form id="spotify-login" role="form">
+          <button type="submit" class="btn btn-primary">Login with Spotify</button>
+        </form>
+
+        <form id="export-playlist" role="form">
+          <p>Name for your new playlist:</p>
+
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="e.g. Pandora Likes - Rock">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create Playlist</button>
+        </form>
+
+        <hr>
+
+        <p><u>Manual:</u> Copy and paste the playlist into Spotify yourself.</p>
+
+        <ol>
+          <li>Create a new playlist in Spotify.</li>
+          <li>Paste the below contents into the new playlist window.</li>
+        </ol>
+
+        <div class="well well-sm">
+          <button id="copy" class="btn btn-primary" data-clipboard-target="spotify-tracks">Copy to clipboard</button>
+          <ul id="spotify-tracks" class="list-unstyled">
+            <li>spotify:track:691Vw3eJh9VuWQRPT9xWNy</li>
+            <li>spotify:track:4XTkUcapS6M4jok4ExAj8C</li>
+            <li>spotify:track:6YPRWU79U3rbxUN1Gy5SoR</li>
+            <li>spotify:track:6lr1ebFsMd98EUlvuj4LXf</li>
+            <li>spotify:track:2vXOjiwfjobOqrezcuSBok</li>
+            <li>spotify:track:1m2A0wGb43khkL02TdRt4K</li>
+            <li>spotify:track:7wpx3TQ24rdWu2RtT1UY42</li>
+            <li>spotify:track:2nkolVfUbbXiNBD7dPaTHl</li>
+            <li>spotify:track:0wN1TtfhiTCRUniGY7Q2fG</li>
+            <li>spotify:track:7rtQTjYUw5GOpN2F4St52Y</li>
+            <li>spotify:track:6UdcdJJGKABvMFLe5MP3xW</li>
+            <li>spotify:track:7ocJPvoS4xnFcaFc4B3AJj</li>
+            <li>spotify:track:6OGRM4MAOlyOdhHuX0OJ6P</li>
+            <li>spotify:track:3zn0XdbeejazoAcx6PSQW5</li>
+            <li>spotify:track:2IDV2sZmOJC9kREGSvhFLh</li>
+            <li>spotify:track:041vtQlFg0g8NPYw6rlbNL</li>
+          </ul>
+        </div>
       </div>
 
     </section>

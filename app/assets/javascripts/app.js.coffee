@@ -6,3 +6,5 @@ $ ->
     labelField: 'title',
     searchField: 'title',
   })
+
+  new ZeroClipboard( document.getElementById("copy") )

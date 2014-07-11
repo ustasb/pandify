@@ -33,6 +33,7 @@ gem 'angularjs-rails'
 gem 'autoprefixer-rails'
 gem "selectize-rails"
 gem 'bootstrap-sass'
+gem 'zeroclipboard-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'

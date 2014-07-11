@@ -92,22 +92,29 @@ nav {
   margin-left: $side-padding;
 }
 
-#configure-menu {
-  button {
-    background-color: $pandora-blue;
-    color: white;
-  }
+.pandify button {
+  background-color: $pandora-blue;
+  color: $background-color;
+  border: none;
+}
 
+.pandify button:hover {
+  background-color: $spotify-green;
+}
+
+.pandify {
+  input, select {
+    width: 350px;
+  }
+}
+
+#configure-menu {
   form {
     margin-top: 15px;
 
     .form-group, button {
       margin-left: 20px;
     }
-  }
-
-  input, select {
-    width: 350px;
   }
 }
 
@@ -144,5 +151,27 @@ nav {
     .glyphicon-play {
       margin-left: 10px;
     }
+  }
+}
+
+#create-menu {
+  form {
+    margin: 15px 0 25px 0;
+  }
+
+  hr {
+    border-color: $divider-color;
+  }
+
+  #copy {
+    float: right;
+  }
+
+  .zeroclipboard-is-hover {
+    background-color: $spotify-green;
+  }
+
+  .list-unstyled {
+    margin: 0;
   }
 }
