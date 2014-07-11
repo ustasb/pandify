@@ -35,7 +35,7 @@ a:hover {
 
 body, a, input {
   font-family: 'Noto Sans', sans-serif !important;
-  color: $text-color !important;
+  color: $text-color;
 }
 
 header {
@@ -54,9 +54,7 @@ nav, section {
 
 nav {
   ul {
-    list-style-type: none;
     float: right;
-    padding: 0;
     margin: 0 $side-padding 0 0;
   }
 
@@ -106,15 +104,13 @@ nav {
   input, select {
     width: 350px;
   }
-}
 
-#configure-menu {
   form {
     margin-top: 15px;
+  }
 
-    .form-group, button {
-      margin-left: 20px;
-    }
+  .form-group, button {
+    margin-left: 20px;
   }
 }
 
@@ -148,7 +144,7 @@ nav {
       color: $pandora-blue;
     }
 
-    .glyphicon-play {
+    tr > .glyphicon {
       margin-left: 10px;
     }
   }
@@ -156,7 +152,7 @@ nav {
 
 #create-menu {
   form {
-    margin: 15px 0 25px 0;
+    margin-bottom: 25px;
   }
 
   hr {
