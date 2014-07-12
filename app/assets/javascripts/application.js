@@ -16,4 +16,7 @@
 //= require selectize
 //= require zeroclipboard
 //= require angular
-//= require_tree .
+//= require angular-route
+//= require angular-rails-templates
+//= require pandify_app
+//= require_tree ./angular

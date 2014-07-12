@@ -15,155 +15,16 @@
 
     <nav class="col-xs-2">
       <ul class="list-unstyled">
-        <li><a>configure</a></li>
-        <li><a>customize</a></li>
-        <li><a>create</a></li>
+        <li><a href="#/">configure</a></li>
+        <li><a href="#/customize">customize</a></li>
+        <li><a href="#/create">create</a></li>
       </ul>
     </nav>
 
     <section class="col-xs-10">
-
-      <div id="configure-menu">
-        <p>
-          Pandify can create a
-          <span class="spotify">Spotify</span>
-          playlist from your favorite
-          <span class="pandora">Pandora.com</span>
-          tracks.
-        </p>
-
-        <p>
-          First, it'll need to retreive your Pandora data.
-          Ensure that your Pandora profile is public!
-        </p>
-
-        <form role="form">
-          <div class="form-group">
-            <input type="email" class="form-control" placeholder="Your Pandora.com email">
-          </div>
-
-          <p>What data would you like to retrieve?</p>
-
-          <div class="form-group checkbox">
-            <label>
-              <input type="checkbox"> Liked Tracks
-            </label>
-          </div>
-          <div class="form-group checkbox">
-            <label>
-              <input type="checkbox"> Bookmarked Tracks
-            </label>
-          </div>
-
-          <p>What market should the tracks be playable in?</p>
-
-          <div class="form-group">
-            <select id="select-state" placeholder="Select a market...">
-              <option value="">Select a market...</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Retrieve Data</button>
-        </form>
-      </div>
-
-      <div id="customize-menu">
-        <p>Next, filter your Pandora data by genre.</p>
-
-        <input id="select-genre" class="form-control" type="text" placeholder="e.g. Classic Rock" value="Classic Rock, Alternative">
-
-        <table class="table table-condensed">
-          <tr>
-            <th></th>
-            <th>Track</th>
-            <th>Artist</th>
-            <th>Time</th>
-            <th>Album</th>
-          </tr>
-          <tr>
-            <td><span class="glyphicon glyphicon-play"></span></td>
-            <td>La Mer</td>
-            <td>Nine Inch Nails</td>
-            <td>4:38</td>
-            <td>The Fragile</td>
-          </tr>
-          <tr>
-            <td><span class="glyphicon glyphicon-play"></span></td>
-            <td>Concrete</td>
-            <td>Distance</td>
-            <td>5:40</td>
-            <td>Repercussions / Chestplate</td>
-          </tr>
-          <tr>
-            <td><span class="glyphicon glyphicon-play"></span></td>
-            <td>Know Your Enemy</td>
-            <td>Hybrid</td>
-            <td>5:58</td>
-            <td>Morning Sci-Fi</td>
-          </tr>
-        </table>
-      </div>
-
-      <div id="create-menu">
-        <p>Finally, export your playlist into Spotify. You have two options:</p>
-
-        <div class="divider"></div>
-
-        <p>Let Pandify export the playlist for you.</p>
-
-        <form role="form" id="spotify-login">
-          <button type="submit" class="btn btn-primary">Login with Spotify</button>
-        </form>
-
-        <form role="form" id="export-playlist">
-          <p>Name for your new playlist:</p>
-
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="e.g. Pandora Likes - Rock">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Create Playlist</button>
-        </form>
-
-        <div class="divider"><span>OR</span></div>
-
-        <p>Copy and paste the playlist into Spotify yourself.</p>
-
-        <ol>
-          <li>Create a new playlist in Spotify.</li>
-          <li>Paste the below contents into the new playlist window.</li>
-        </ol>
-
-        <div class="well well-sm">
-          <button id="copy" class="btn btn-primary" data-clipboard-target="spotify-tracks">Copy to clipboard</button>
-          <ul id="spotify-tracks" class="list-unstyled">
-            <li>spotify:track:691Vw3eJh9VuWQRPT9xWNy</li>
-            <li>spotify:track:4XTkUcapS6M4jok4ExAj8C</li>
-            <li>spotify:track:6YPRWU79U3rbxUN1Gy5SoR</li>
-            <li>spotify:track:6lr1ebFsMd98EUlvuj4LXf</li>
-            <li>spotify:track:2vXOjiwfjobOqrezcuSBok</li>
-            <li>spotify:track:1m2A0wGb43khkL02TdRt4K</li>
-            <li>spotify:track:7wpx3TQ24rdWu2RtT1UY42</li>
-            <li>spotify:track:2nkolVfUbbXiNBD7dPaTHl</li>
-            <li>spotify:track:0wN1TtfhiTCRUniGY7Q2fG</li>
-            <li>spotify:track:7rtQTjYUw5GOpN2F4St52Y</li>
-            <li>spotify:track:6UdcdJJGKABvMFLe5MP3xW</li>
-            <li>spotify:track:7ocJPvoS4xnFcaFc4B3AJj</li>
-            <li>spotify:track:6OGRM4MAOlyOdhHuX0OJ6P</li>
-            <li>spotify:track:3zn0XdbeejazoAcx6PSQW5</li>
-            <li>spotify:track:2IDV2sZmOJC9kREGSvhFLh</li>
-            <li>spotify:track:041vtQlFg0g8NPYw6rlbNL</li>
-          </ul>
-        </div>
-      </div>
-
+      <div ng-view></div>
     </section>
+
   </main>
 
 </div>

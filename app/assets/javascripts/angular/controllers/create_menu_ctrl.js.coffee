@@ -9,18 +9,12 @@ hasFlash = ->
            navigator.mimeTypes['application/x-shockwave-flash'] isnt undefined and
            navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin
 
-$ ->
-  $('#select-genre').selectize({
-    plugins: ['remove_button'],
-    maxItems: null,
-    valueField: 'id',
-    labelField: 'title',
-    searchField: 'title',
-  })
-
-  $('#select-state').selectize()
-
+init = ->
   if hasFlash()
     new ZeroClipboard( $('#copy') )
   else
     $('#copy').hide()
+
+window.pandifyApp.controller 'CreateMenuCtrl', ['$scope', ($scope) ->
+  init()
+]
