@@ -1,18 +1,3 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-// Colors
-$background-color: #ECEDEA;
-$text-color: #333333;
-$placeholder-color: #999;
-$spotify-green: #85C318;
-$pandora-blue: #33659D;
-$divider-color: #B8BAB6;
-
-// Sizes
-$min-container-width: 690px;
-$side-padding: 15px;
-
 .spotify {
   color: $spotify-green;
 }
@@ -117,83 +102,6 @@ nav {
 
   .form-group, button {
     margin-left: 20px;
-  }
-}
-
-#configure-menu {
-  .selectize-control {
-    margin-top: 15px;
-  }
-}
-
-#customize-menu {
-  .glyphicon {
-    cursor: pointer;
-  }
-
-  .selectize-input {
-    line-height: 30px;
-    padding-right: 5px !important;
-    margin: 0;
-  }
-
-  .selectize-input > div {
-    background-color: $spotify-green;
-    padding-right: 20px !important;
-    padding-left: 7px !important;
-    margin-right: 5px;
-
-    // Close button
-    a {
-      font-size: 1.1em;
-    }
-  }
-
-  table {
-    margin-top: 10px;
-
-    th {
-      color: $pandora-blue;
-    }
-
-    tr > .glyphicon {
-      margin-left: 10px;
-    }
-  }
-}
-
-#create-menu {
-  form {
-    margin-bottom: 25px;
-  }
-
-  #copy {
-    float: right;
-  }
-
-  .zeroclipboard-is-hover {
-    background-color: $spotify-green;
-    color: $background-color;
-  }
-
-  .list-unstyled {
-    margin: 0;
-  }
-
-  .divider {
-    margin: 20px 0;
-    height: 1px;
-    text-align: center;
-    background-color: $divider-color;
-
-    span {
-      position: relative;
-      top: -0.7em;
-      padding: 0 10px;
-      font-size: 1.8em;
-      color: $pandora-blue;
-      background-color: $background-color;
-    }
   }
 }
 

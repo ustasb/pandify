@@ -12,6 +12,5 @@
  *
  *= require selectize
  *= require selectize.bootstrap3
- *= require_tree .
- *= require_self
+ *= require combined
  */
