@@ -41,7 +41,9 @@
           <div class="form-group">
             <input type="email" class="form-control" placeholder="Your Pandora.com email">
           </div>
+
           <p>What data would you like to retrieve?</p>
+
           <div class="form-group checkbox">
             <label>
               <input type="checkbox"> Liked Tracks
@@ -52,14 +54,21 @@
               <input type="checkbox"> Bookmarked Tracks
             </label>
           </div>
+
           <p>What region should the tracks be playable in?</p>
-          <select class="form-group form-control">
-            <option>US</option>
-            <option>UK</option>
-            <option>NG</option>
-            <option>FO</option>
-            <option>FK</option>
-          </select>
+
+          <div class="form-group">
+            <select id="select-state" placeholder="Pick a state...">
+              <option value="">Select a state...</option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+            </select>
+          </div>
+
           <button type="submit" class="btn btn-default">Retrieve Data</button>
         </form>
       </div>

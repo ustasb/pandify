@@ -4,6 +4,7 @@
 // Colors
 $background-color: #ECEDEA;
 $text-color: #333333;
+$placeholder-color: #999;
 $spotify-green: #85C318;
 $pandora-blue: #33659D;
 $divider-color: #B8BAB6;
@@ -101,9 +102,14 @@ nav {
 }
 
 .pandify {
-  input, select {
+  input, select, #configure-menu .selectize-control {
     width: 350px;
   }
+
+  ::-webkit-input-placeholder { color: $placeholder-color; } // WebKit browsers
+  :-moz-placeholder { color: $placeholder-color; opacity:  1; } // Mozilla Firefox 4 to 18
+  ::-moz-placeholder { color: $placeholder-color; opacity:  1; } // Mozilla Firefox 19+
+  :-ms-input-placeholder { color: $placeholder-color; } // Internet Explorer 10+
 
   form {
     margin-top: 15px;
@@ -111,6 +117,12 @@ nav {
 
   .form-group, button {
     margin-left: 20px;
+  }
+}
+
+#configure-menu {
+  .selectize-control {
+    margin-top: 15px;
   }
 }
 
@@ -165,6 +177,7 @@ nav {
 
   .zeroclipboard-is-hover {
     background-color: $spotify-green;
+    color: $background-color;
   }
 
   .list-unstyled {
