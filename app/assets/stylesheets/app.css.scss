@@ -167,10 +167,6 @@ nav {
     margin-bottom: 25px;
   }
 
-  hr {
-    border-color: $divider-color;
-  }
-
   #copy {
     float: right;
   }
@@ -182,6 +178,22 @@ nav {
 
   .list-unstyled {
     margin: 0;
+  }
+
+  .divider {
+    margin: 20px 0;
+    height: 1px;
+    text-align: center;
+    background-color: $divider-color;
+
+    span {
+      position: relative;
+      top: -0.7em;
+      padding: 0 10px;
+      font-size: 1.8em;
+      color: $pandora-blue;
+      background-color: $background-color;
+    }
   }
 }
 
