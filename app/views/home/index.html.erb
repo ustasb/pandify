@@ -34,7 +34,7 @@
 
         <p>
           First, it'll need to retreive your Pandora data.
-          Ensure that your Pandora profile is public.
+          Ensure that your Pandora profile is public!
         </p>
 
         <form role="form">
@@ -55,11 +55,11 @@
             </label>
           </div>
 
-          <p>What region should the tracks be playable in?</p>
+          <p>What market should the tracks be playable in?</p>
 
           <div class="form-group">
-            <select id="select-state" placeholder="Pick a state...">
-              <option value="">Select a state...</option>
+            <select id="select-state" placeholder="Select a market...">
+              <option value="">Select a market...</option>
               <option value="AL">Alabama</option>
               <option value="AK">Alaska</option>
               <option value="AZ">Arizona</option>
@@ -74,18 +74,16 @@
       </div>
 
       <div id="customize-menu">
-        <p>
-        Next, filter your Pandora data by genre.
-        </p>
+        <p>Next, filter your Pandora data by genre.</p>
 
-        <input id="select-genre" class="form-control" type="text" placeholder="e.g. Classic Rock" value="awesome,neat">
+        <input id="select-genre" class="form-control" type="text" placeholder="e.g. Classic Rock" value="Classic Rock, Alternative">
 
         <table class="table table-condensed">
           <tr>
             <th></th>
             <th>Track</th>
             <th>Artist</th>
-            <th>Length</th>
+            <th>Time</th>
             <th>Album</th>
           </tr>
           <tr>
@@ -119,11 +117,11 @@
 
         <p>Let Pandify export the playlist for you.</p>
 
-        <form id="spotify-login" role="form">
+        <form role="form" id="spotify-login">
           <button type="submit" class="btn btn-primary">Login with Spotify</button>
         </form>
 
-        <form id="export-playlist" role="form">
+        <form role="form" id="export-playlist">
           <p>Name for your new playlist:</p>
 
           <div class="form-group">

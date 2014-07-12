@@ -87,7 +87,7 @@ nav {
 }
 
 .pandify {
-  input, select, #configure-menu .selectize-control {
+  input[type=text], input[type=email], select, #configure-menu .selectize-control {
     width: 350px;
   }
 
