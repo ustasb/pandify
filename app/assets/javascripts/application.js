@@ -19,4 +19,5 @@
 //= require angular-route
 //= require angular-rails-templates
 //= require pandify_app
+//= require_tree ./angular/providers
 //= require_tree ./angular
