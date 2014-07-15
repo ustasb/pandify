@@ -21,7 +21,7 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', ['$scope', 'pandoraData', 'tra
         $scope.likedTracks.unshift
           track: data.name
           artist: data.artists[0].name
-          play_time: data.duration_ms
+          duration_ms: data.duration_ms
           album: data.album.name
 ]
 

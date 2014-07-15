@@ -26,6 +26,11 @@
 
     th {
       color: $pandora-blue;
+      cursor: pointer;
+    }
+
+    th:hover {
+      color: $spotify-green;
     }
 
     td > .glyphicon {
