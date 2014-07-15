@@ -1,6 +1,6 @@
-window.pandifyApp.factory 'trackData', ->
+window.pandifyApp.factory 'trackDataDownloader', ->
 
-  new class TrackData
+  new class TrackDataDownloader
     MAX_REQUESTS = 3
     FAILURE_WAIT_TIME = 2000
 
@@ -25,7 +25,7 @@ window.pandifyApp.factory 'trackData', ->
       "track:#{track} artist:#{artist}"
 
     # Returns an array of genres to onDone for the given artists.
-    _getGenres: (artistIDs, onDone) ->
+    _queryGenres: (artistIDs, onDone) ->
       ids = artistIDs.slice(0) # Duplicate the array
       allGenres = []
 
@@ -48,7 +48,7 @@ window.pandifyApp.factory 'trackData', ->
         , (error) =>
 
           setTimeout =>
-            @_getGenres(artistIDs, onDone)
+            @_queryGenres(artistIDs, onDone)
           , FAILURE_WAIT_TIME
 
     # Downloads a track's data and genres from the queue.
@@ -69,7 +69,7 @@ window.pandifyApp.factory 'trackData', ->
           trackData = data['tracks']['items'][0] # First item is the best match.
           artistIDs = trackData.artists.map (artist) -> artist.id
 
-          @_getGenres artistIDs, (genres) =>
+          @_queryGenres artistIDs, (genres) =>
             trackData.pandify_artists_genres = genres
             track.onDone(trackData)
 

@@ -7,21 +7,16 @@ initGenreSelector = ->
     searchField: 'title'
     create: false
 
-window.pandifyApp.controller 'CustomizeMenuCtrl', ['$scope', 'pandoraData', 'trackData', ($scope, pandoraData, trackData) ->
+window.pandifyApp.controller 'CustomizeMenuCtrl', ['$scope', 'pandoraData', 'trackDataDownloader', 'trackDataExtractor', ($scope, pandoraData, downloader, extractor) ->
   initGenreSelector()
 
   $scope.likedTracks = []
   tracks = pandoraData['liked_tracks']
 
   for track in tracks by 1
-    trackData.queryTrackData track.track, track.artist, (data) ->
-      return unless data?
-
+    downloader.queryTrackData track.track, track.artist, (trackData) ->
       $scope.$apply ->
-        $scope.likedTracks.unshift
-          track: data.name
-          artist: data.artists[0].name
-          duration_ms: data.duration_ms
-          album: data.album.name
-]
+        $scope.likedTracks.push extractor.extract(trackData) if trackData?
 
+    null
+]
