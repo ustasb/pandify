@@ -1,7 +1,9 @@
 <div id="customize-menu">
   <p>Next, filter your Pandora data by genre.</p>
 
-  <input id="select-genre" class="form-control" type="text" placeholder="e.g. Classic Rock" value="Classic Rock, Alternative">
+  <div>
+    <input id="select-genre" type="text" placeholder="e.g. Classic Rock" value="Classic Rock,Alternative">
+  </div>
 
   <table class="table table-condensed">
     <tr>
@@ -11,26 +13,12 @@
       <th>Time</th>
       <th>Album</th>
     </tr>
-    <tr>
+    <tr ng-repeat="track in likedTracks">
       <td><span class="glyphicon glyphicon-play"></span></td>
-      <td>La Mer</td>
-      <td>Nine Inch Nails</td>
-      <td>4:38</td>
-      <td>The Fragile</td>
-    </tr>
-    <tr>
-      <td><span class="glyphicon glyphicon-play"></span></td>
-      <td>Concrete</td>
-      <td>Distance</td>
-      <td>5:40</td>
-      <td>Repercussions / Chestplate</td>
-    </tr>
-    <tr>
-      <td><span class="glyphicon glyphicon-play"></span></td>
-      <td>Know Your Enemy</td>
-      <td>Hybrid</td>
-      <td>5:58</td>
-      <td>Morning Sci-Fi</td>
+      <td>{{ track.track }}</td>
+      <td>{{ track.artist }}</td>
+      <td>{{ track.play_time | date:'m:ss' }}</td>
+      <td>{{ track.album }}</td>
     </tr>
   </table>
 </div>

@@ -18,6 +18,7 @@
 //= require angular
 //= require angular-route
 //= require angular-rails-templates
+//= require_tree ../../../vendor/assets/javascripts/.
 //= require pandify_app
 //= require_tree ./angular/providers
 //= require_tree ./angular
