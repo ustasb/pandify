@@ -1,4 +1,4 @@
-window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates'])
+window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates', 'pandifyFilters', 'LocalStorageModule'])
 
 window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
   $routeProvider
@@ -13,4 +13,8 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
       controller: 'CreateMenuCtrl'
     .otherwise
       redirectTo: '/'
+]
+
+window.pandifyApp.config ['localStorageServiceProvider', (localStorageServiceProvider) ->
+  localStorageServiceProvider.setPrefix('pandify')
 ]
