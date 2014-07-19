@@ -21,5 +21,5 @@
 //= require_tree ../../../vendor/assets/javascripts/.
 //= require_tree ./angular/filters
 //= require pandify_app
-//= require_tree ./angular/providers
+//= require_tree ./angular/services
 //= require_tree ./angular
