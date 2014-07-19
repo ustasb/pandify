@@ -1,6 +1,4 @@
-pandify = angular.module 'pandifyFilters', []
-
-pandify.filter 'genre', ->
+window.pandifyApp.filter 'genre', ->
   (tracks, genreIDs) ->
     filtered = []
 

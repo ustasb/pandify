@@ -1,4 +1,4 @@
-window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates', 'pandifyFilters', 'LocalStorageModule'])
+window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates', 'LocalStorageModule'])
 
 window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
   $routeProvider
