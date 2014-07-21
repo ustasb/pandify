@@ -9,6 +9,7 @@
     <button type="submit" class="btn btn-primary">Login with Spotify</button>
   </form>
 
+  <!--
   <form role="form" id="export-playlist">
     <p>Name for your new playlist:</p>
 
@@ -18,6 +19,7 @@
 
     <button type="submit" class="btn btn-primary">Create Playlist</button>
   </form>
+  -->
 
   <div class="divider"><span>OR</span></div>
 
@@ -31,22 +33,7 @@
   <div class="well well-sm">
     <button id="copy" class="btn btn-primary" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
     <ul id="spotify-tracks" class="list-unstyled">
-      <li>spotify:track:691Vw3eJh9VuWQRPT9xWNy</li>
-      <li>spotify:track:4XTkUcapS6M4jok4ExAj8C</li>
-      <li>spotify:track:6YPRWU79U3rbxUN1Gy5SoR</li>
-      <li>spotify:track:6lr1ebFsMd98EUlvuj4LXf</li>
-      <li>spotify:track:2vXOjiwfjobOqrezcuSBok</li>
-      <li>spotify:track:1m2A0wGb43khkL02TdRt4K</li>
-      <li>spotify:track:7wpx3TQ24rdWu2RtT1UY42</li>
-      <li>spotify:track:2nkolVfUbbXiNBD7dPaTHl</li>
-      <li>spotify:track:0wN1TtfhiTCRUniGY7Q2fG</li>
-      <li>spotify:track:7rtQTjYUw5GOpN2F4St52Y</li>
-      <li>spotify:track:6UdcdJJGKABvMFLe5MP3xW</li>
-      <li>spotify:track:7ocJPvoS4xnFcaFc4B3AJj</li>
-      <li>spotify:track:6OGRM4MAOlyOdhHuX0OJ6P</li>
-      <li>spotify:track:3zn0XdbeejazoAcx6PSQW5</li>
-      <li>spotify:track:2IDV2sZmOJC9kREGSvhFLh</li>
-      <li>spotify:track:041vtQlFg0g8NPYw6rlbNL</li>
+      <li ng-repeat="track in tracks | genre:genreFilters">{{track.uri}} </li>
     </ul>
   </div>
 </div>
