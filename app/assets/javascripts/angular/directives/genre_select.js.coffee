@@ -2,7 +2,7 @@ window.pandifyApp.directive 'genreSelect', ->
 
   restrict: 'A'
 
-  template: '<input type="text" placeholder="e.g. Classic Rock">'
+  template: '<input type="text">'
 
   scope:
     genres: '='
