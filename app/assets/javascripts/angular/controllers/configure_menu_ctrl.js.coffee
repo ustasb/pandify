@@ -6,5 +6,6 @@ window.pandifyApp.controller 'ConfigureMenuCtrl', [
 
     $scope.retrieveData = ->
       session.kill()
-      session.set('pandoraTracks', pandoraData['liked_tracks'])
+      session.set('pandoraTracksToQuery', pandoraData['liked_tracks'])
+      session.set('initPandoraTracksCount', pandoraData['liked_tracks'].length)
 ]

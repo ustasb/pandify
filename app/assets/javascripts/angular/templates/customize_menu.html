@@ -3,6 +3,18 @@
 
   <div id="genre-filter" genre-select genres="genres" genre-filters="genreFilters" placeholder="e.g. Classic Rock"></div>
 
+  <div id="tracks-data">
+    <p>
+      <span class="spotify">{{tracks.length}}</span>
+      Spotify matches made out of
+      <span class="pandora">{{initPandoraTracksCount}}</span>
+      Pandora tracks
+    </p>
+    <p>
+    {{filteredTracks.length}} tracks displayed, {{sumTime(filteredTracks) | humanTime }}
+    </p>
+  </div>
+
   <table class="table table-condensed">
     <tr>
       <th></th>
@@ -11,7 +23,7 @@
       <th ng-click="predicate='duration_ms'; reverse=!reverse">Time</th>
       <th ng-click="predicate='album'; reverse=!reverse">Album</th>
     </tr>
-    <tr ng-repeat="track in tracks | genre:genreFilters | orderBy:predicate:reverse">
+    <tr ng-repeat="track in filteredTracks = (tracks | genre:genreFilters | orderBy:predicate:reverse)">
       <td><span class="glyphicon glyphicon-play"></span></td>
       <td>{{ track.track }}</td>
       <td>{{ track.artist }}</td>

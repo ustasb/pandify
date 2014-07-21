@@ -6,20 +6,21 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', [
   ($scope, downloader, extractor, session) ->
 
     $scope.tracks = session.get('tracks') or []
+    $scope.initPandoraTracksCount = session.get('initPandoraTracksCount')
     $scope.genreFilters = session.get('activeGenreFilters') or []
 
     $scope.genres = []
     for track in $scope.tracks
       $scope.genres.push(genre) for genre in track.genres
 
-    pandoraTracks = session.get('pandoraTracks') or []
+    pandoraTracks = session.get('pandoraTracksToQuery') or []
     for track, index in pandoraTracks by 1
 
       do (index) ->
         downloader.queueTrackDownload track.track, track.artist, (trackData) ->
           # The track doesn't need to be queried anymore.
           pandoraTracks.splice(index, 1)
-          session.set('pandoraTracks', pandoraTracks)
+          session.set('pandoraTracksToQuery', pandoraTracks)
 
           return unless trackData?
 
@@ -32,4 +33,9 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', [
       null
 
     downloader.downloadAll()
+
+    $scope.sumTime = (tracks = []) ->
+      sum = 0
+      sum += track.durationMS for track in tracks
+      sum
 ]
