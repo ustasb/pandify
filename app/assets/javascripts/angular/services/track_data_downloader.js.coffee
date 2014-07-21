@@ -11,12 +11,14 @@ window.pandifyApp.factory 'trackDataDownloader', ->
       @tracksToQuery = [] # Queue of tracks to query for.
 
     # Adds the track to the query queue.
-    queryTrackData: (track, artist, onDone) ->
+    queueTrackDownload: (track, artist, onDone) ->
       @tracksToQuery.push
         track: track
         artist: artist
         onDone: onDone
 
+    # Download all tracks in the queue.
+    downloadAll: ->
       @_downloadTrackData()
 
     # Exact query for track/artist combination

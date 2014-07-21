@@ -1,11 +1,17 @@
 window.pandifyApp.filter 'genre', ->
-  (tracks, genreIDs) ->
+  (tracks, genres) ->
     filtered = []
 
+    return tracks unless genres?
+
     for track in tracks by 1
-      for genreID in genreIDs by 1
-        if $.inArray(genreID, track.genreIDs) isnt -1
-          filtered.push(track)
+      valid = true
+
+      for genre in genres by 1
+        if $.inArray(genre, track.genres) is -1
+          valid = false
           break
+
+      filtered.push(track) if valid
 
     filtered

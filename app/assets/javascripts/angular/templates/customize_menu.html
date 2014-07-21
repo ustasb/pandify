@@ -1,9 +1,7 @@
 <div id="customize-menu">
   <p>Next, filter your Pandora data by genre.</p>
 
-  <div>
-    <input id="select-genre" type="text" placeholder="e.g. Classic Rock">
-  </div>
+  <div id="genre-filter" genre-select genres="genres" genre-filters="genreFilters"></div>
 
   <table class="table table-condensed">
     <tr>
@@ -13,7 +11,7 @@
       <th ng-click="predicate='duration_ms'; reverse=!reverse">Time</th>
       <th ng-click="predicate='album'; reverse=!reverse">Album</th>
     </tr>
-    <tr ng-repeat="track in likedTracks | orderBy:predicate:reverse">
+    <tr ng-repeat="track in tracks | genre:genreFilters | orderBy:predicate:reverse">
       <td><span class="glyphicon glyphicon-play"></span></td>
       <td>{{ track.track }}</td>
       <td>{{ track.artist }}</td>

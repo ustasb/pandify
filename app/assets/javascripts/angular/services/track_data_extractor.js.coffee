@@ -1,4 +1,4 @@
-window.pandifyApp.factory 'trackDataExtractor', ['genreID', (genreID) ->
+window.pandifyApp.factory 'trackDataExtractor', ->
 
   extract: (trackData) ->
     album: trackData.album.name
@@ -6,9 +6,7 @@ window.pandifyApp.factory 'trackDataExtractor', ['genreID', (genreID) ->
     artist: trackData.artists[0].name
     durationMS: trackData.duration_ms
     genres: trackData.pandify_artists_genres
-    genreIDs: trackData.pandify_artists_genres.map (genre) -> genreID.getID(genre)
     markets: trackData.available_markets
     previewURL: trackData.previewURL
     track: trackData.name
     uri: trackData.uri
-]
