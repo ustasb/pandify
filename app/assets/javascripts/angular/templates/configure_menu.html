@@ -12,30 +12,33 @@
     Ensure that your Pandora profile is public!
   </p>
 
-  <form role="form" ng-submit="retrieveData()">
+  <form role="form" name="configForm" novalidate ng-submit="formIsValid() && retrieveData()">
     <div class="form-group">
-      <input type="email" class="form-control" placeholder="Your Pandora.com email">
+      <input type="email" name="pandoraID" class="form-control" placeholder="Your Pandora.com email" ng-model="user.pandoraID" required>
     </div>
+    <div class="form-group error" ng-show="submitted && configForm.pandoraID.$error.required">Required</div>
+    <div class="form-group error" ng-show="submitted && configForm.pandoraID.$error.email">Invalid email</div>
 
     <p>What data would you like to retrieve?</p>
 
     <div class="form-group checkbox">
       <label>
-        <input type="checkbox"> Liked Tracks
+        <input type="checkbox" ng-model="user.likedTracks"> Liked Tracks
       </label>
     </div>
     <div class="form-group checkbox">
       <label>
-        <input type="checkbox"> Bookmarked Tracks
+        <input type="checkbox" ng-model="user.bookmarkedTracks"> Bookmarked Tracks
       </label>
     </div>
+    <div class="form-group error" ng-show="!user.likedTracks && !user.bookmarkedTracks">Select at least one</div>
 
     <p>What market should the tracks be playable in?</p>
 
     <div class="form-group">
-      <div country-select></div>
+      <div country-select market="user.market"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Retrieve Data</button>
+    <button type="submit" class="btn btn-primary" ng-click="submitted=true">Retrieve Data</button>
   </form>
 </div>

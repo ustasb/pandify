@@ -49,6 +49,10 @@ nav {
   }
 }
 
+.error {
+  color: $error-red;
+}
+
 .container {
   min-width: $min-container-width;
 }
