@@ -46,6 +46,10 @@ nav {
 
   li {
     padding-bottom: 15px;
+
+    span {
+      color: $divider-color;
+    }
   }
 }
 

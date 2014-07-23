@@ -13,11 +13,17 @@
 
   <main class="row">
 
-    <nav class="col-xs-2">
+    <nav class="col-xs-2" ng-controller="navMenuCtrl">
       <ul class="list-unstyled">
         <li><a href="#/">configure</a></li>
-        <li><a href="#/customize">customize</a></li>
-        <li><a href="#/create">create</a></li>
+        <li>
+          <a href="#/customize" ng-show="hasTracks">customize</a>
+          <span ng-hide="hasTracks">customize</span>
+        </li>
+        <li>
+          <a href="#/create" ng-show="hasTracks">create</a>
+          <span ng-hide="hasTracks">create</span>
+        </li>
       </ul>
     </nav>
 
