@@ -2,7 +2,7 @@ window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates', 'LocalSto
 
 window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
   $routeProvider
-    .when '/',
+    .when '/configure',
       templateUrl: 'angular/templates/configure_menu.html'
       controller: 'ConfigureMenuCtrl'
     .when '/customize',
@@ -12,7 +12,7 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
       templateUrl: 'angular/templates/create_menu.html'
       controller: 'CreateMenuCtrl'
     .otherwise
-      redirectTo: '/'
+      redirectTo: '/configure'
 ]
 
 window.pandifyApp.config ['localStorageServiceProvider', (localStorageServiceProvider) ->

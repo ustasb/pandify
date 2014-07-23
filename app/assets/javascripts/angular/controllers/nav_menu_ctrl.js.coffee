@@ -14,4 +14,6 @@ window.pandifyApp.controller 'navMenuCtrl', [
       unless hasPandoraTracks
         $scope.hasTracks = false
         $location.path('/configure') if atCreateOrCustomize
+
+      $scope.activeMenu = $location.url().slice(1)
 ]

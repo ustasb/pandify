@@ -15,13 +15,13 @@
 
     <nav class="col-xs-2" ng-controller="navMenuCtrl">
       <ul class="list-unstyled">
-        <li><a href="#/">configure</a></li>
+        <li><a href="#/configure" ng-class="{active: activeMenu==='configure'}">configure</a></li>
         <li>
-          <a href="#/customize" ng-show="hasTracks">customize</a>
+          <a href="#/customize" ng-class="{active: activeMenu==='customize'}" ng-show="hasTracks">customize</a>
           <span ng-hide="hasTracks">customize</span>
         </li>
         <li>
-          <a href="#/create" ng-show="hasTracks">create</a>
+          <a href="#/create" ng-class="{active: activeMenu==='create'}" ng-show="hasTracks">create</a>
           <span ng-hide="hasTracks">create</span>
         </li>
       </ul>
