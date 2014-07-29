@@ -5,12 +5,11 @@
 
   <p>Let Pandify export the playlist for you.</p>
 
-  <form role="form" id="spotify-login">
-    <button type="submit" class="btn btn-primary">Login with Spotify</button>
+  <form role="form" id="spotify-login" ng-submit="logIn()" ng-hide="loggedIn">
+    <button type="submit" class="btn btn-primary">Log in with Spotify</button>
   </form>
 
-  <!--
-  <form role="form" id="export-playlist">
+  <form role="form" id="export-playlist" ng-show="loggedIn">
     <p>Name for your new playlist:</p>
 
     <div class="form-group">
@@ -19,7 +18,6 @@
 
     <button type="submit" class="btn btn-primary">Create Playlist</button>
   </form>
-  -->
 
   <div class="divider"><span>OR</span></div>
 

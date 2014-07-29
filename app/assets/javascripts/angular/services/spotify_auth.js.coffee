@@ -20,38 +20,59 @@ generateRandomString = (length) ->
 
   text
 
-popUpWindow = (url, title, w, h) ->
+# Opens a pop-up in the center of the screen.
+popUpWindow = (url, w, h) ->
   left = (screen.width / 2) - (w / 2)
   top = (screen.height / 2) - (h / 2)
 
-  window.open url, title,
+  window.open url, '_blank',
     "toolbar=no, location=no, directories=no, status=no, menubar=no," +
-    "scrollbars=no, resizable=no, copyhistory=no, width=#{w}, height=#{h}," +
-    "top=#{top}, left=#{left}"
+    "scrollbars=no, resizable=no, copyhistory=no," +
+    "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
 window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'
-  REDIRECT_URI = 'http://localhost:3000/?/create'
+  REDIRECT_URI = 'http://localhost:3000/spotify_auth_callback.html'
   SCOPES = 'playlist-modify-private playlist-read-private'
   STATE_KEY = 'spotify_auth_state'
 
   new class SpotifyAuth
 
-    isLoggedIn: ->
+    setAccessToken: (token, expiresInSecs) ->
+      expiresInMS = expiresInSecs * 1000
+      session.set('accessToken', token)
+      session.set('accessTokenExpires', (new Date()).getTime() + expiresInMS)
 
-    logIn: ->
+    getAccessToken: ->
+      token = session.get('accessToken')
+
+      if token
+        expireTime = session.get('accessTokenExpires')
+        time = (new Date()).getTime()
+
+        return token if expireTime > time
+
+      null
+
+    getTimeUntilExpire: ->
+      expireTime = session.get('accessTokenExpires')
+      time = (new Date()).getTime()
+      expireTime - time
+
+    openLoginWindow: ->
       state = @_getState()
 
       url = AUTH_URL
       url += '?response_type=token'
       url += '&client_id=' + encodeURIComponent(CLIENT_ID)
       url += '&scope=' + encodeURIComponent(SCOPES)
-      url += '&redirect_uri=' + REDIRECT_URI
+      url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
       url += '&state=' + encodeURIComponent(state)
 
-      window.location = url
-      #popUpWindow(url, 'Spotify Login', 400, 400)
+      popUpWindow(url, 500, 500)
+
+      null # Angular doesn't like a window to be returned...
 
     _getState: ->
       state = generateRandomString(16)

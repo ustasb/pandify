@@ -18,3 +18,15 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
 window.pandifyApp.config ['localStorageServiceProvider', (localStorageServiceProvider) ->
   localStorageServiceProvider.setPrefix('pandify')
 ]
+
+window.pandifyApp.run [
+  '$window',
+  '$rootScope',
+  ($window, $rootScope) ->
+
+    receiveMessage = (event) ->
+      data = JSON.parse(event.originalEvent.data)
+      $rootScope.$broadcast('spotifyLoggedIn', data)
+
+    $($window).on('message', receiveMessage)
+]
