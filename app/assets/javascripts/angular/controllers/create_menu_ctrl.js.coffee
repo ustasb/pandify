@@ -5,14 +5,23 @@ window.pandifyApp.controller 'CreateMenuCtrl', [
   'spotifyAuth',
   ($scope, $timeout, session, spotifyAuth) ->
 
-    $scope.tracks = session.get('tracks') or []
-    $scope.genreFilters = session.get('activeGenreFilters') or []
-
     setLoginTimeout = ->
       $timeout(
         -> $scope.loggedIn = false,
         spotifyAuth.getTimeUntilExpire()
       )
+
+    $scope.createPlaylist = ->
+      spotifyApi = new SpotifyWebApi()
+      spotifyApi.setAccessToken(spotifyAuth.getAccessToken())
+      spotifyAuth.uploadTracks(
+        spotifyApi,
+        $scope.playlistName,
+        $scope.tracks.map (track) -> track.uri
+      )
+
+    $scope.tracks = session.get('tracks') or []
+    $scope.genreFilters = session.get('activeGenreFilters') or []
 
     $scope.logIn = -> spotifyAuth.openLoginWindow()
     $scope.loggedIn = !!spotifyAuth.getAccessToken()

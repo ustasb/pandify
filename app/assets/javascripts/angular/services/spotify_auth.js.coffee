@@ -10,16 +10,6 @@ getHashParams = ->
 
   hashParams
 
-# Generates a random string containing numbers and letters
-generateRandomString = (length) ->
-  text = ''
-  possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-  for i in [0...length] by 1
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
-
-  text
-
 # Opens a pop-up in the center of the screen.
 popUpWindow = (url, w, h) ->
   left = (screen.width / 2) - (w / 2)
@@ -31,11 +21,11 @@ popUpWindow = (url, w, h) ->
     "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
 window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
+  MAX_URIS_TO_UPLOAD = 100 # Spotify only allows 100 to be uploaded at once.
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'
   REDIRECT_URI = 'http://localhost:3000/spotify_auth_callback.html'
   SCOPES = 'playlist-modify-private playlist-read-private'
-  STATE_KEY = 'spotify_auth_state'
 
   new class SpotifyAuth
 
@@ -61,21 +51,42 @@ window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
       expireTime - time
 
     openLoginWindow: ->
-      state = @_getState()
-
       url = AUTH_URL
       url += '?response_type=token'
       url += '&client_id=' + encodeURIComponent(CLIENT_ID)
       url += '&scope=' + encodeURIComponent(SCOPES)
       url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
-      url += '&state=' + encodeURIComponent(state)
 
       popUpWindow(url, 500, 500)
 
       null # Angular doesn't like a window to be returned...
 
-    _getState: ->
-      state = generateRandomString(16)
-      session.set(STATE_KEY, state)
-      state
+    uploadTracks: (spotifyApi, playlistName, trackURIs) ->
+      userID = ''
+
+      assignUserID = (data) -> userID = data.id
+      assignUserIDError = (err) -> alert('Error retrieving user information!')
+
+      createPlaylist = (data) -> spotifyApi.createPlaylist(userID, name: playlistName, public: false)
+      createPlaylistError = (err) -> alert('Error creating playlist!')
+
+      uploadTracks = (data) =>
+        playlistID = data.id
+        @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs)
+      uploadTracksError = (err) -> alert('Error uploading tracks!')
+
+      spotifyApi.getMe()
+      .then(assignUserID, assignUserIDError)
+      .then(createPlaylist, createPlaylistError)
+      .then(uploadTracks, uploadTracksError)
+
+    _addTracksToPlaylist: (spotifyApi, userID, playlistID, trackURIs) ->
+      uploadURIS = trackURIs.splice(0, MAX_URIS_TO_UPLOAD)
+
+      addTracks = (data) =>
+        if trackURIs.length > 0 then @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs)
+      addTracksError = (err) -> onError('Error uploading tracks!')
+
+      spotifyApi.addTracksToPlaylist(userID, playlistID, uploadURIS)
+      .then(addTracks, addTracksError)
 ]
