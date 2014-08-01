@@ -1,7 +1,28 @@
 <div id="customize-menu">
-  <p>Next, filter your Pandora data by genre.</p>
+  <p>Next, filter your Pandora data by genre. Select a filter method:</p>
 
-  <div id="genre-filter" genre-select genres="genres" genre-filters="genreFilters" placeholder="e.g. Classic Rock"></div>
+  <form role="form" name="filterForm" novalidate ng-submit="exportPlaylist()">
+    <div class="form-group radio">
+      <label>
+        <input type="radio" name="filterMethod" ng-model="lazy" ng-value="true" ng-checked="true">
+        Lazy - track must contain at least 1 filter genre
+      </label>
+    </div>
+    <div class="form-group radio">
+      <label>
+        <input type="radio" name="filterMethod" ng-model="lazy" ng-value="false" >
+        Strict - track must contain all filter genres
+      </label>
+    </div>
+
+    <p>Add genre filters:</p>
+
+    <div class="form-group">
+      <div id="genre-filter" genre-select genres="genres" genre-filters="genreFilters" placeholder="e.g. Classic Rock"></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Export Playlist!</button>
+  </form>
 
   <div id="tracks-data">
     <p>
@@ -23,7 +44,7 @@
       <th ng-click="predicate='duration_ms'; reverse=!reverse">Time</th>
       <th ng-click="predicate='album'; reverse=!reverse">Album</th>
     </tr>
-    <tr ng-repeat="track in filteredTracks = (tracks | genre:genreFilters | orderBy:predicate:reverse)">
+    <tr ng-repeat="track in filteredTracks = (tracks | genre:genreFilters:lazy | orderBy:predicate:reverse)">
       <td><span class="glyphicon glyphicon-play"></span></td>
       <td>{{ track.track }}</td>
       <td>{{ track.artist }}</td>

@@ -1,9 +1,10 @@
 window.pandifyApp.controller 'CustomizeMenuCtrl', [
   '$scope',
+  '$location',
   'trackDataDownloader',
   'trackDataExtractor',
   'pandifySession',
-  ($scope, downloader, extractor, session) ->
+  ($scope, $location, downloader, extractor, session) ->
 
     $scope.tracks = session.get('tracks') or []
     $scope.initPandoraTracksCount = session.get('initPandoraTracksCount')
@@ -38,4 +39,7 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', [
       sum = 0
       sum += track.durationMS for track in tracks
       sum
+
+    $scope.exportPlaylist = ->
+      $location.path('/create')
 ]
