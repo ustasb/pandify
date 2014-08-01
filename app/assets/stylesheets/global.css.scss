@@ -70,21 +70,37 @@ nav {
   min-height: 120px
 }
 
-.pandify section:before {
-  content: "";
+.vertical-divider {
   position: absolute;
   top: 0%;
   bottom: 0%;
   left: -1px;
   width: 1px;
-  background-image: -webkit-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
-  background-image: -moz-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
-  background-image: -ms-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
-  background-image: -o-linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
-  background-image: linear-gradient(top, rgba(227,224,216,0) 0, $divider-color 20%, $divider-color 80%, rgba(227,224,216,0) 100%);
+  background-color: $divider-color;
+
+  .top, .bottom {
+    position: absolute;
+    left: 0;
+    width: 1px;
+    height: 100px;
+    background-color: $background-color;
+    background-repeat: no-repeat;
+  }
+
+  .top {
+    top: 0;
+    background-image: url('divider_gradient_top.png');
+    background-position: left top;
+  }
+
+  .bottom {
+    bottom: 0;
+    background-image: url('divider_gradient_bottom.png');
+    background-position: left bottom;
+  }
 }
 
-.pandify section > div {
+.pandify section > .angular-view {
   margin-left: $side-padding;
 }
 
