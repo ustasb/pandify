@@ -13,6 +13,10 @@
     margin: 0;
   }
 
+  .selectize-dropdown .option.active {
+    background-color: $spotify-green;
+  }
+
   .selectize-input > div {
     background-color: $spotify-green;
     padding-right: 20px !important;
