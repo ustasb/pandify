@@ -5,20 +5,7 @@
 
   <p>Let Pandify export the playlist for you.</p>
 
-  <form role="form" id="spotify-login" novalidate ng-hide="loggedIn" ng-submit="logIn()">
-    <button type="submit" class="btn btn-primary">Log in with Spotify</button>
-  </form>
-
-  <form role="form" name="createPlaylistForm" novalidate ng-show="loggedIn" ng-submit="createPlaylistForm.$valid && createPlaylist()">
-    <p>Name for your new private playlist:</p>
-
-    <div class="form-group">
-      <input type="text" class="form-control" name="playlistName" placeholder="e.g. Pandora Likes - Rock" ng-model="playlistName" required>
-    </div>
-    <div class="form-group error" ng-show="submitted && createPlaylistForm.playlistName.$error.required">Required</div>
-
-    <button type="submit" class="btn btn-primary" ng-click="submitted=true">Create Playlist</button>
-  </form>
+  <div spotify-auth-login filtered-tracks="tracks"></div>
 
   <div class="divider"><span>OR</span></div>
 

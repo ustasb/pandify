@@ -61,7 +61,7 @@ window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
 
       null # Angular doesn't like a window to be returned...
 
-    uploadTracks: (spotifyApi, playlistName, trackURIs) ->
+    uploadTracks: (spotifyApi, playlistName, trackURIs, onDone) ->
       userID = ''
 
       assignUserID = (data) -> userID = data.id
@@ -72,7 +72,7 @@ window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
 
       uploadTracks = (data) =>
         playlistID = data.id
-        @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs)
+        @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
       uploadTracksError = (err) -> alert('Error uploading tracks!')
 
       spotifyApi.getMe()
@@ -80,11 +80,14 @@ window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
       .then(createPlaylist, createPlaylistError)
       .then(uploadTracks, uploadTracksError)
 
-    _addTracksToPlaylist: (spotifyApi, userID, playlistID, trackURIs) ->
+    _addTracksToPlaylist: (spotifyApi, userID, playlistID, trackURIs, onDone) ->
       uploadURIS = trackURIs.splice(0, MAX_URIS_TO_UPLOAD)
 
       addTracks = (data) =>
-        if trackURIs.length > 0 then @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs)
+        if trackURIs.length is 0
+          onDone()
+        else
+          @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
       addTracksError = (err) -> onError('Error uploading tracks!')
 
       spotifyApi.addTracksToPlaylist(userID, playlistID, uploadURIS)

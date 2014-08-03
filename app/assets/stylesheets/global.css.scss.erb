@@ -1,11 +1,3 @@
-.spotify {
-  color: $spotify-green;
-}
-
-.pandora {
-  color: $pandora-blue;
-}
-
 body {
   background-color: $background-color;
 }
@@ -57,12 +49,41 @@ nav {
   }
 }
 
+.spotify {
+  color: $spotify-green;
+}
+
+.pandora {
+  color: $pandora-blue;
+}
+
 .error {
   color: $error-red;
 }
 
 .container {
   min-width: $min-container-width;
+}
+
+form .btn {
+  position: relative;
+
+  .preloader {
+    position: absolute;
+    top: -1px;
+    right: -45px;
+    background-image: url(<%= asset_path('preloader_blue.gif') %>);
+    background-repeat: no-repeat;
+    background-position: left top;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.info {
+  display: inline-block;
+  margin-left: 10px;
+  color: $spotify-green;
 }
 
 .pandify section {
@@ -149,4 +170,3 @@ nav {
     text-decoration: none;
   }
 }
-
