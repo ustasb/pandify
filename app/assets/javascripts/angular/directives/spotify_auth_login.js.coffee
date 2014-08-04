@@ -50,3 +50,8 @@ window.pandifyApp.directive 'spotifyAuthLogin', ->
             $scope.exporting = false
             $scope.exportFinished = true
   ]
+
+  link: ($scope, element, attrs) ->
+    $scope.$watch 'loggedIn', (newVal) ->
+      # Doesn't work if the developer console is open.
+      $(element).find('input[name=playlistName]').focus() if newVal
