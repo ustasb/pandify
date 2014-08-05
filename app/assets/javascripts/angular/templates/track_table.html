@@ -1,0 +1,19 @@
+<table class="table table-condensed">
+  <tr>
+    <th></th>
+    <th ng-click="predicate='track'; reverse=!reverse">Track</th>
+    <th ng-click="predicate='artist'; reverse=!reverse">Artist</th>
+    <th ng-click="predicate='duration_ms'; reverse=!reverse">Time</th>
+    <th ng-click="predicate='album'; reverse=!reverse">Album</th>
+  </tr>
+  <tr class="track" ng-repeat="track in filteredTracks = (tracks | genre:filters:lazy | orderBy:predicate:reverse)">
+    <td>
+      <img class="album-art" ng-src="{{track.albumArt.url}}" width="{{track.albumArt.width * imgScale}}" height="{{track.albumArt.height * imgScale}}">
+      <span class="glyphicon glyphicon-play"></span>
+    </td>
+    <td>{{ track.track }}</td>
+    <td>{{ track.artist }}</td>
+    <td>{{ track.durationMS | date:'m:ss' }}</td>
+    <td>{{ track.album }}</td>
+  </tr>
+</table>

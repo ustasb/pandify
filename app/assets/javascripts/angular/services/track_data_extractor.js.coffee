@@ -2,7 +2,7 @@ window.pandifyApp.factory 'trackDataExtractor', ->
 
   extract: (trackData) ->
     album: trackData.album.name
-    albumArt: trackData.album.images.pop().url
+    albumArt: trackData.album.images.shift()
     artist: trackData.artists[0].name
     durationMS: trackData.duration_ms
     genres: trackData.pandify_artists_genres

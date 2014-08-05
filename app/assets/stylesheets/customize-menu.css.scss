@@ -41,6 +41,29 @@
       color: $spotify-green;
     }
 
+    td:first-child {
+      position: relative;
+
+      .album-art {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 100%;
+        margin-right: $side-padding;
+        -moz-box-shadow: 2px 2px 7px #707070;
+        -webkit-box-shadow: 2px 2px 7px #707070;
+        box-shadow: 2px 2px 7px #707070;
+      }
+    }
+
+    tr.hovered {
+      background-color: $spotify-green;
+
+      .album-art {
+        display: block;
+      }
+    }
+
     td > .glyphicon {
       margin-left: 10px;
     }

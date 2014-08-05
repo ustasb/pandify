@@ -32,25 +32,10 @@
       Pandora tracks
     </p>
     <p>
-    {{filteredTracks.length}} tracks displayed, {{sumTime(filteredTracks) | humanTime }}
+      {{filteredTracks.length}} tracks displayed, {{sumTime(filteredTracks) | humanTime }}
     </p>
   </div>
 
-  <table class="table table-condensed">
-    <tr>
-      <th></th>
-      <th ng-click="predicate='track'; reverse=!reverse">Track</th>
-      <th ng-click="predicate='artist'; reverse=!reverse">Artist</th>
-      <th ng-click="predicate='duration_ms'; reverse=!reverse">Time</th>
-      <th ng-click="predicate='album'; reverse=!reverse">Album</th>
-    </tr>
-    <tr ng-repeat="track in filteredTracks = (tracks | genre:genreFilters:lazy | orderBy:predicate:reverse)">
-      <td><span class="glyphicon glyphicon-play"></span></td>
-      <td>{{ track.track }}</td>
-      <td>{{ track.artist }}</td>
-      <td>{{ track.durationMS | date:'m:ss' }}</td>
-      <td>{{ track.album }}</td>
-    </tr>
-  </table>
+  <div track-table tracks="tracks" lazy="lazy" filters="genreFilters"></div>
 </div>
 
