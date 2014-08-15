@@ -1,5 +1,5 @@
 PandoraData = ($q, RawPandoraData) ->
-  get: ->
+  get: (dataToGet) ->
     deferred = $q.defer()
 
     getData = ->

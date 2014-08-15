@@ -1,6 +1,8 @@
 ConfigureMenuCtrl = ($location, Session, PandoraData) ->
   vm = @
 
+  vm.retrievingPandoraTracks = false
+
   vm.user = {}
   vm.user.pandoraID = Session.get('user.pandoraID') or ''
   vm.user.getLikedTracks = JSON.parse(Session.get('user.getLikedTracks')) or true
@@ -18,12 +20,18 @@ ConfigureMenuCtrl = ($location, Session, PandoraData) ->
     Session.set('user.market', vm.user.market)
 
   vm.retrieveData = ->
+    vm.retrievingPandoraTracks = true
     storeData = (tracks) -> Session.set('user.pandoraTracks', tracks)
-    PandoraData.get().then(storeData)
+    PandoraData.get(
+      likedTracks: vm.user.getLikedTracks
+      bookmarkedTracks: vm.user.getBookmarkedTracks
+    ).then(storeData)
 
   vm.onSubmit = ->
     vm.storePreferences()
-    vm.retrieveData().then -> $location.path('/customize')
+    vm.retrieveData().then ->
+      vm.retrievingPandoraTracks = false
+      $location.path('/customize')
 
   vm
 

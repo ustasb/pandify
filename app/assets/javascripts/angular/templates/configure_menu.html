@@ -39,6 +39,9 @@
       <div country-select market="vm.user.market"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary" ng-click="submitted = true">Retrieve Data</button>
+    <button type="submit" class="btn btn-primary" ng-click="submitted = true" ng-disabled="vm.retrievingPandoraTracks">
+      Retrieve Data
+      <div class="preloader" ng-show="vm.retrievingPandoraTracks"></div>
+    </button>
   </form>
 </div>
