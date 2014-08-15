@@ -13,15 +13,15 @@ ConfigureMenuCtrl = ($location, Session, PandoraData) ->
     vm.configForm.pandoraID.$valid and (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
 
   vm.storePreferences = ->
-    Session.kill() # Erase all stored state
-    Session.set('user.pandoraID', vm.user.pandoraID)
-    Session.set('user.getLikedTracks', vm.user.getLikedTracks)
-    Session.set('user.getBookmarkedTracks', vm.user.getBookmarkedTracks)
-    Session.set('user.market', vm.user.market)
+    Session.eraseAll()
+    Session.put('user.pandoraID', vm.user.pandoraID)
+    Session.put('user.getLikedTracks', vm.user.getLikedTracks)
+    Session.put('user.getBookmarkedTracks', vm.user.getBookmarkedTracks)
+    Session.put('user.market', vm.user.market)
 
   vm.retrieveData = ->
     vm.retrievingPandoraTracks = true
-    storeData = (tracks) -> Session.set('user.pandoraTracks', tracks)
+    storeData = (tracks) -> Session.put('user.pandoraTracks', tracks)
     PandoraData.get(
       likedTracks: vm.user.getLikedTracks
       bookmarkedTracks: vm.user.getBookmarkedTracks

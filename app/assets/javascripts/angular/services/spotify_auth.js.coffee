@@ -31,8 +31,8 @@ window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
 
     setAccessToken: (token, expiresInSecs) ->
       expiresInMS = expiresInSecs * 1000
-      session.set('accessToken', token)
-      session.set('accessTokenExpires', (new Date()).getTime() + expiresInMS)
+      session.put('accessToken', token)
+      session.put('accessTokenExpires', (new Date()).getTime() + expiresInMS)
 
     getAccessToken: ->
       token = session.get('accessToken')

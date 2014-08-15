@@ -4,11 +4,11 @@ window.pandifyApp.factory 'pandifySession', ['localStorageService', (localStorag
     constructor: ->
       @cache = {}
 
-    kill: ->
+    eraseAll: ->
       @cache = {}
       localStorage.clearAll()
 
-    set: (key, value) ->
+    put: (key, value) ->
       @cache[key] = value
       localStorage.set(key, value)
 

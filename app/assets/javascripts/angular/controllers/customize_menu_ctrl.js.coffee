@@ -21,7 +21,7 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', [
         downloader.queueTrackDownload track.track, track.artist, (trackData) ->
           # The track doesn't need to be queried anymore.
           pandoraTracks.splice(index, 1)
-          session.set('pandoraTracksToQuery', pandoraTracks)
+          session.put('pandoraTracksToQuery', pandoraTracks)
 
           return unless trackData?
 
@@ -29,7 +29,7 @@ window.pandifyApp.controller 'CustomizeMenuCtrl', [
           $scope.$apply ->
             $scope.genres.push.apply($scope.genres, track.genres) # Concat the arrays
             $scope.tracks.unshift(track)
-            session.set('tracks', $scope.tracks)
+            session.put('tracks', $scope.tracks)
 
       null
 

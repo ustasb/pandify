@@ -34,10 +34,10 @@ window.pandifyApp.directive 'genreSelect', ->
     $scope.addGenre = (genre) ->
       if $.inArray(genre, $scope.genreFilters) is -1
         $scope.$apply -> $scope.genreFilters.push(genre)
-        session.set('activeGenreFilters', $scope.genreFilters)
+        session.put('activeGenreFilters', $scope.genreFilters)
 
     $scope.removeGenre = (genre) ->
       index = $.inArray(genre, $scope.genreFilters)
       $scope.$apply -> $scope.genreFilters.splice(index, 1)
-      session.set('activeGenreFilters', $scope.genreFilters)
+      session.put('activeGenreFilters', $scope.genreFilters)
   ]
