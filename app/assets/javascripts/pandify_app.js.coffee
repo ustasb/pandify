@@ -5,6 +5,7 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
     .when '/configure',
       templateUrl: 'angular/templates/configure_menu.html'
       controller: 'ConfigureMenuCtrl'
+      controllerAs: 'vm'
     .when '/customize',
       templateUrl: 'angular/templates/customize_menu.html'
       controller: 'CustomizeMenuCtrl'

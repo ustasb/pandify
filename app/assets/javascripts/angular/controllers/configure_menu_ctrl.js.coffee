@@ -1,35 +1,31 @@
-window.pandifyApp.controller 'ConfigureMenuCtrl', [
-  '$scope',
-  '$location',
-  'pandifySession',
-  'pandoraData',
-  ($scope, $location, session, pandoraData) ->
+ConfigureMenuCtrl = ($location, Session, PandoraData) ->
+  vm = @
 
-    $scope.user = {}
-    $scope.user.pandoraID = session.get('user.pandoraID') or ''
-    $scope.user.likedTracks = session.get('user.likedTracks') or true
-    $scope.user.bookmarkedTracks = session.get('user.bookmarkedTracks') or true
-    $scope.user.market = session.get('user.market') or 'US'
+  vm.user = {}
+  vm.user.pandoraID = Session.get('user.pandoraID') or ''
+  vm.user.getLikedTracks = JSON.parse(Session.get('user.getLikedTracks')) or true
+  vm.user.getBookmarkedTracks = JSON.parse(Session.get('user.getBookmarkedTracks')) or true
+  vm.user.market = Session.get('user.market') or 'US'
 
-    # Cast string booleans to actual booleans.
-    $scope.user.likedTracks = JSON.parse $scope.user.likedTracks
-    $scope.user.bookmarkedTracks = JSON.parse $scope.user.bookmarkedTracks
+  vm.isFormValid = ->
+    vm.configForm.pandoraID.$valid and (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
 
-    $scope.formIsValid = ->
-      $scope.configForm.pandoraID.$valid and
-      ($scope.user.likedTracks or $scope.user.bookmarkedTracks) and
-      $scope.user.market
+  vm.storePreferences = ->
+    Session.kill() # Erase all stored state
+    Session.set('user.pandoraID', vm.user.pandoraID)
+    Session.set('user.getLikedTracks', vm.user.getLikedTracks)
+    Session.set('user.getBookmarkedTracks', vm.user.getBookmarkedTracks)
+    Session.set('user.market', vm.user.market)
 
-    $scope.retrieveData = ->
-      session.kill()
+  vm.retrieveData = ->
+    storeData = (tracks) -> Session.set('user.pandoraTracks', tracks)
+    PandoraData.get().then(storeData)
 
-      session.set('user.pandoraID', $scope.user.pandoraID)
-      session.set('user.likedTracks', $scope.user.likedTracks)
-      session.set('user.bookmarkedTracks', $scope.user.bookmarkedTracks)
-      session.set('user.market', $scope.user.market)
+  vm.onSubmit = ->
+    vm.storePreferences()
+    vm.retrieveData().then -> $location.path('/customize')
 
-      session.set('pandoraTracksToQuery', pandoraData['liked_tracks'])
-      session.set('initPandoraTracksCount', pandoraData['liked_tracks'].length)
+  vm
 
-      $location.path('/customize')
-]
+ConfigureMenuCtrl.$inject = ['$location', 'pandifySession', 'PandoraData']
+angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)
