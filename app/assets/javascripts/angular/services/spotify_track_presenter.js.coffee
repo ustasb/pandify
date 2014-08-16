@@ -11,5 +11,15 @@ class SpotifyTrackPresenter
     track: trackMatch.name
     uri: trackMatch.uri
 
+  genres: (tracks) ->
+    genres = {}
+
+    for track in tracks by 1
+      for genre in track.genres by 1
+        genres[genre] ?= 0
+        ++genres[genre]
+
+    genres
+
 angular.module('pandify').service('SpotifyTrackPresenter', SpotifyTrackPresenter)
 

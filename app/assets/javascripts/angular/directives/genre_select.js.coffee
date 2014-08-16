@@ -1,43 +1,38 @@
-window.pandifyApp.directive 'genreSelect', ->
+GenreSelectLink = ($scope, element, attrs) ->
+  selectize = element.selectize(
+    plugins: ['remove_button']
+    labelField: 'title'
+    valueField: 'value'
+    searchField: 'value'
+    sortField: 'value'
+    onItemAdd: (genre) -> $scope.$emit('addGenre', genre)
+    onItemRemove: (genre) -> $scope.$emit('removeGenre', genre)
+  )[0].selectize
 
+  for genre, count of $scope.genres
+    selectize.addOption(title: "#{genre} (#{count})", value: genre)
+
+  for genre in $scope.selectedGenres by 1
+    selectize.addItem(genre)
+
+  $scope.$on 'trackMatch', (e, trackMatch) ->
+    for genre in trackMatch.genres by 1
+      count = $scope.genres[genre]
+
+      if count is 1
+        selectize.addOption(title: "#{genre} (#{count})", value: genre)
+      else
+        selectize.updateOption(genre, title: "#{genre} (#{count})", value: genre)
+
+    null
+
+genreSelect = ->
   restrict: 'A'
-
+  replace: true
   template: '<input type="text">'
-
   scope:
     genres: '='
-    genreFilters: '='
+    selectedGenres: '='
+  link: GenreSelectLink
 
-  link: ($scope, element, attrs) ->
-
-    selectize = element.selectize(
-      plugins: ['remove_button']
-      valueField: 'title'
-      labelField: 'title'
-      searchField: 'title'
-      sortField: 'title'
-      onItemAdd: (genre) ->
-        $scope.addGenre(genre)
-      onItemRemove: (genre) ->
-        $scope.removeGenre(genre)
-    )[0].selectize
-
-    $scope.$watchCollection 'genres', ->
-      for genre in $scope.genres
-        selectize.addOption(title: genre)
-
-    $scope.$watchCollection 'genreFilters', ->
-      for genre in $scope.genreFilters
-        selectize.addItem(genre)
-
-  controller: ['$scope', 'pandifySession', ($scope, session) ->
-    $scope.addGenre = (genre) ->
-      if $.inArray(genre, $scope.genreFilters) is -1
-        $scope.$apply -> $scope.genreFilters.push(genre)
-        session.put('activeGenreFilters', $scope.genreFilters)
-
-    $scope.removeGenre = (genre) ->
-      index = $.inArray(genre, $scope.genreFilters)
-      $scope.$apply -> $scope.genreFilters.splice(index, 1)
-      session.put('activeGenreFilters', $scope.genreFilters)
-  ]
+angular.module('pandify').directive('genreSelect', genreSelect)

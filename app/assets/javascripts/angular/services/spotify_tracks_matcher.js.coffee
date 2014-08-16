@@ -1,14 +1,24 @@
 SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) ->
   pauseMatching = true
+
   matches = Session.get('matches') or []
+  matchesGenres = SpotifyTrackPresenter.genres(matches)
   tracksToMatch = Session.get('tracksToMatch') or []
   trackToMatchIndex = Session.get('trackToMatchIndex') or 0
 
+  onDoneMatching = ->
+  onTrackMatch = ->
+
   init: (toMatch) ->
     pauseMatching = true
+
     Session.put('matches', matches = [])
+    matchesGenres = {}
     Session.put('tracksToMatch', tracksToMatch = toMatch)
     Session.put('trackToMatchIndex', trackToMatchIndex = 0)
+
+    onDoneMatching = ->
+    onTrackMatch = ->
 
   doneMatching: () ->
     trackToMatchIndex >= tracksToMatch.length
@@ -16,14 +26,23 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
   getMatches: ->
     matches
 
-  startMatching: (onDone) ->
+  getMatchesGenres: ->
+    matchesGenres
+
+  onDoneMatching: (onDoneMatchingCB) ->
+    onDoneMatching = onDoneMatchingCB
+
+  onTrackMatch: (onTrackMatchCB) ->
+    onTrackMatch = onTrackMatchCB
+
+  startMatching: ->
     pauseMatching = false
-    @match(onDone)
+    @match()
 
   pauseMatching: ->
     pauseMatching = true
 
-  match: (onDone) ->
+  match: ->
     return if pauseMatching or @doneMatching()
 
     track = tracksToMatch[trackToMatchIndex]
@@ -33,13 +52,20 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
 
       if trackMatch?
         trackMatch = SpotifyTrackPresenter.present(trackMatch)
+
         matches.push(trackMatch)
         Session.put('matches', matches)
 
+        for genre in trackMatch.genres by 1
+          matchesGenres[genre] ?= 0
+          ++matchesGenres[genre]
+
+        onTrackMatch(trackMatch)
+
       if @doneMatching()
-        onDone()
+        onDoneMatching()
       else
-        @match(onDone)
+        @match()
 
     SpotifyTrackDownloader.downloadTrack(track.track, track.artist).then(onSuccess)
 
