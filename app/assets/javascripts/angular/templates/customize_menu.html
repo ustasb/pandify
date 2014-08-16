@@ -1,4 +1,5 @@
 <div id="customize-menu">
+  <!--
   <p>Next, filter your Pandora data by genre. Select a filter method:</p>
 
   <form role="form" name="filterForm" novalidate ng-submit="exportPlaylist()">
@@ -23,18 +24,25 @@
 
     <button type="submit" class="btn btn-primary">Export Playlist</button>
   </form>
+  -->
 
   <div id="tracks-data">
     <p>
-      <span class="spotify">{{tracks.length}}</span>
+      <span class="spotify">{{ vm.spotifyTrackMatches.length }}</span>
       Spotify matches made out of
-      <span class="pandora">{{initPandoraTracksCount}}</span>
+      <span class="pandora">{{ vm.pandoraTracksCount }}</span>
       Pandora tracks
+      –
+      <span ng-show="vm.doneMatching">done</span>
+      <span ng-hide="vm.doneMatching">
+        <a class="underline" ng-show="vm.matchingPaused" ng-click="vm.resumeMatching()">resume</a>
+        <a class="underline" ng-hide="vm.matchingPaused" ng-click="vm.pauseMatching()">pause</a>
+      </span>
     </p>
     <p>
       {{filteredTracks.length}} tracks displayed, {{sumTime(filteredTracks) | humanTime }}
     </p>
   </div>
 
-  <div track-table tracks="tracks" lazy="lazy" filters="genreFilters"></div>
+  <div track-table tracks="vm.spotifyTrackMatches"></div>
 </div>

@@ -5,8 +5,6 @@ window.pandifyApp.directive 'trackTable', ->
   templateUrl: 'angular/templates/track_table.html'
   scope:
     tracks: '='
-    filters: '='
-    lazy: '='
 
   controller: ['$scope', ($scope) ->
     $scope.imgScale = 1 / 3
@@ -21,7 +19,7 @@ window.pandifyApp.directive 'trackTable', ->
 
       albumArt = row.find('.album-art')
       albumArt.css
-        # Vertically center the image
+        # Vertically center the image.
         top: - (albumArt.height() - row.height()) / 2
 
     element.on 'mouseleave', '.track', (e) ->

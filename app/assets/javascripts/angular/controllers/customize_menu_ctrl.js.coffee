@@ -1,45 +1,24 @@
-window.pandifyApp.controller 'CustomizeMenuCtrl', [
-  '$scope',
-  '$location',
-  'trackDataDownloader',
-  'trackDataExtractor',
-  'pandifySession',
-  ($scope, $location, downloader, extractor, session) ->
+CustomizeMenuCtrl = ($location, Session, SpotifyTracksMatcher) ->
+  vm = @
 
-    $scope.tracks = session.get('tracks') or []
-    $scope.initPandoraTracksCount = session.get('initPandoraTracksCount')
-    $scope.genreFilters = session.get('activeGenreFilters') or []
+  vm.pandoraTracksCount = Session.get('user.pandoraTracks').length
+  vm.spotifyTrackMatches = SpotifyTracksMatcher.getMatches()
 
-    $scope.genres = []
-    for track in $scope.tracks
-      $scope.genres.push(genre) for genre in track.genres
+  vm.matchingPaused = JSON.parse(Session.get('matchingPaused'))
+  vm.doneMatching = SpotifyTracksMatcher.doneMatching()
 
-    pandoraTracks = session.get('pandoraTracksToQuery') or []
-    for track, index in pandoraTracks by 1
+  vm.pauseMatching = ->
+    Session.put('matchingPaused', vm.matchingPaused = true)
+    SpotifyTracksMatcher.pauseMatching()
 
-      do (index) ->
-        downloader.queueTrackDownload track.track, track.artist, (trackData) ->
-          # The track doesn't need to be queried anymore.
-          pandoraTracks.splice(index, 1)
-          session.put('pandoraTracksToQuery', pandoraTracks)
+  vm.resumeMatching = ->
+    Session.put('matchingPaused', vm.matchingPaused = false)
+    SpotifyTracksMatcher.startMatching(-> vm.doneMatching = true)
 
-          return unless trackData?
+  # Default to resume for the first time.
+  vm.resumeMatching() if vm.matchingPaused is null
 
-          track = extractor.extract(trackData)
-          $scope.$apply ->
-            $scope.genres.push.apply($scope.genres, track.genres) # Concat the arrays
-            $scope.tracks.unshift(track)
-            session.put('tracks', $scope.tracks)
+  vm
 
-      null
-
-    downloader.downloadAll()
-
-    $scope.sumTime = (tracks = []) ->
-      sum = 0
-      sum += track.durationMS for track in tracks
-      sum
-
-    $scope.exportPlaylist = ->
-      $location.path('/create')
-]
+CustomizeMenuCtrl.$inject = ['$location', 'pandifySession', 'SpotifyTracksMatcher']
+angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)

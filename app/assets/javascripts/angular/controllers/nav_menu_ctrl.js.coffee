@@ -6,14 +6,14 @@ window.pandifyApp.controller 'navMenuCtrl', [
   ($root, $scope, $location, session) ->
 
     $root.$on '$routeChangeStart', (event, next, current) ->
-      $scope.hasTracks = true
+      #$scope.hasTracks = true
 
-      atCreateOrCustomize = /\/(customize|create)/.test($location.url())
-      hasPandoraTracks = session.get('initPandoraTracksCount') > 0
+      #atCreateOrCustomize = /\/(customize|create)/.test($location.url())
+      #hasPandoraTracks = session.get('user.pandoraTracks').length > 0
 
-      unless hasPandoraTracks
-        $scope.hasTracks = false
-        $location.path('/configure') if atCreateOrCustomize
+      #unless hasPandoraTracks
+        #$scope.hasTracks = false
+        #$location.path('/configure') if atCreateOrCustomize
 
-      $scope.activeMenu = $location.url().slice(1)
+      #$scope.activeMenu = $location.url().slice(1)
 ]
