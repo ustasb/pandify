@@ -1,25 +1,18 @@
-CustomizeMenuCtrl = ($scope, $location, $filter, Session, SpotifyTracksMatcher, SpotifyTrackPresenter) ->
+CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, SpotifyTrackPresenter, TracksGenreFilter) ->
   vm = @
 
   filterTracks = (filterMethod) ->
-    vm.filterMethod = filterMethod
-    vm.filteredTracks = $filter(vm.filterMethod)(vm.spotifyTrackMatches, vm.selectedGenres)
+    TracksGenreFilter.setFilterMethod(vm.filterMethod = filterMethod) if filterMethod?
+    vm.filteredTracks = TracksGenreFilter.filter(vm.spotifyTrackMatches)
 
   onAddGenre = (e, genre) ->
-    return if $.inArray(genre, vm.selectedGenres) isnt -1
-    vm.selectedGenres.push(genre)
-    Session.put('selectedGenres', vm.selectedGenres)
-
-    vm.filterTracks(vm.filterMethod)
+    TracksGenreFilter.addGenre(genre)
+    vm.filterTracks()
     $scope.$digest()
 
   onRemoveGenre = (e, genre) ->
-    index = $.inArray(genre, vm.selectedGenres)
-    return if index is -1
-    vm.selectedGenres.splice(index, 1)
-    Session.put('selectedGenres', vm.selectedGenres)
-
-    vm.filterTracks(vm.filterMethod)
+    TracksGenreFilter.removeGenre(genre)
+    vm.filterTracks()
     $scope.$digest()
 
   pauseMatching = ->
@@ -33,7 +26,7 @@ CustomizeMenuCtrl = ($scope, $location, $filter, Session, SpotifyTracksMatcher, 
   SpotifyTracksMatcher.onDoneMatching -> vm.doneMatching = true
   SpotifyTracksMatcher.onTrackMatch (trackMatch) ->
     $scope.$broadcast 'trackMatch', trackMatch
-    vm.filterTracks(vm.filterMethod)
+    vm.filterTracks()
 
   vm.pandoraTracksCount = Session.get('user.pandoraTracks').length
   vm.spotifyTrackMatches = SpotifyTracksMatcher.getMatches()
@@ -41,7 +34,7 @@ CustomizeMenuCtrl = ($scope, $location, $filter, Session, SpotifyTracksMatcher, 
   vm.trackMatchesGenres = SpotifyTracksMatcher.getMatchesGenres()
   vm.selectedGenres = Session.get('selectedGenres') or []
 
-  vm.filterMethod = 'lazyFilter'
+  vm.filterMethod = TracksGenreFilter.getFilterMethod()
   vm.filterTracks = filterTracks
   vm.filteredTracks = vm.spotifyTrackMatches
 
@@ -62,5 +55,5 @@ CustomizeMenuCtrl = ($scope, $location, $filter, Session, SpotifyTracksMatcher, 
 
   vm
 
-CustomizeMenuCtrl.$inject = ['$scope', '$location', '$filter', 'pandifySession', 'SpotifyTracksMatcher', 'SpotifyTrackPresenter']
+CustomizeMenuCtrl.$inject = ['$scope', '$location', 'pandifySession', 'SpotifyTracksMatcher', 'SpotifyTrackPresenter', 'TracksGenreFilter']
 angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)

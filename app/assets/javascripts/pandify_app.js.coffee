@@ -13,6 +13,7 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
     .when '/create',
       templateUrl: 'angular/templates/create_menu.html'
       controller: 'CreateMenuCtrl'
+      controllerAs: 'vm'
     .otherwise
       redirectTo: '/configure'
 ]

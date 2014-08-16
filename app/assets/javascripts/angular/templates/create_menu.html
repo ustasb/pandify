@@ -5,7 +5,7 @@
 
   <p>Let Pandify export the playlist for you.</p>
 
-  <div spotify-auth-login filtered-tracks="tracks"></div>
+  <div spotify-auth-login filtered-tracks="vm.filteredTracks"></div>
 
   <div class="divider"><span>OR</span></div>
 
@@ -19,7 +19,7 @@
   <div class="well well-sm">
     <button id="copy" class="btn btn-primary" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
     <ul id="spotify-tracks" class="list-unstyled">
-      <li ng-repeat="track in tracks | genre:genreFilters">{{track.uri}} </li>
+      <li ng-repeat="track in vm.filteredTracks">{{track.uri}} </li>
     </ul>
   </div>
 </div>

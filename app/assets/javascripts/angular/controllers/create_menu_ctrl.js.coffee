@@ -1,9 +1,9 @@
-window.pandifyApp.controller 'CreateMenuCtrl', [
-  '$scope',
-  '$timeout',
-  'pandifySession',
-  'spotifyAuth',
-  ($scope, $timeout, session, spotifyAuth) ->
-    $scope.tracks = session.get('tracks') or []
-    $scope.genreFilters = session.get('activeGenreFilters') or []
-]
+CreateMenuCtrl = (SpotifyTracksMatcher, TracksGenreFilter) ->
+  vm = @
+
+  vm.filteredTracks = TracksGenreFilter.filter(SpotifyTracksMatcher.getMatches())
+
+  vm
+
+CreateMenuCtrl.$inject = ['SpotifyTracksMatcher', 'TracksGenreFilter']
+angular.module('pandify').controller('CreateMenuCtrl', CreateMenuCtrl)
