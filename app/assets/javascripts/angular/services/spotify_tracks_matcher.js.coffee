@@ -2,15 +2,16 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
   pauseMatching = true
   matches = Session.get('matches') or []
   tracksToMatch = Session.get('tracksToMatch') or []
+  trackToMatchIndex = Session.get('trackToMatchIndex') or 0
 
   init: (toMatch) ->
     pauseMatching = true
     Session.put('matches', matches = [])
-    # Copy the array - it's going to change.
-    Session.put('tracksToMatch', tracksToMatch = toMatch.slice(0))
+    Session.put('tracksToMatch', tracksToMatch = toMatch)
+    Session.put('trackToMatchIndex', trackToMatchIndex = 0)
 
   doneMatching: () ->
-    tracksToMatch.length is 0
+    trackToMatchIndex >= tracksToMatch.length
 
   getMatches: ->
     matches
@@ -23,20 +24,19 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
     pauseMatching = true
 
   match: (onDone) ->
-    return if pauseMatching
+    return if pauseMatching or @doneMatching()
 
-    track = tracksToMatch.pop()
-    return unless track?
+    track = tracksToMatch[trackToMatchIndex]
 
     onSuccess = (trackMatch) =>
-      Session.put('tracksToMatch', tracksToMatch)
+      Session.put('trackToMatchIndex', ++trackToMatchIndex)
 
       if trackMatch?
         trackMatch = SpotifyTrackPresenter.present(trackMatch)
         matches.push(trackMatch)
         Session.put('matches', matches)
 
-      if tracksToMatch.length is 0
+      if @doneMatching()
         onDone()
       else
         @match(onDone)
