@@ -1,4 +1,4 @@
-CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, SpotifyTrackPresenter, TracksGenreFilter) ->
+CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGenreFilter) ->
   vm = @
 
   filterTracks = (filterMethod) ->
@@ -38,8 +38,6 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, SpotifyTr
   vm.filterTracks = filterTracks
   vm.filteredTracks = vm.spotifyTrackMatches
 
-  vm.totalHumanTime = (tracks) -> SpotifyTrackPresenter.humanTime(tracks)
-
   $scope.$on 'addGenre', onAddGenre
   $scope.$on 'removeGenre', onRemoveGenre
 
@@ -55,5 +53,5 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, SpotifyTr
 
   vm
 
-CustomizeMenuCtrl.$inject = ['$scope', '$location', 'pandifySession', 'SpotifyTracksMatcher', 'SpotifyTrackPresenter', 'TracksGenreFilter']
+CustomizeMenuCtrl.$inject = ['$scope', '$location', 'pandifySession', 'SpotifyTracksMatcher', 'TracksGenreFilter']
 angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)

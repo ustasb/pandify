@@ -37,9 +37,7 @@
         <a class="underline" ng-hide="vm.matchingPaused" ng-click="vm.pauseMatching()">pause</a>
       </span>
     </p>
-    <p>
-      {{ vm.filteredTracks.length }} tracks displayed, {{ vm.totalHumanTime(vm.filteredTracks) }}
-    </p>
+    <p playlist-stats tracks="vm.filteredTracks"></p>
   </div>
 
   <div track-table tracks="vm.filteredTracks"></div>
