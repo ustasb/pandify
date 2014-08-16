@@ -1,4 +1,4 @@
-window.pandifyApp.filter 'humanTime', ->
+humanTime = ->
   (timeMS) ->
     ms = timeMS % 1000
     timeMS = (timeMS - ms) / 1000
@@ -10,3 +10,5 @@ window.pandifyApp.filter 'humanTime', ->
     str = ''
     str += "#{hrs} hours and " if hrs > 0
     str += "#{mins} minutes"
+
+window.pandifyApp.filter 'humanTime', humanTime

@@ -1,4 +1,4 @@
-class SpotifyTrackPresenter
+SpotifyTrackPresenter = ($filter) ->
 
   present: (trackMatch) ->
     album: trackMatch.album.name
@@ -21,5 +21,11 @@ class SpotifyTrackPresenter
 
     genres
 
-angular.module('pandify').service('SpotifyTrackPresenter', SpotifyTrackPresenter)
+  humanTime: (tracks) ->
+    sum = 0
+    sum += track.durationMS for track in tracks by 1
+    $filter('humanTime')(sum)
+
+SpotifyTrackPresenter.$inject = ['$filter']
+angular.module('pandify').factory('SpotifyTrackPresenter', SpotifyTrackPresenter)
 

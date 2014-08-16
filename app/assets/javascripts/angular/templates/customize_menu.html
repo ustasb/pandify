@@ -4,13 +4,13 @@
   <form role="form" name="vm.filterForm" novalidate ng-submit="vm.exportPlaylist()">
     <div class="form-group radio">
       <label>
-        <input type="radio" name="filterMethod" ng-checked="true">
+        <input type="radio" name="filterMethod" ng-checked="vm.filterMethod == 'lazyFilter'" ng-click="vm.filterTracks('lazyFilter')">
         Lazy – track must contain at least 1 genre filter
       </label>
     </div>
     <div class="form-group radio">
       <label>
-        <input type="radio" name="filterMethod">
+        <input type="radio" name="filterMethod" ng-checked="vm.filterMethod == 'strictFilter'" ng-click="vm.filterTracks('strictFilter')">
         Strict – track must contain all genre filters
       </label>
     </div>
@@ -38,9 +38,9 @@
       </span>
     </p>
     <p>
-      {{ filteredTracks.length }} tracks displayed, {{ sumTime(filteredTracks) | humanTime }}
+      {{ vm.filteredTracks.length }} tracks displayed, {{ vm.totalHumanTime(vm.filteredTracks) }}
     </p>
   </div>
 
-  <div track-table tracks="vm.spotifyTrackMatches"></div>
+  <div track-table tracks="vm.filteredTracks"></div>
 </div>
