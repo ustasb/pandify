@@ -1,0 +1,27 @@
+Audio = ->
+  player = new Audio5js
+    swf_path: '<%= Rails.public_path %>/audio5js.swf'
+    throw_errors: true
+
+  cb =
+    onEnd: ->
+    onPlay: ->
+
+  player.on 'pause', -> cb.onEnd()
+  player.on 'ended', -> cb.onEnd()
+  player.on 'canplay', ->
+    player.play()
+    cb.onPlay()
+
+  stop = ->
+    player.pause()
+
+  play = (opts) ->
+    stop()
+    player.load(opts.source)
+    cb.onPlay = -> cb.onEnd = opts.onEnd
+
+  stop: stop
+  play: play
+
+angular.module('pandify').factory('Audio', Audio)

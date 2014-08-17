@@ -11,7 +11,7 @@
       <img class="album-art" ng-src="{{ track.albumArt.url }}"
         width="{{ track.albumArt.width * imgScale }}"
         height="{{ track.albumArt.height * imgScale }}">
-      <span class="glyphicon glyphicon-play"></span>
+      <div audio source="track.previewURL"></div>
     </td>
     <td>{{ track.track }}</td>
     <td>{{ track.artist }}</td>

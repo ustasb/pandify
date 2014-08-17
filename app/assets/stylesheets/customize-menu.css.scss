@@ -43,6 +43,7 @@
 
     td:first-child {
       position: relative;
+      width: 40px;
 
       .album-art {
         display: none;
@@ -62,10 +63,18 @@
       .album-art {
         display: block;
       }
+
+      .glyphicon-play {
+        display: inline-block;
+      }
     }
 
-    td > .glyphicon {
+    .glyphicon-play, .glyphicon-stop {
       margin-left: 10px;
+    }
+
+    .glyphicon-play {
+      display: none;
     }
   }
 }
