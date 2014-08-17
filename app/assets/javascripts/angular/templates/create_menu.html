@@ -1,25 +1,36 @@
 <div id="create-menu">
-  <p>Finally, export your playlist into Spotify. You have two options:</p>
+  <p class="error" ng-hide="vm.hasFilteredTracks">
+    You don't have any filtered tracks to export.
+    Select some in the
+    <a href="#/customize" class="error underline">customize</a>
+    menu.
+  </p>
 
-  <div class="divider"></div>
+  <div class="options">
+    <div class="disabled-cover" ng-hide="vm.hasFilteredTracks"></div>
 
-  <p>Let Pandify export the playlist for you.</p>
+    <p>Finally, export your playlist into Spotify. You have two options:</p>
 
-  <div spotify-auth-login filtered-tracks="vm.filteredTracks"></div>
+    <div class="divider"></div>
 
-  <div class="divider"><span>OR</span></div>
+    <p>Let Pandify export the playlist for you.</p>
 
-  <p>Copy and paste the playlist into Spotify yourself.</p>
+    <div spotify-auth-login filtered-tracks="vm.filteredTracks"></div>
 
-  <ol>
-    <li>Create a new playlist in Spotify.</li>
-    <li>Paste the below contents into the new playlist window.</li>
-  </ol>
+    <div class="divider"><span>OR</span></div>
 
-  <div class="well well-sm">
-    <button id="copy" class="btn btn-primary" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
-    <ul id="spotify-tracks" class="list-unstyled">
-      <li ng-repeat="track in vm.filteredTracks">{{track.uri}} </li>
-    </ul>
+    <p>Copy and paste the playlist into Spotify yourself.</p>
+
+    <ol>
+      <li>Create a new playlist in Spotify.</li>
+      <li>Paste the below contents into the new playlist window.</li>
+    </ol>
+
+    <div class="well well-sm">
+      <button id="copy" class="btn btn-primary" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
+      <ul id="spotify-tracks" class="list-unstyled">
+        <li ng-repeat="track in vm.filteredTracks">{{track.uri}} </li>
+      </ul>
+    </div>
   </div>
 </div>
