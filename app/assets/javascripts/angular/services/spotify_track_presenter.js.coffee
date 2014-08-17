@@ -1,6 +1,8 @@
 SpotifyTrackPresenter = ($filter) ->
+  id = 0
 
   present: (trackMatch) ->
+    id: ++id  # URI won't suffice as duplicate track matches are possible.
     album: trackMatch.album.name
     albumArt: trackMatch.album.images.shift()
     artist: trackMatch.artists[0].name
@@ -28,4 +30,3 @@ SpotifyTrackPresenter = ($filter) ->
 
 SpotifyTrackPresenter.$inject = ['$filter']
 angular.module('pandify').factory('SpotifyTrackPresenter', SpotifyTrackPresenter)
-

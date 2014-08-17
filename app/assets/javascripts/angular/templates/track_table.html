@@ -6,7 +6,7 @@
     <th ng-click="predicate = 'duration_ms'; reverse =! reverse">Time</th>
     <th ng-click="predicate = 'album'; reverse =! reverse">Album</th>
   </tr>
-  <tr class="track" ng-repeat="track in tracks | orderBy:predicate:reverse">
+  <tr class="track" ng-repeat="track in tracks | orderBy:predicate:reverse track by track.id">
     <td>
       <img class="album-art" ng-src="{{ track.albumArt.url }}"
         width="{{ track.albumArt.width * imgScale }}"
