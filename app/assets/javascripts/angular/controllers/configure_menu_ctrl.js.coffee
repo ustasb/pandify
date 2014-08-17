@@ -26,7 +26,7 @@ ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher) ->
       SpotifyTracksMatcher.init(tracks)
       vm.retrievingPandoraTracks = false
 
-    PandoraData.get(
+    PandoraData.getTracks(
       likedTracks: vm.user.getLikedTracks
       bookmarkedTracks: vm.user.getBookmarkedTracks
     ).then(storeData)

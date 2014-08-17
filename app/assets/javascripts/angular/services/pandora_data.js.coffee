@@ -1,5 +1,6 @@
 PandoraData = ($q, RawPandoraData) ->
-  get: (dataToGet) ->
+
+  getTracks = (dataToGet) ->
     deferred = $q.defer()
 
     getData = ->
@@ -9,6 +10,8 @@ PandoraData = ($q, RawPandoraData) ->
     setTimeout(getData, 4000)
 
     deferred.promise
+
+  getTracks: getTracks
 
 PandoraData.$inject = ['$q', 'RawPandoraData']
 angular.module('pandify').factory('PandoraData', PandoraData)
