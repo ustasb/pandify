@@ -8,16 +8,20 @@ TracksGenreFilter = ($filter, Session) ->
   setFilterMethod: (newFilterMethod) ->
     Session.put('filterMethod', filterMethod = newFilterMethod)
 
+  # Returns a boolean indicating success
   addGenre: (genre) ->
-    return if $.inArray(genre, selectedGenres) isnt -1
+    return false if $.inArray(genre, selectedGenres) isnt -1
     selectedGenres.push(genre)
     Session.put('selectedGenres', selectedGenres)
+    true
 
+  # Returns a boolean indicating success
   removeGenre: (genre) ->
     index = $.inArray(genre, selectedGenres)
-    return if index is -1
+    return false if index is -1
     selectedGenres.splice(index, 1)
     Session.put('selectedGenres', selectedGenres)
+    true
 
   filter: (tracks) ->
     $filter(filterMethod)(tracks, selectedGenres)

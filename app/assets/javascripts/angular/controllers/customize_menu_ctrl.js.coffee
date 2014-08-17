@@ -6,14 +6,14 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
     vm.filteredTracks = TracksGenreFilter.filter(vm.spotifyTrackMatches)
 
   onAddGenre = (e, genre) ->
-    TracksGenreFilter.addGenre(genre)
-    vm.filterTracks()
-    $scope.$digest()
+    if TracksGenreFilter.addGenre(genre)
+      vm.filterTracks()
+      $scope.$digest()
 
   onRemoveGenre = (e, genre) ->
-    TracksGenreFilter.removeGenre(genre)
-    vm.filterTracks()
-    $scope.$digest()
+    if TracksGenreFilter.removeGenre(genre)
+      vm.filterTracks()
+      $scope.$digest()
 
   pauseMatching = ->
     Session.put('matchingPaused', vm.matchingPaused = true)
