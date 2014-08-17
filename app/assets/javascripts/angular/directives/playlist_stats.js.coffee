@@ -2,6 +2,7 @@ PlaylistStatsCtrl = ($scope, SpotifyTrackPresenter) ->
   $scope.totalHumanTime = (tracks) -> SpotifyTrackPresenter.humanTime(tracks)
 
 playlistStats = ->
+  restrict: 'A'
   templateUrl: 'angular/templates/playlist_stats.html'
   scope:
     tracks: '='

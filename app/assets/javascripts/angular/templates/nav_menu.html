@@ -1,0 +1,15 @@
+<nav class="col-xs-2">
+  <ul class="list-unstyled">
+    <li>
+      <a href="#/configure" ng-class="{active: vm.activeMenu === 'configure'}">configure</a>
+    </li>
+    <li>
+      <a href="#/customize" ng-show="vm.hasPandoraTracks" ng-class="{active: vm.activeMenu === 'customize'}">customize</a>
+      <span ng-hide="vm.hasPandoraTracks">customize</span>
+    </li>
+    <li>
+      <a href="#/create" ng-show="vm.hasSpotifyTrackMatches" ng-class="{active: vm.activeMenu === 'create'}">create</a>
+      <span ng-hide="vm.hasSpotifyTrackMatches">create</span>
+    </li>
+  </ul>
+</nav>
