@@ -36,7 +36,7 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
 
   vm.filterMethod = TracksGenreFilter.getFilterMethod()
   vm.filterTracks = filterTracks
-  vm.filteredTracks = vm.spotifyTrackMatches
+  vm.filterTracks()
 
   $scope.$on 'addGenre', onAddGenre
   $scope.$on 'removeGenre', onRemoveGenre
