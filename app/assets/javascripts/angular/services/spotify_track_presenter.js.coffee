@@ -11,9 +11,9 @@ SpotifyTrackPresenter = ($filter) ->
     albumArt: trackMatch.album.images.shift()
     artist: trackMatch.artists[0].name
     durationMS: trackMatch.duration_ms
-    genres: trackMatch.pandify_artists_genres
+    genres: trackMatch.spotify_artists_genres
     markets: trackMatch.available_markets
-    previewURL: trackMatch.previewURL
+    previewURL: trackMatch.preview_url
     track: trackMatch.name
     uri: trackMatch.uri
 

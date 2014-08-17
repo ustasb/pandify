@@ -36,7 +36,7 @@ class SpotifyTrackDownloader
 
     deferred.promise
 
-  # Adds the track's artists' genres to the trackMatch object via pandify_artists_genres.
+  # Adds the track's artists' genres to the trackMatch object via spotify_artists_genres.
   downloadGenres: (trackMatch) ->
     deferred = @$q.defer()
     artistIDs = trackMatch.artists.map (artist) -> artist.id
@@ -50,7 +50,7 @@ class SpotifyTrackDownloader
         idsToQuery.push(id)
 
     if idsToQuery.length is 0
-      trackMatch.pandify_artists_genres = allGenres
+      trackMatch.spotify_artists_genres = allGenres
       deferred.resolve(trackMatch)
     else
       onSuccess = (response) =>
@@ -58,7 +58,7 @@ class SpotifyTrackDownloader
           @artistGenreCache[artist.id] = artist.genres
           allGenres = allGenres.concat(artist.genres)
 
-        trackMatch.pandify_artists_genres = allGenres
+        trackMatch.spotify_artists_genres = allGenres
         deferred.resolve(trackMatch)
 
       onFailure = -> alert('Failed to download genres for: ' + trackMatch)
