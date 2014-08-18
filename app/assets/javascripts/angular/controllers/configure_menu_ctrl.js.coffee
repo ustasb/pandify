@@ -22,8 +22,7 @@ ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher) ->
     vm.retrievingPandoraTracks = true
 
     storeData = (tracks) ->
-      Session.put('user.pandoraTracks', tracks)
-      SpotifyTracksMatcher.init(tracks)
+      SpotifyTracksMatcher.init(tracks, vm.user.market)
       vm.retrievingPandoraTracks = false
 
     PandoraData.getTracks(

@@ -28,7 +28,7 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
     $scope.$broadcast 'trackMatch', trackMatch
     vm.filterTracks()
 
-  vm.pandoraTracksCount = Session.get('user.pandoraTracks').length
+  vm.pandoraTracksCount = SpotifyTracksMatcher.getTracksToMatch().length
   vm.spotifyTrackMatches = SpotifyTracksMatcher.getMatches()
 
   vm.trackMatchesGenres = SpotifyTracksMatcher.getMatchesGenres()

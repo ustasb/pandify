@@ -5,23 +5,28 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
   matchesGenres = SpotifyTrackPresenter.genres(matches)
   tracksToMatch = Session.get('tracksToMatch') or []
   trackToMatchIndex = Session.get('trackToMatchIndex') or 0
+  marketToMatch = Session.get('marketToMatch') or 'US'
 
   onDoneMatching = ->
   onTrackMatch = ->
 
-  init: (toMatch) ->
+  init: (tracks, market) ->
     pauseMatching = true
 
     Session.put('matches', matches = [])
     matchesGenres = {}
-    Session.put('tracksToMatch', tracksToMatch = toMatch)
+    Session.put('tracksToMatch', tracksToMatch = tracks)
     Session.put('trackToMatchIndex', trackToMatchIndex = 0)
+    Session.put('marketToMatch', marketToMatch = market)
 
     onDoneMatching = ->
     onTrackMatch = ->
 
-  doneMatching: () ->
+  doneMatching: ->
     trackToMatchIndex >= tracksToMatch.length
+
+  getTracksToMatch: ->
+    tracksToMatch
 
   getMatches: ->
     matches
@@ -42,6 +47,19 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
   pauseMatching: ->
     pauseMatching = true
 
+  isTrackValid: (trackMatch) ->
+    $.inArray(marketToMatch, trackMatch.markets) isnt -1
+
+  storeMatch: (trackMatch) ->
+    delete trackMatch.markets # Unnecessary to store this.
+
+    matches.push(trackMatch)
+    Session.put('matches', matches)
+
+    for genre in trackMatch.genres by 1
+      matchesGenres[genre] ?= 0
+      ++matchesGenres[genre]
+
   match: ->
     return if pauseMatching or @doneMatching()
 
@@ -52,15 +70,9 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
 
       if trackMatch?
         trackMatch = SpotifyTrackPresenter.present(trackMatch)
-
-        matches.push(trackMatch)
-        Session.put('matches', matches)
-
-        for genre in trackMatch.genres by 1
-          matchesGenres[genre] ?= 0
-          ++matchesGenres[genre]
-
-        onTrackMatch(trackMatch)
+        if @isTrackValid(trackMatch)
+          @storeMatch(trackMatch)
+          onTrackMatch(trackMatch)
 
       if @doneMatching()
         onDoneMatching()
