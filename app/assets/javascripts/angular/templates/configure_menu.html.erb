@@ -15,7 +15,7 @@
 
   <form role="form" name="vm.configForm" novalidate ng-submit="vm.isFormValid() && vm.onSubmit()">
     <div class="form-group">
-      <input type="email" name="pandoraID" class="form-control" placeholder="Your Pandora.com email" ng-model="vm.user.pandoraID" required>
+      <input type="email" autofocus name="pandoraID" class="form-control" placeholder="Your Pandora.com email" ng-model="vm.user.pandoraID" required>
     </div>
     <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.required">Required</div>
     <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.email">Invalid email</div>
