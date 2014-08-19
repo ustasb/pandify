@@ -3,12 +3,8 @@ NavMenuCtrl = ($rootScope, $location, Session, SpotifyTracksMatcher) ->
 
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
     vm.hasPandoraTracks = SpotifyTracksMatcher.getTracksToMatch().length > 0
-    vm.hasSpotifyTrackMatches = SpotifyTracksMatcher.getMatches().length > 0
 
-    if /\/customize/.test($location.url())
-      $location.path('/configure') unless vm.hasPandoraTracks
-    else if /\/create/.test($location.url())
-      $location.path('/configure') unless vm.hasSpotifyTrackMatches
+    $location.path('/configure') unless vm.hasPandoraTracks
 
     vm.activeMenu = $location.url().slice(1)
 
