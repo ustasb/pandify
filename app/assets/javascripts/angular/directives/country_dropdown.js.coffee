@@ -1,7 +1,7 @@
 window.pandifyApp.directive 'countrySelect', ->
-  template: '<select placeholder="Select a market..."></select>'
   restrict: 'A'
   replace: true
+  template: '<select></select>'
 
   scope:
     market: '='
