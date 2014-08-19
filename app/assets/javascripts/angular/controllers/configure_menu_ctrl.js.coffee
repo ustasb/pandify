@@ -1,4 +1,4 @@
-ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher) ->
+ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher, TracksGenreFilter) ->
   vm = @
 
   vm.retrievingPandoraTracks = false
@@ -32,10 +32,11 @@ ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher) ->
 
   vm.onSubmit = ->
     Session.init()
+    TracksGenreFilter.init('lazyFilter')
     vm.storePreferences()
     vm.retrieveData().then -> $location.path('/customize')
 
   vm
 
-ConfigureMenuCtrl.$inject = ['$location', 'Session', 'PandoraData', 'SpotifyTracksMatcher']
+ConfigureMenuCtrl.$inject = ['$location', 'Session', 'PandoraData', 'SpotifyTracksMatcher', 'TracksGenreFilter']
 angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)

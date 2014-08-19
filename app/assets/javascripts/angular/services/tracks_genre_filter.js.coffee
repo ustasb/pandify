@@ -1,6 +1,13 @@
 TracksGenreFilter = ($filter, Session) ->
-  filterMethod = Session.get('filterMethod') or 'lazyFilter'
-  selectedGenres = Session.get('selectedGenres') or []
+  filterMethod = Session.get('filterMethod')
+  selectedGenres = Session.get('selectedGenres')
+
+  init: (filter) ->
+    Session.put('filterMethod', filterMethod = filter)
+    Session.put('selectedGenres', selectedGenres = [])
+
+  getSelectedGenres: ->
+    selectedGenres
 
   getFilterMethod: ->
     filterMethod
