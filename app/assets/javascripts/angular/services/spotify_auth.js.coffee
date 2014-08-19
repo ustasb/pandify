@@ -20,7 +20,7 @@ popUpWindow = (url, w, h) ->
     "scrollbars=no, resizable=no, copyhistory=no," +
     "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
-window.pandifyApp.factory 'spotifyAuth', ['pandifySession', (session) ->
+window.pandifyApp.factory 'spotifyAuth', ['Session', (session) ->
   MAX_URIS_TO_UPLOAD = 100 # Spotify only allows 100 to be uploaded at once.
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'

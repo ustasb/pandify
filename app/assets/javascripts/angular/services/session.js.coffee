@@ -1,17 +1,19 @@
-window.pandifyApp.factory 'pandifySession', ['localStorageService', (localStorage) ->
-  new class Session
+Session = (localStorage) ->
+  cache = {}
 
-    constructor: ->
-      @cache = {}
+  init = ->
+    cache = {}
+    localStorage.clearAll()
 
-    eraseAll: ->
-      @cache = {}
-      localStorage.clearAll()
+  get = (key) ->
+    cache[key] or cache[key] = localStorage.get(key)
 
-    put: (key, value) ->
-      @cache[key] = value
-      localStorage.set(key, value)
+  put = (key, value) ->
+    localStorage.set(key, cache[key] = value)
 
-    get: (key) ->
-      @cache[key] or @cache[key] = localStorage.get(key)
-]
+  init: init
+  get: get
+  put: put
+
+Session.$inject = ['localStorageService']
+angular.module('pandify').factory('Session', Session)

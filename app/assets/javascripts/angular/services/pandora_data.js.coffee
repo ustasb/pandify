@@ -6,7 +6,7 @@ PandoraData = ($q, RawPandoraData) ->
     getData = ->
       deferred.resolve(RawPandoraData['tracks'])
 
-    # Simulate fetching from the server
+    # Simulate fetching from the server.
     setTimeout(getData, 4000)
 
     deferred.promise

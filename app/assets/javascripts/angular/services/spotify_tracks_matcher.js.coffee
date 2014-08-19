@@ -81,5 +81,5 @@ SpotifyTracksMatcher = (Session, SpotifyTrackDownloader, SpotifyTrackPresenter) 
 
     SpotifyTrackDownloader.downloadTrack(track.track, track.artist).then(onSuccess)
 
-SpotifyTracksMatcher.$inject = ['pandifySession', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter']
+SpotifyTracksMatcher.$inject = ['Session', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter']
 angular.module('pandify').factory('SpotifyTracksMatcher', SpotifyTracksMatcher)

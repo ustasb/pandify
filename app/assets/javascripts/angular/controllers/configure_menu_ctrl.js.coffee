@@ -31,11 +31,11 @@ ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher) ->
     ).then(storeData)
 
   vm.onSubmit = ->
-    Session.eraseAll()
+    Session.init()
     vm.storePreferences()
     vm.retrieveData().then -> $location.path('/customize')
 
   vm
 
-ConfigureMenuCtrl.$inject = ['$location', 'pandifySession', 'PandoraData', 'SpotifyTracksMatcher']
+ConfigureMenuCtrl.$inject = ['$location', 'Session', 'PandoraData', 'SpotifyTracksMatcher']
 angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)

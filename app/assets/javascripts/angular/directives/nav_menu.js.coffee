@@ -21,5 +21,5 @@ navMenu = ->
   controller: NavMenuCtrl
   controllerAs: 'vm'
 
-NavMenuCtrl.$inject = ['$rootScope', '$location', 'pandifySession', 'SpotifyTracksMatcher']
+NavMenuCtrl.$inject = ['$rootScope', '$location', 'Session', 'SpotifyTracksMatcher']
 angular.module('pandify').directive('navMenu', navMenu)

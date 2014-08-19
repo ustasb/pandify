@@ -26,5 +26,5 @@ TracksGenreFilter = ($filter, Session) ->
   filter: (tracks) ->
     $filter(filterMethod)(tracks, selectedGenres)
 
-TracksGenreFilter.$inject = ['$filter', 'pandifySession']
+TracksGenreFilter.$inject = ['$filter', 'Session']
 angular.module('pandify').factory('TracksGenreFilter', TracksGenreFilter)

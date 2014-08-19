@@ -53,5 +53,5 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
 
   vm
 
-CustomizeMenuCtrl.$inject = ['$scope', '$location', 'pandifySession', 'SpotifyTracksMatcher', 'TracksGenreFilter']
+CustomizeMenuCtrl.$inject = ['$scope', '$location', 'Session', 'SpotifyTracksMatcher', 'TracksGenreFilter']
 angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)
