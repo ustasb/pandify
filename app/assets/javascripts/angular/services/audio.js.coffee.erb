@@ -10,8 +10,8 @@ Audio = ->
   player.on 'pause', -> cb.onEnd()
   player.on 'ended', -> cb.onEnd()
   player.on 'canplay', ->
-    player.play()
     cb.onPlay()
+    player.play()
 
   stop = ->
     player.pause()
