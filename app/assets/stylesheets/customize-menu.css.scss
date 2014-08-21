@@ -1,31 +1,26 @@
 #customize-menu {
-  form button.btn {
+  form button[type="submit"] {
     float: right;
-  }
-
-  .glyphicon {
-    cursor: pointer;
   }
 
   .selectize-input {
     line-height: 30px;
-    padding-right: 5px !important;
     margin: 0;
+    padding-right: 5px;
   }
 
-  .selectize-dropdown .option.active {
+  .selectize-dropdown .active {
     background-color: $spotify-green;
   }
 
-  .selectize-input > div {
+  .selectize-input .item {
     background-color: $spotify-green;
+    padding-left: 7px;
     padding-right: 20px !important;
-    padding-left: 7px !important;
     margin-right: 5px;
 
-    // Close button
-    a {
-      font-size: 1.1em;
+    .remove {
+      font-size: 15px;
     }
   }
 
@@ -44,20 +39,20 @@
     td:first-child {
       position: relative;
       width: 40px;
-
-      .album-art {
-        display: none;
-        position: absolute;
-        top: 0;
-        right: 100%;
-        margin-right: $side-padding;
-        -moz-box-shadow: 2px 2px 7px #707070;
-        -webkit-box-shadow: 2px 2px 7px #707070;
-        box-shadow: 2px 2px 7px #707070;
-      }
     }
 
-    tr.hovered {
+    .album-art {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 100%;
+      margin-right: 15px;
+      -moz-box-shadow: 2px 2px 7px #707070;
+      -webkit-box-shadow: 2px 2px 7px #707070;
+      box-shadow: 2px 2px 7px #707070;
+    }
+
+    .track.hovered {
       background-color: $spotify-green;
 
       .album-art {
@@ -69,7 +64,8 @@
       }
     }
 
-    .glyphicon-play, .glyphicon-stop {
+    .glyphicon {
+      cursor: pointer;
       margin-left: 10px;
     }
 

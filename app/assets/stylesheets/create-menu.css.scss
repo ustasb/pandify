@@ -1,26 +1,22 @@
 #create-menu {
-  form {
-    margin-bottom: 25px;
-  }
+  .export-options {
+    position: relative;
 
-  #copy {
-    float: right;
-  }
-
-  .zeroclipboard-is-hover {
-    background-color: $spotify-green;
-    color: $background-color;
-  }
-
-  .list-unstyled {
-    margin: 0;
+    .disabled-cover {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: $background-color;
+      opacity: 0.6;
+      z-index: 9999;
+    }
   }
 
   .divider {
     margin: 20px 0;
     height: 1px;
     text-align: center;
-    background-color: $divider-color;
+    background-color: $unemphasized-color;
 
     span {
       position: relative;
@@ -36,17 +32,16 @@
     min-height: 53px;
   }
 
-  .options {
-    position: relative;
-
-    .disabled-cover {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: $background-color;
-      opacity: 0.5;
-      z-index: 9999;
-    }
+  #spotify-tracks {
+    margin: 0;
   }
 
+  button.copy {
+    float: right;
+  }
+
+  .zeroclipboard-is-hover {
+    background-color: $spotify-green;
+    color: $background-color;
+  }
 }

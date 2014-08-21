@@ -1,14 +1,14 @@
-<nav class="col-xs-2">
-  <ul class="list-unstyled">
-    <li>
-      <a href="#/configure" ng-class="{active: vm.activeMenu === 'configure'}">configure</a>
+<nav class="nav-menu">
+  <ul class="nav-list list-unstyled">
+    <li class="nav-list-item">
+      <a href="#/configure" ng-class="{'active-menu-item': vm.activeMenu === 'configure'}">configure</a>
     </li>
-    <li>
-      <a href="#/customize" ng-show="vm.hasPandoraTracks" ng-class="{active: vm.activeMenu === 'customize'}">customize</a>
+    <li class="nav-list-item">
+      <a href="#/customize" ng-show="vm.hasPandoraTracks" ng-class="{'active-menu-item': vm.activeMenu === 'customize'}">customize</a>
       <span ng-hide="vm.hasPandoraTracks">customize</span>
     </li>
-    <li>
-      <a href="#/create" ng-show="vm.hasPandoraTracks" ng-class="{active: vm.activeMenu === 'create'}">create</a>
+    <li class="nav-list-item">
+      <a href="#/create" ng-show="vm.hasPandoraTracks" ng-class="{'active-menu-item': vm.activeMenu === 'create'}">create</a>
       <span ng-hide="vm.hasPandoraTracks">create</span>
     </li>
   </ul>

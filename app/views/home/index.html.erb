@@ -1,30 +1,28 @@
-<div class="pandify container">
+<div id="master-container" class="container">
 
   <div id="credit">
-    created by
+    <span>created by</span>
     <a href="http://ustasb.com">ustasb</a>
   </div>
 
-  <header class="row">
+  <header id="logo-header" class="row">
     <div class="col-xs-2">
       <a href="#/configure">
-        <%= image_tag 'pandify_logo.png', alt: 'Pandify Logo', width: 313, height: 70 %>
+        <%= image_tag 'pandify_logo.png', class: 'logo', alt: 'Pandify Logo', width: 313, height: 70 %>
       </a>
     </div>
   </header>
 
   <main class="row">
+    <nav nav-menu class="col-xs-2"></nav>
 
-    <nav nav-menu></nav>
-
-    <section class="col-xs-10">
+    <section id="main-content" class="col-xs-10">
       <div class="vertical-divider">
         <div class="top"></div>
         <div class="bottom"></div>
       </div>
-      <div class="angular-view" ng-view></div>
+      <div ng-view></div>
     </section>
-
   </main>
 
 </div>

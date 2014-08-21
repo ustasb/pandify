@@ -15,7 +15,7 @@
 
   <form role="form" name="vm.configForm" novalidate ng-submit="vm.isFormValid() && vm.onSubmit()">
     <div class="form-group">
-      <input type="email" autofocus name="pandoraID" class="form-control" placeholder="Your Pandora.com email" ng-model="vm.user.pandoraID" required>
+      <input autofocus type="email" name="pandoraID" class="form-control short-width" placeholder="Your Pandora.com email" ng-model="vm.user.pandoraID" required>
     </div>
     <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.required">Required</div>
     <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.email">Invalid email</div>
@@ -37,10 +37,10 @@
     <p>What market should the tracks be playable in?</p>
 
     <div class="form-group">
-      <div country-select market="vm.user.market"></div>
+      <div country-select class="short-width" market="vm.user.market"></div>
     </div>
 
-    <button type="submit" class="btn btn-primary" ng-click="submitted = true" ng-disabled="vm.retrievingPandoraTracks">
+    <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="vm.retrievingPandoraTracks">
       Retrieve Data
       <div class="preloader" ng-show="vm.retrievingPandoraTracks"></div>
     </button>

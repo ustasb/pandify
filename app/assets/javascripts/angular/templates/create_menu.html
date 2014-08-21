@@ -1,12 +1,11 @@
 <div id="create-menu">
   <p class="error" ng-hide="vm.hasFilteredTracks">
-    You don't have any filtered tracks to export.
-    Select some in the
+    You don't have any filtered tracks to export. Select some in the
     <a href="#/customize" class="error underline">customize</a>
     menu.
   </p>
 
-  <div class="options">
+  <div class="export-options">
     <div class="disabled-cover" ng-hide="vm.hasFilteredTracks"></div>
 
     <p>Finally, export your playlist into Spotify. You have two options:</p>
@@ -27,7 +26,7 @@
     </ol>
 
     <div class="well well-sm">
-      <button id="copy" class="btn btn-primary" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
+      <button class="btn btn-primary copy" zero-clipboard data-clipboard-target="spotify-tracks">Copy to clipboard</button>
       <ul id="spotify-tracks" class="list-unstyled">
         <li ng-repeat="track in vm.filteredTracks">{{track.uri}} </li>
       </ul>

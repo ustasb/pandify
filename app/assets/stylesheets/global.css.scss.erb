@@ -1,9 +1,73 @@
-body {
+#pandify {
+  position: relative;
   background-color: $background-color;
+  font-family: 'Noto Sans', sans-serif;
+  color: $text-color;
+
+  input, .selectize-input {
+    font-family: 'Noto Sans', sans-serif;
+    color: $text-color;
+  }
 }
 
 a {
-  cursor: pointer;
+  color: $text-color;
+}
+
+#master-container {
+  min-width: $min-container-width;
+}
+
+#credit {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+
+  a, span {
+    color: $unemphasized-color;
+    font-size: 0.8em;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+#logo-header {
+  padding: 20px 0;
+
+  .logo {
+    float: right;
+    margin-right: -230px;
+  }
+}
+
+#main-content {
+  position: relative;
+  padding: 10px 0 0 30px;
+  min-height: 120px;
+  // So that the section:before gradient sits where the border-left would be.
+  border-left: 1px solid transparent;
+}
+
+.nav-menu {
+  padding: 10px 30px 0 0;
+
+  .nav-list {
+    float: right;
+  }
+
+  .nav-list-item {
+    padding-bottom: 15px;
+
+    span {
+      color: $unemphasized-color;
+    }
+  }
+
+  .active-menu-item {
+    color: $spotify-green;
+  }
 }
 
 a:hover {
@@ -11,46 +75,8 @@ a:hover {
   text-decoration: none;
 }
 
-body, div, span, a, input {
-  font-family: 'Noto Sans', sans-serif;
-  color: $text-color;
-}
-
 .underline, .underline:hover {
   text-decoration: underline;
-}
-
-header {
-  padding: 20px 0;
-
-  img {
-    display: block;
-    float: right;
-    margin-right: -230px;
-  }
-}
-
-nav, section {
-  padding: 10px 0px;
-}
-
-nav {
-  ul {
-    float: right;
-    margin: 0 $side-padding 0 0;
-  }
-
-  li {
-    padding-bottom: 15px;
-
-    span {
-      color: $divider-color;
-    }
-  }
-
-  .active {
-    color: $spotify-green;
-  }
 }
 
 .spotify {
@@ -62,46 +88,48 @@ nav {
 }
 
 .error {
-  color: $error-red;
+  color: $error;
 }
 
-.container {
-  min-width: $min-container-width;
+.btn-primary {
+  background-color: $pandora-blue;
+  color: $background-color;
+  border: none;
 }
 
-form .btn {
+.btn-primary:hover {
+  background-color: $spotify-green;
+}
+
+.btn-preloader {
   position: relative;
 
   .preloader {
     position: absolute;
     top: -1px;
     right: -45px;
+    width: 32px;
+    height: 32px;
     background-image: url(<%= asset_path('preloader_blue.gif') %>);
     background-repeat: no-repeat;
     background-position: left top;
-    width: 32px;
-    height: 32px;
   }
-}
 
-.info {
-  display: inline-block;
-  margin-left: 10px;
-  color: $spotify-green;
-}
-
-.pandify section {
-  border-left: 1px solid transparent; // So that the section:before gradient sits where the border-left would be.
-  min-height: 120px
+  .preloader-status {
+    position: absolute;
+    top: 6px;
+    right: -125px;
+    color: $spotify-green;
+  }
 }
 
 .vertical-divider {
   position: absolute;
-  top: 0%;
-  bottom: 0%;
+  top: 0;
+  bottom: 0;
   left: -1px;
   width: 1px;
-  background-color: $divider-color;
+  background-color: $unemphasized-color;
 
   .top, .bottom {
     position: absolute;
@@ -125,51 +153,14 @@ form .btn {
   }
 }
 
-.pandify section > .angular-view {
-  margin-left: $side-padding;
-}
+form {
+  margin-top: 15px;
 
-.pandify button {
-  background-color: $pandora-blue;
-  color: $background-color;
-  border: none;
-}
-
-.pandify button:hover {
-  background-color: $spotify-green;
-}
-
-.pandify {
-  input[type=text], input[type=email], select, #configure-menu .selectize-control {
+  .short-width {
     width: 350px;
-  }
-
-  ::-webkit-input-placeholder { color: $placeholder-color; } // WebKit browsers
-  :-moz-placeholder { color: $placeholder-color; opacity:  1; } // Mozilla Firefox 4 to 18
-  ::-moz-placeholder { color: $placeholder-color; opacity:  1; } // Mozilla Firefox 19+
-  :-ms-input-placeholder { color: $placeholder-color; } // Internet Explorer 10+
-
-  form {
-    margin-top: 15px;
   }
 
   .form-group, button {
     margin-left: 20px;
-  }
-}
-
-#credit {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: $divider-color;
-  font-size: 0.8em;
-
-  a {
-    color: $divider-color;
-  }
-
-  a:hover {
-    text-decoration: underline;
   }
 }

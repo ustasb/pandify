@@ -1,4 +1,4 @@
-<form role="form" novalidate ng-hide="loggedIn" ng-submit="openLoginWindow()">
+<form role="form" name="spotifyLoginForm" novalidate ng-hide="loggedIn" ng-submit="openLoginWindow()">
   <button type="submit" class="btn btn-primary">Log in with Spotify</button>
 </form>
 
@@ -6,14 +6,14 @@
   <p>Name for your new private playlist:</p>
 
   <div class="form-group">
-    <input type="text" class="form-control" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName" ng-disabled="exporting">
+    <input type="text" class="form-control short-width" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName" ng-disabled="exporting">
   </div>
   <div class="form-group error" ng-show="submitted && createPlaylistForm.playlistName.$error.required">Required</div>
 
-  <button type="submit" class="btn btn-primary" ng-click="submitted=true" ng-disabled="exporting">
+  <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="exporting">
     Create Playlist
     <div class="preloader" ng-show="exporting"></div>
+    <div class="preloader-status" ng-show="exportFinished">Playlist Created!</div>
   </button>
-  <div class="info" ng-show="exportFinished">Playlist Created!</div>
 </form>
 
