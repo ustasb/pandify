@@ -110,7 +110,7 @@ a:hover {
     right: -45px;
     width: 32px;
     height: 32px;
-    background-image: url(<%= asset_path('preloader_blue.gif') %>);
+    background-image: url(<%= asset_path('preloader_blue_32x32.gif') %>);
     background-repeat: no-repeat;
     background-position: left top;
   }
@@ -121,6 +121,14 @@ a:hover {
     right: -125px;
     color: $spotify-green;
   }
+}
+
+.btn-sm .preloader {
+  top: 1px;
+  right: -35px;
+  width: 26px;
+  height: 26px;
+  background-image: url(<%= asset_path('preloader_blue_26x26.gif') %>);
 }
 
 .vertical-divider {

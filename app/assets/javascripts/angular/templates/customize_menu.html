@@ -25,16 +25,18 @@
   </form>
 
   <div>
-    <p>
+    <p class="spotify-match-stats">
       <span class="spotify">{{ vm.spotifyTrackMatches.length }}</span>
       Spotify matches made out of
       <span class="pandora">{{ vm.pandoraTracksCount }}</span>
       Pandora tracks
-      –
-      <span ng-show="vm.doneMatching">done</span>
+      <span ng-show="vm.doneMatching">– done</span>
       <span ng-hide="vm.doneMatching">
-        <a class="underline" ng-show="vm.matchingPaused" ng-click="vm.resumeMatching()">resume</a>
-        <a class="underline" ng-hide="vm.matchingPaused" ng-click="vm.pauseMatching()">pause</a>
+        <button class="btn btn-primary btn-sm" ng-show="vm.matchingPaused" ng-click="vm.resumeMatching()">Resume</button>
+        <button class="btn btn-primary btn-sm btn-preloader" ng-hide="vm.matchingPaused" ng-click="vm.pauseMatching()">
+          Pause
+          <div class="preloader"></div>
+        </button>
       </span>
     </p>
     <p playlist-stats tracks="vm.filteredTracks"></p>
