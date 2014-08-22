@@ -24,8 +24,12 @@
     }
   }
 
-  .spotify-match-stats .btn {
-    margin-left: 5px;
+  .spotify-match-stats {
+    padding-top: 2px; // To line-up the Pause/Resume button with the Export button.
+
+    .btn {
+      margin-left: 5px;
+    }
   }
 
   table {
