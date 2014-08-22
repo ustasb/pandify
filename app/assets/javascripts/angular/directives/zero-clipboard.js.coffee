@@ -24,6 +24,10 @@ ZeroClipboardLink = ($scope, element, attrs) ->
 
   client.on 'ready', -> client.on 'aftercopy', onAfterCopy
 
+  # For some reason, ZeroClipboard is not the best at removing this class when
+  # the mouse is moving quickly...
+  element.mouseleave -> element.removeClass('zeroclipboard-is-hover')
+
 zeroClipboard = ->
   restrict: 'A'
   replace: true

@@ -5,7 +5,7 @@ trackUriWell = ($window, $timeout) ->
   scope: false
   link: ($scope, element, attrs) ->
     w = $($window)
-    marginBottom = 40
+    marginBottom = 60
 
     onResize = ->
       offsetTop = element.offset().top
