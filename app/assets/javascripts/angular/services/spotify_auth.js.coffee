@@ -20,7 +20,7 @@ popUpWindow = (url, w, h) ->
     "scrollbars=no, resizable=no, copyhistory=no," +
     "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
-window.pandifyApp.factory 'spotifyAuth', ['Session', (session) ->
+SpotifyAuth = (Session) ->
   MAX_URIS_TO_UPLOAD = 100 # Spotify only allows 100 to be uploaded at once.
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'
@@ -31,14 +31,14 @@ window.pandifyApp.factory 'spotifyAuth', ['Session', (session) ->
 
     setAccessToken: (token, expiresInSecs) ->
       expiresInMS = expiresInSecs * 1000
-      session.put('accessToken', token)
-      session.put('accessTokenExpires', (new Date()).getTime() + expiresInMS)
+      Session.put('accessToken', token)
+      Session.put('accessTokenExpires', (new Date()).getTime() + expiresInMS)
 
     getAccessToken: ->
-      token = session.get('accessToken')
+      token = Session.get('accessToken')
 
       if token
-        expireTime = session.get('accessTokenExpires')
+        expireTime = Session.get('accessTokenExpires')
         time = (new Date()).getTime()
 
         return token if expireTime > time
@@ -46,7 +46,7 @@ window.pandifyApp.factory 'spotifyAuth', ['Session', (session) ->
       null
 
     getTimeUntilExpire: ->
-      expireTime = session.get('accessTokenExpires')
+      expireTime = Session.get('accessTokenExpires')
       time = (new Date()).getTime()
       expireTime - time
 
@@ -92,4 +92,6 @@ window.pandifyApp.factory 'spotifyAuth', ['Session', (session) ->
 
       spotifyApi.addTracksToPlaylist(userID, playlistID, uploadURIS)
       .then(addTracks, addTracksError)
-]
+
+SpotifyAuth.$inject = ['Session']
+angular.module('pandify').factory('SpotifyAuth', SpotifyAuth)

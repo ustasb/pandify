@@ -1,4 +1,4 @@
-window.pandifyApp.value 'iso_3166-1_alpha-2_codes',
+angular.module('pandify').value 'iso_3166-1_alpha-2_codes',
   [
     {
       name: "Afghanistan"

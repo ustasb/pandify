@@ -1,6 +1,4 @@
-window.pandifyApp = angular.module('pandify', ['ngRoute', 'templates', 'LocalStorageModule'])
-
-window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
+Config = ($routeProvider, localStorageServiceProvider) ->
   $routeProvider
     .when '/configure',
       templateUrl: 'angular/templates/configure_menu.html'
@@ -16,20 +14,19 @@ window.pandifyApp.config ['$routeProvider', ($routeProvider) ->
       controllerAs: 'vm'
     .otherwise
       redirectTo: '/configure'
-]
 
-window.pandifyApp.config ['localStorageServiceProvider', (localStorageServiceProvider) ->
   localStorageServiceProvider.setPrefix('pandify')
-]
 
-window.pandifyApp.run [
-  '$window',
-  '$rootScope',
-  ($window, $rootScope) ->
+Run = ($window, $rootScope) ->
+  receiveMessage = (event) ->
+    data = JSON.parse(event.originalEvent.data)
+    $rootScope.$broadcast('spotifyLoggedIn', data)
 
-    receiveMessage = (event) ->
-      data = JSON.parse(event.originalEvent.data)
-      $rootScope.$broadcast('spotifyLoggedIn', data)
+  $($window).on('message', receiveMessage)
 
-    $($window).on('message', receiveMessage)
-]
+Config.$inject = ['$routeProvider', 'localStorageServiceProvider']
+Run.$inject = ['$window', '$rootScope']
+
+angular.module('pandify', ['ngRoute', 'templates', 'LocalStorageModule'])
+  .config(Config)
+  .run(Run)

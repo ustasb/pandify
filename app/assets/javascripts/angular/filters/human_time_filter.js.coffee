@@ -11,4 +11,4 @@ humanTime = ->
     str += "#{hrs} hours and " if hrs > 0
     str += "#{mins} minutes"
 
-window.pandifyApp.filter 'humanTime', humanTime
+angular.module('pandify').filter('humanTime', humanTime)
