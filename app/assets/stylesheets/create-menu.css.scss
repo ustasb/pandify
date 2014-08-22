@@ -29,14 +29,19 @@
   }
 
   .well {
-    min-height: 53px;
+    position: relative;
+    min-height: 150px;
   }
 
   #spotify-tracks {
-    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
   }
 
   .zero-clipboard {
-    float: right;
+    position: absolute;
+    right: 29px;
+    top: 10px;
   }
 }

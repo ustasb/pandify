@@ -25,11 +25,6 @@
       <li>Paste the content below into the new playlist window.</li>
     </ol>
 
-    <div class="well well-sm">
-      <button zero-clipboard data-clipboard-target="spotify-tracks"></button>
-      <ul id="spotify-tracks" class="list-unstyled">
-        <li ng-repeat="track in vm.filteredTracks">{{track.uri}} </li>
-      </ul>
-    </div>
+    <div track-uri-well></div>
   </div>
 </div>
