@@ -31,13 +31,7 @@
       <span class="pandora">{{ vm.pandoraTracksCount }}</span>
       Pandora tracks
       <span ng-show="vm.doneMatching">– done</span>
-      <span ng-hide="vm.doneMatching">
-        <button class="btn btn-primary btn-sm" ng-show="vm.matchingPaused" ng-click="vm.resumeMatching()">Resume</button>
-        <button class="btn btn-primary btn-sm btn-preloader" ng-hide="vm.matchingPaused" ng-click="vm.pauseMatching()">
-          Pause
-          <div class="preloader"></div>
-        </button>
-      </span>
+      <span ng-hide="vm.doneMatching" matching-pause-resume-btns></span>
     </p>
     <p playlist-stats tracks="vm.filteredTracks"></p>
   </div>
