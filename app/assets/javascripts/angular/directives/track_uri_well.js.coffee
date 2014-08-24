@@ -1,11 +1,11 @@
 trackUriWell = ($window, $timeout) ->
   restrict: 'A'
   replace: true
-  templateUrl: 'angular/templates/track-uri-well.html'
+  templateUrl: 'angular/templates/track_uri_well.html'
   scope: false
   link: ($scope, element, attrs) ->
     w = $($window)
-    marginBottom = 60
+    marginBottom = 50
 
     onResize = ->
       offsetTop = element.offset().top

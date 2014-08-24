@@ -1,4 +1,4 @@
-Config = ($routeProvider, localStorageServiceProvider) ->
+Config = ($routeProvider) ->
   $routeProvider
     .when '/configure',
       templateUrl: 'angular/templates/configure_menu.html'
@@ -15,18 +15,17 @@ Config = ($routeProvider, localStorageServiceProvider) ->
     .otherwise
       redirectTo: '/configure'
 
-  localStorageServiceProvider.setPrefix('pandify')
-
 Run = ($window, $rootScope) ->
+  # Handles the Spotify login redirect.
   receiveMessage = (event) ->
     data = JSON.parse(event.originalEvent.data)
     $rootScope.$broadcast('spotifyLoggedIn', data)
 
   $($window).on('message', receiveMessage)
 
-Config.$inject = ['$routeProvider', 'localStorageServiceProvider']
+Config.$inject = ['$routeProvider']
 Run.$inject = ['$window', '$rootScope']
 
-angular.module('pandify', ['ngRoute', 'templates', 'LocalStorageModule'])
+angular.module('pandify', ['ngRoute', 'templates'])
   .config(Config)
   .run(Run)

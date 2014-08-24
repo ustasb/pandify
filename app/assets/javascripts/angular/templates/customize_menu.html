@@ -24,17 +24,16 @@
     <button type="submit" class="btn btn-primary">Export Playlist</button>
   </form>
 
-  <div>
-    <p class="spotify-match-stats">
-      <span class="spotify">{{ vm.spotifyTrackMatches.length }}</span>
-      Spotify matches made out of
-      <span class="pandora">{{ vm.pandoraTracksCount }}</span>
-      Pandora tracks
-      <span ng-show="vm.doneMatching">– done</span>
-      <span ng-hide="vm.doneMatching" matching-pause-resume-btns></span>
-    </p>
-    <p playlist-stats tracks="vm.filteredTracks"></p>
-  </div>
+  <p class="spotify-match-stats">
+    <span class="spotify">{{ vm.spotifyTrackMatches.length }}</span>
+    Spotify matches made out of
+    <span class="pandora">{{ vm.pandoraTracksCount }}</span>
+    Pandora tracks
+    <span ng-show="vm.isDoneMatching">– done</span>
+    <span ng-hide="vm.isDoneMatching" track-matching-ctrls></span>
+  </p>
+
+  <p playlist-stats tracks="vm.filteredTracks"></p>
 
   <div track-table tracks="vm.filteredTracks"></div>
 </div>

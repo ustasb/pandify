@@ -1,37 +1,32 @@
-TracksGenreFilter = ($filter, Session) ->
-  filterMethod = Session.get('filterMethod')
-  selectedGenres = Session.get('selectedGenres')
-
-  init: (filter) ->
-    Session.put('filterMethod', filterMethod = filter)
-    Session.put('selectedGenres', selectedGenres = [])
-
-  getSelectedGenres: ->
-    selectedGenres
+TracksGenreFilter = ($filter, StateMachine) ->
+  state = StateMachine.create 'TracksGenreFilter',
+    filterMethod: 'lazyFilter'
+    selectedGenres: []
 
   getFilterMethod: ->
-    filterMethod
+    state.get('filterMethod')
 
-  setFilterMethod: (newFilterMethod) ->
-    Session.put('filterMethod', filterMethod = newFilterMethod)
+  getSelectedGenres: ->
+    state.get('selectedGenres')
 
-  # Returns a boolean indicating success
+  setFilterMethod: (filterMethod) ->
+    state.set('filterMethod', filterMethod)
+
+  # Returns a boolean indicating success.
   addGenre: (genre) ->
-    return false if $.inArray(genre, selectedGenres) isnt -1
-    selectedGenres.push(genre)
-    Session.put('selectedGenres', selectedGenres)
+    return false if $.inArray(genre, state.get('selectedGenres')) isnt -1
+    state.update 'selectedGenres', (v) -> v.push(genre); v
     true
 
-  # Returns a boolean indicating success
+  # Returns a boolean indicating success.
   removeGenre: (genre) ->
-    index = $.inArray(genre, selectedGenres)
+    index = $.inArray(genre, state.get('selectedGenres'))
     return false if index is -1
-    selectedGenres.splice(index, 1)
-    Session.put('selectedGenres', selectedGenres)
+    state.update 'selectedGenres', (v) -> v.splice(index, 1); v
     true
 
   filter: (tracks) ->
-    $filter(filterMethod)(tracks, selectedGenres)
+    $filter(state.get('filterMethod'))(tracks, state.get('selectedGenres'))
 
-TracksGenreFilter.$inject = ['$filter', 'Session']
+TracksGenreFilter.$inject = ['$filter', 'StateMachine']
 angular.module('pandify').factory('TracksGenreFilter', TracksGenreFilter)

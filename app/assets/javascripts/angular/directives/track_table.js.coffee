@@ -13,7 +13,7 @@ TrackTableLink = ($scope, element, attrs) ->
     $(e.currentTarget).removeClass('hovered')
 
 TrackTableCtrl = ($scope) ->
-  $scope.imgScale = 1 / 3
+  $scope.IMG_SCALE = 1 / 3
 
 trackTable = ->
   restrict: 'A'

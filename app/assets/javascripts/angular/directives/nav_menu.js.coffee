@@ -1,4 +1,4 @@
-NavMenuCtrl = ($rootScope, $location, Session, SpotifyTracksMatcher) ->
+NavMenuCtrl = ($rootScope, $location, SpotifyTracksMatcher) ->
   vm = @
 
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
@@ -17,5 +17,5 @@ navMenu = ->
   controller: NavMenuCtrl
   controllerAs: 'vm'
 
-NavMenuCtrl.$inject = ['$rootScope', '$location', 'Session', 'SpotifyTracksMatcher']
+NavMenuCtrl.$inject = ['$rootScope', '$location', 'SpotifyTracksMatcher']
 angular.module('pandify').directive('navMenu', navMenu)

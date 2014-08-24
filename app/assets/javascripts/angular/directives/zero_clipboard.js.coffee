@@ -13,14 +13,14 @@ ZeroClipboardLink = ($scope, element, attrs) ->
   return element.hide() unless hasFlash()
 
   client = new ZeroClipboard(element)
-  messageTime = 2500
+  messageLifetime = 2500
 
   onAfterCopy = ->
     element.addClass('zero-show-message')
     element.blur()
 
     onTimeout = -> element.removeClass('zero-show-message')
-    setTimeout onTimeout, messageTime
+    setTimeout onTimeout, messageLifetime
 
   client.on 'ready', -> client.on 'aftercopy', onAfterCopy
 
@@ -31,7 +31,7 @@ ZeroClipboardLink = ($scope, element, attrs) ->
 zeroClipboard = ->
   restrict: 'A'
   replace: true
-  templateUrl: 'angular/templates/zero-clipboard.html'
+  templateUrl: 'angular/templates/zero_clipboard.html'
   link: ZeroClipboardLink
 
 angular.module('pandify').directive('zeroClipboard', zeroClipboard)

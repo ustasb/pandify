@@ -3,14 +3,14 @@ Audio = ->
     swf_path: '<%= Rails.public_path %>/audio5js.swf'
     throw_errors: true
 
-  cb =
+  callbacks =
     onEnd: ->
     onPlay: ->
 
-  player.on 'pause', -> cb.onEnd()
-  player.on 'ended', -> cb.onEnd()
+  player.on 'pause', -> callbacks.onEnd()
+  player.on 'ended', -> callbacks.onEnd()
   player.on 'canplay', ->
-    cb.onPlay()
+    callbacks.onPlay()
     player.play()
 
   stop = ->
@@ -19,7 +19,7 @@ Audio = ->
   play = (opts) ->
     stop()
     player.load(opts.source)
-    cb.onPlay = -> cb.onEnd = opts.onEnd
+    callbacks.onPlay = -> callbacks.onEnd = opts.onEnd
 
   stop: stop
   play: play

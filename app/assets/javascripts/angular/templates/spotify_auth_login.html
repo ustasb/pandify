@@ -1,19 +1,18 @@
-<form role="form" name="spotifyLoginForm" novalidate ng-hide="loggedIn" ng-submit="openLoginWindow()">
+<form role="form" name="spotifyLoginForm" novalidate ng-hide="isLoggedIn" ng-submit="openLoginWindow()">
   <button type="submit" class="btn btn-primary">Log in with Spotify</button>
 </form>
 
-<form role="form" name="createPlaylistForm" novalidate ng-show="loggedIn" ng-submit="createPlaylistForm.$valid && exportPlaylist()">
+<form role="form" name="createPlaylistForm" novalidate ng-show="isLoggedIn" ng-submit="createPlaylistForm.$valid && exportPlaylist()">
   <p>Name for your new private playlist:</p>
 
   <div class="form-group">
-    <input type="text" class="form-control short-width" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName" ng-disabled="exporting">
+    <input type="text" class="form-control short-width" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName" ng-disabled="isExportingPlaylist">
   </div>
   <div class="form-group error" ng-show="submitted && createPlaylistForm.playlistName.$error.required">Required</div>
 
-  <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="exporting">
+  <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="isExportingPlaylist">
     Create Playlist
-    <div class="preloader" ng-show="exporting"></div>
-    <div class="preloader-status" ng-show="exportFinished">Playlist Created!</div>
+    <div class="preloader" ng-show="isExportingPlaylist"></div>
+    <div class="preloader-status" ng-show="isExportingFinished">Playlist Created!</div>
   </button>
 </form>
-

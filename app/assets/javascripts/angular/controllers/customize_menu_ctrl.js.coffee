@@ -1,4 +1,4 @@
-CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGenreFilter) ->
+CustomizeMenuCtrl = ($scope, $location, SpotifyTracksMatcher, TracksGenreFilter) ->
   vm = @
 
   filterTracks = (filterMethod) ->
@@ -16,17 +16,21 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
       $scope.$digest()
 
   pauseMatching = ->
-    Session.put('matchingPaused', vm.matchingPaused = true)
+    vm.isMatchingPaused = true
     SpotifyTracksMatcher.pauseMatching()
 
   resumeMatching = ->
-    Session.put('matchingPaused', vm.matchingPaused = false)
+    vm.isMatchingPaused = false
     SpotifyTracksMatcher.startMatching()
 
-  SpotifyTracksMatcher.onDoneMatching -> vm.doneMatching = true
+  SpotifyTracksMatcher.onDoneMatching ->
+    vm.isDoneMatching = true
   SpotifyTracksMatcher.onTrackMatch (trackMatch) ->
-    $scope.$broadcast 'trackMatch', trackMatch
+    $scope.$broadcast('trackMatch', trackMatch)
     vm.filterTracks()
+
+  $scope.$on 'addGenre', onAddGenre
+  $scope.$on 'removeGenre', onRemoveGenre
 
   vm.pandoraTracksCount = SpotifyTracksMatcher.getTracksToMatch().length
   vm.spotifyTrackMatches = SpotifyTracksMatcher.getMatches()
@@ -36,22 +40,19 @@ CustomizeMenuCtrl = ($scope, $location, Session, SpotifyTracksMatcher, TracksGen
 
   vm.filterMethod = TracksGenreFilter.getFilterMethod()
   vm.filterTracks = filterTracks
-  vm.filterTracks()
 
-  $scope.$on 'addGenre', onAddGenre
-  $scope.$on 'removeGenre', onRemoveGenre
-
-  vm.matchingPaused = JSON.parse(Session.get('matchingPaused'))
-  vm.doneMatching = SpotifyTracksMatcher.doneMatching()
+  vm.isMatchingPaused = SpotifyTracksMatcher.isMatchingPaused()
+  vm.isDoneMatching = SpotifyTracksMatcher.isDoneMatching()
 
   vm.pauseMatching = pauseMatching
   vm.resumeMatching = resumeMatching
-  # Default to resume for the first time.
-  vm.resumeMatching() if vm.matchingPaused is null
 
   vm.exportPlaylist = -> $location.path('/create')
 
+  vm.filterTracks()
+  SpotifyTracksMatcher.startMatching() unless vm.isMatchingPaused
+
   vm
 
-CustomizeMenuCtrl.$inject = ['$scope', '$location', 'Session', 'SpotifyTracksMatcher', 'TracksGenreFilter']
+CustomizeMenuCtrl.$inject = ['$scope', '$location', 'SpotifyTracksMatcher', 'TracksGenreFilter']
 angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)

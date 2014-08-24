@@ -1,4 +1,4 @@
-# Obtains parameters from the hash of the URL
+# Obtains parameters from the hash of the URL.
 getHashParams = ->
   hashParams = {}
 
@@ -20,78 +20,84 @@ popUpWindow = (url, w, h) ->
     "scrollbars=no, resizable=no, copyhistory=no," +
     "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
-SpotifyAuth = (Session) ->
+SpotifyAuth = (StateMachine) ->
   MAX_URIS_TO_UPLOAD = 100 # Spotify only allows 100 to be uploaded at once.
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'
   REDIRECT_URI = 'http://localhost:3000/spotify_auth_callback.html'
   SCOPES = 'playlist-modify-private playlist-read-private'
 
-  new class SpotifyAuth
+  state = StateMachine.create 'SpotifyAuth',
+    accessToken: null
+    accessTokenExpiresAt: null
 
-    setAccessToken: (token, expiresInSecs) ->
-      expiresInMS = expiresInSecs * 1000
-      Session.put('accessToken', token)
-      Session.put('accessTokenExpires', (new Date()).getTime() + expiresInMS)
+  setAccessToken = (token, expiresInSecs) ->
+    nowInMS = (new Date()).getTime()
+    expiresInMS = expiresInSecs * 1000
+    state.set('accessToken', token)
+    state.set('accessTokenExpiresAt', nowInMS + expiresInMS)
 
-    getAccessToken: ->
-      token = Session.get('accessToken')
+  getAccessToken = ->
+    token = state.get('accessToken')
+    return unless token?
+    expireTime = state.get('accessTokenExpiresAt')
+    now = (new Date()).getTime()
+    return token if expireTime > now
 
-      if token
-        expireTime = Session.get('accessTokenExpires')
-        time = (new Date()).getTime()
+  getTimeUntilExpire = ->
+    expireTime = state.get('accessTokenExpiresAt')
+    now = (new Date()).getTime()
+    expireTime - now
 
-        return token if expireTime > time
+  openLoginWindow = ->
+    url = AUTH_URL
+    url += '?response_type=token'
+    url += '&client_id=' + encodeURIComponent(CLIENT_ID)
+    url += '&scope=' + encodeURIComponent(SCOPES)
+    url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
 
-      null
+    popUpWindow(url, 500, 500)
 
-    getTimeUntilExpire: ->
-      expireTime = Session.get('accessTokenExpires')
-      time = (new Date()).getTime()
-      expireTime - time
+    null # Angular doesn't like a window being returned...
 
-    openLoginWindow: ->
-      url = AUTH_URL
-      url += '?response_type=token'
-      url += '&client_id=' + encodeURIComponent(CLIENT_ID)
-      url += '&scope=' + encodeURIComponent(SCOPES)
-      url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI)
+  uploadTracks = (spotifyApi, playlistName, trackURIs, onDone) ->
+    userID = ''
+    trackURIs = angular.copy(trackURIs) # This array will be manipulated.
 
-      popUpWindow(url, 500, 500)
+    assignUserID = (data) -> userID = data.id
+    assignUserIDError = (err) -> alert('Error retrieving user information!')
 
-      null # Angular doesn't like a window to be returned...
+    createPlaylist = (data) -> spotifyApi.createPlaylist(userID, name: playlistName, public: false)
+    createPlaylistError = (err) -> alert('Error creating playlist!')
 
-    uploadTracks: (spotifyApi, playlistName, trackURIs, onDone) ->
-      userID = ''
+    uploadTracks = (data) ->
+      playlistID = data.id
+      addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
+    uploadTracksError = (err) -> alert('Error uploading tracks!')
 
-      assignUserID = (data) -> userID = data.id
-      assignUserIDError = (err) -> alert('Error retrieving user information!')
+    spotifyApi.getMe()
+    .then(assignUserID, assignUserIDError)
+    .then(createPlaylist, createPlaylistError)
+    .then(uploadTracks, uploadTracksError)
 
-      createPlaylist = (data) -> spotifyApi.createPlaylist(userID, name: playlistName, public: false)
-      createPlaylistError = (err) -> alert('Error creating playlist!')
+  addTracksToPlaylist = (spotifyApi, userID, playlistID, trackURIs, onDone) ->
+    uploadURIS = trackURIs.splice(0, MAX_URIS_TO_UPLOAD)
 
-      uploadTracks = (data) =>
-        playlistID = data.id
-        @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
-      uploadTracksError = (err) -> alert('Error uploading tracks!')
+    addTracks = (data) ->
+      if trackURIs.length is 0
+        onDone()
+      else
+        addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
+    addTracksError = (err) -> onError('Error uploading tracks!')
 
-      spotifyApi.getMe()
-      .then(assignUserID, assignUserIDError)
-      .then(createPlaylist, createPlaylistError)
-      .then(uploadTracks, uploadTracksError)
-
-    _addTracksToPlaylist: (spotifyApi, userID, playlistID, trackURIs, onDone) ->
-      uploadURIS = trackURIs.splice(0, MAX_URIS_TO_UPLOAD)
-
-      addTracks = (data) =>
-        if trackURIs.length is 0
-          onDone()
-        else
-          @_addTracksToPlaylist(spotifyApi, userID, playlistID, trackURIs, onDone)
-      addTracksError = (err) -> onError('Error uploading tracks!')
-
-      spotifyApi.addTracksToPlaylist(userID, playlistID, uploadURIS)
+    spotifyApi.addTracksToPlaylist(userID, playlistID, uploadURIS)
       .then(addTracks, addTracksError)
 
-SpotifyAuth.$inject = ['Session']
+  setAccessToken: setAccessToken
+  getAccessToken: getAccessToken
+  getTimeUntilExpire: getTimeUntilExpire
+  openLoginWindow: openLoginWindow
+  uploadTracks: uploadTracks
+
+SpotifyAuth.$inject = ['StateMachine']
 angular.module('pandify').factory('SpotifyAuth', SpotifyAuth)

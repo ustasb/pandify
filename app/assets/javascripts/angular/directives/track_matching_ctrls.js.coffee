@@ -1,4 +1,4 @@
-MatchingPauseResumeBtnsLink = ($scope, element, attrs) ->
+TrackMatchingCtrlsLink = ($scope, element, attrs) ->
   resume = element.children('.resume')
   pause = element.children('.pause')
 
@@ -16,10 +16,10 @@ MatchingPauseResumeBtnsLink = ($scope, element, attrs) ->
   element.on 'mouseleave', '.btn', (e) ->
     $(e.currentTarget).css('background-color', '')
 
-matchingPauseResumeBtns = ->
+trackMatchingCtrls = ->
   restrict: 'A'
   scope: false
-  templateUrl: 'angular/templates/matching-pause-resume-btns.html'
-  link: MatchingPauseResumeBtnsLink
+  templateUrl: 'angular/templates/track_matching_ctrls.html'
+  link: TrackMatchingCtrlsLink
 
-angular.module('pandify').directive('matchingPauseResumeBtns', matchingPauseResumeBtns)
+angular.module('pandify').directive('trackMatchingCtrls', trackMatchingCtrls)

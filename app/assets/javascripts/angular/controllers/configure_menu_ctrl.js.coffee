@@ -1,29 +1,19 @@
-ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher, TracksGenreFilter) ->
+ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences) ->
   vm = @
 
-  vm.retrievingPandoraTracks = false
-
-  vm.user = {}
-  vm.user.pandoraID = Session.get('user.pandoraID') or ''
-  vm.user.getLikedTracks = JSON.parse(Session.get('user.getLikedTracks')) or true
-  vm.user.getBookmarkedTracks = JSON.parse(Session.get('user.getBookmarkedTracks')) or true
-  vm.user.market = Session.get('user.market') or 'US'
+  vm.isRetrievingPandoraTracks = false
+  vm.user = UserPreferences.getAll()
 
   vm.isFormValid = ->
     vm.configForm.pandoraID.$valid and (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
 
-  vm.storePreferences = ->
-    Session.put('user.pandoraID', vm.user.pandoraID)
-    Session.put('user.getLikedTracks', vm.user.getLikedTracks)
-    Session.put('user.getBookmarkedTracks', vm.user.getBookmarkedTracks)
-    Session.put('user.market', vm.user.market)
-
   vm.retrieveData = ->
-    vm.retrievingPandoraTracks = true
+    vm.isRetrievingPandoraTracks = true
 
     storeData = (tracks) ->
-      SpotifyTracksMatcher.init(tracks, vm.user.market)
-      vm.retrievingPandoraTracks = false
+      SpotifyTracksMatcher.setTracksToMatch(tracks)
+      SpotifyTracksMatcher.setMarketToMatch(vm.user.market)
+      vm.isRetrievingPandoraTracks = false
 
     PandoraData.getTracks(
       likedTracks: vm.user.getLikedTracks
@@ -31,12 +21,11 @@ ConfigureMenuCtrl = ($location, Session, PandoraData, SpotifyTracksMatcher, Trac
     ).then(storeData)
 
   vm.onSubmit = ->
-    Session.init()
-    TracksGenreFilter.init('lazyFilter')
-    vm.storePreferences()
+    StateMachine.destroyAll()
+    UserPreferences.set(vm.user)
     vm.retrieveData().then -> $location.path('/customize')
 
   vm
 
-ConfigureMenuCtrl.$inject = ['$location', 'Session', 'PandoraData', 'SpotifyTracksMatcher', 'TracksGenreFilter']
+ConfigureMenuCtrl.$inject = ['$location', 'StateMachine', 'PandoraData', 'SpotifyTracksMatcher', 'UserPreferences']
 angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)

@@ -46,7 +46,7 @@ a {
 
 #main-content {
   position: relative;
-  padding: 10px 0 0 30px;
+  padding: 10px 0 10px 30px;
   min-height: 120px;
   // So that the section:before gradient sits where the border-left would be.
   border-left: 1px solid transparent;
@@ -143,7 +143,7 @@ a:hover {
   width: 1px;
   background-color: $unemphasized-color;
 
-  .top, .bottom {
+  .top-gradient, .bottom-gradient {
     position: absolute;
     left: 0;
     width: 1px;
@@ -152,13 +152,13 @@ a:hover {
     background-repeat: no-repeat;
   }
 
-  .top {
+  .top-gradient {
     top: 0;
     background-image: url('divider_gradient_top.png');
     background-position: left top;
   }
 
-  .bottom {
+  .bottom-gradient {
     bottom: 0;
     background-image: url('divider_gradient_bottom.png');
     background-position: left bottom;

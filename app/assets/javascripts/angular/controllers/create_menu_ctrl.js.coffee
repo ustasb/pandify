@@ -1,8 +1,9 @@
 CreateMenuCtrl = (SpotifyTracksMatcher, TracksGenreFilter) ->
   vm = @
 
-  vm.filteredTracks = TracksGenreFilter.filter(SpotifyTracksMatcher.getMatches())
-  vm.hasFilteredTracks = vm.filteredTracks.length > 0
+  filteredTracks = TracksGenreFilter.filter(SpotifyTracksMatcher.getMatches())
+  vm.hasFilteredTracks = filteredTracks.length > 0
+  vm.filteredTracksURIs = filteredTracks.map (track) -> track.uri
 
   vm
 

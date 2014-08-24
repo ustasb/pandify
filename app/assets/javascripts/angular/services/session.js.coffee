@@ -1,19 +1,25 @@
-Session = (localStorage) ->
+Session = ->
+  primaryKey = 'Pandify'
   cache = {}
 
-  init = ->
+  kill = ->
     cache = {}
-    localStorage.clearAll()
+    localStorage.clear()
+
+  getKey = (key) ->
+    primaryKey + '.' + key
 
   get = (key) ->
-    cache[key] or cache[key] = localStorage.get(key)
+    key = getKey(key)
+    cache[key] or cache[key] = JSON.parse(localStorage.getItem(key))
 
   put = (key, value) ->
-    localStorage.set(key, cache[key] = value)
+    key = getKey(key)
+    cache[key] = value
+    localStorage.setItem(key, JSON.stringify(value))
 
-  init: init
+  kill: kill
   get: get
   put: put
 
-Session.$inject = ['localStorageService']
 angular.module('pandify').factory('Session', Session)

@@ -9,8 +9,8 @@
   <tr class="track" ng-repeat="track in tracks | orderBy:predicate:reverse track by track.id">
     <td>
       <img class="album-art" ng-src="{{ track.albumArt.url }}"
-        width="{{ track.albumArt.width * imgScale }}"
-        height="{{ track.albumArt.height * imgScale }}">
+        width="{{ track.albumArt.width * IMG_SCALE }}"
+        height="{{ track.albumArt.height * IMG_SCALE }}">
       <div audio source="track.previewURL"></div>
     </td>
     <td>{{ track.track }}</td>

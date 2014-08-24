@@ -1,54 +1,59 @@
 SpotifyAuthLoginLink = ($scope, element, attrs) ->
-  $scope.$watch 'loggedIn', (newVal) ->
-    # Doesn't work if the developer console is open.
-    $(element).find('input[name=playlistName]').focus() if newVal
+  $scope.$watch 'isLoggedIn', (newVal) ->
+    # Note: Doesn't work if the developer console is open.
+    $(element).find('input[name=playlistName]').focus() if newVal?
 
 SpotifyAuthLoginCtrl = ($scope, $timeout, SpotifyAuth) ->
   uploadTracks = (onDone) ->
-    spotifyApi = new SpotifyWebApi()
     spotifyApi.setAccessToken(SpotifyAuth.getAccessToken())
     SpotifyAuth.uploadTracks(
       spotifyApi,
       $scope.playlistName,
-      ($scope.filteredTracks.map (track) -> track.uri),
+      $scope.tracksUris,
       onDone
     )
 
   setLoginTimeout = ->
     $timeout(
-      -> $scope.loggedIn = false,
+      -> $scope.isLoggedIn = false,
       SpotifyAuth.getTimeUntilExpire()
     )
 
-  $scope.loggedIn = !!SpotifyAuth.getAccessToken()
-  $scope.playlistName = ''
-  $scope.exporting = false
-  $scope.exportFinished = false
-
-  setLoginTimeout() if $scope.loggedIn
-  $scope.$on 'spotifyLoggedIn', (event, data) ->
+  onSpotifyLoggedIn = (event, data) ->
     SpotifyAuth.setAccessToken(data.access_token, data.expires_in)
 
-    $scope.$apply -> $scope.loggedIn = true
+    $scope.isLoggedIn = true
+    $scope.$digest()
+
     setLoginTimeout()
 
-  $scope.openLoginWindow = ->
-    SpotifyAuth.openLoginWindow()
-
-  $scope.exportPlaylist = ->
-    $scope.exporting = true
-    $scope.exportFinished = false
+  exportPlaylist = ->
+    $scope.isExportingPlaylist = true
+    $scope.isExportingFinished = false
 
     uploadTracks ->
-      $scope.$apply ->
-        $scope.exporting = false
-        $scope.exportFinished = true
+      $scope.isExportingPlaylist = false
+      $scope.isExportingFinished = true
+      $scope.$digest()
+
+  spotifyApi = new SpotifyWebApi()
+
+  $scope.$on 'spotifyLoggedIn', onSpotifyLoggedIn
+  $scope.openLoginWindow = SpotifyAuth.openLoginWindow
+  $scope.exportPlaylist = exportPlaylist
+
+  $scope.playlistName = ''
+  $scope.isLoggedIn = !!SpotifyAuth.getAccessToken()
+  $scope.isExportingPlaylist = false
+  $scope.isExportingFinished = false
+
+  setLoginTimeout() if $scope.isLoggedIn
 
 spotifyAuthLogin = ->
   restrict: 'A'
   templateUrl: 'angular/templates/spotify_auth_login.html'
   scope:
-    filteredTracks: '='
+    tracksUris: '='
   link: SpotifyAuthLoginLink
   controller: SpotifyAuthLoginCtrl
 
