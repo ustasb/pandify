@@ -3,7 +3,7 @@ SpotifyAuthLoginLink = ($scope, element, attrs) ->
     # Note: Doesn't work if the developer console is open.
     $(element).find('input[name=playlistName]').focus() if newVal?
 
-SpotifyAuthLoginCtrl = ($scope, $timeout, SpotifyAuth) ->
+SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, SpotifyAuth) ->
   uploadTracks = (onDone) ->
     spotifyApi.setAccessToken(SpotifyAuth.getAccessToken())
     SpotifyAuth.uploadTracks(
@@ -26,6 +26,8 @@ SpotifyAuthLoginCtrl = ($scope, $timeout, SpotifyAuth) ->
     $scope.$digest()
 
     setLoginTimeout()
+
+    $rootScope.$broadcast('spotifyPlaylistFormAdded')
 
   exportPlaylist = ->
     $scope.isExportingPlaylist = true
@@ -57,5 +59,5 @@ spotifyAuthLogin = ->
   link: SpotifyAuthLoginLink
   controller: SpotifyAuthLoginCtrl
 
-SpotifyAuthLoginCtrl.$inject = ['$scope', '$timeout', 'SpotifyAuth']
+SpotifyAuthLoginCtrl.$inject = ['$rootScope', '$scope', '$timeout', 'SpotifyAuth']
 angular.module('pandify').directive('spotifyAuthLogin', spotifyAuthLogin)
