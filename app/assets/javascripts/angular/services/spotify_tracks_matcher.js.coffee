@@ -1,86 +1,128 @@
-SpotifyTracksMatcher = (StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter) ->
+SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter) ->
   state = StateMachine.create 'SpotifyTracksMatcher',
     isMatchingPaused: false
     matches: []
     tracksToMatch: []
     trackToMatchIndex: 0
     marketToMatch: 'US'
+
   matchesGenres = SpotifyTrackPresenter.genres(state.get('matches'))
   matchesIDs = SpotifyTrackPresenter.ids(state.get('matches'))
   onDoneMatching = ->
   onTrackMatch = ->
 
-  getMatches: ->
-    state.get('matches')
+  # Getters
+  getMatches = -> state.get('matches')
+  getTracksToMatch = -> state.get('tracksToMatch')
+  getMatchesGenres = -> matchesGenres
 
-  getTracksToMatch: ->
-    state.get('tracksToMatch')
-
-  getMatchesGenres: ->
-    matchesGenres
-
-  onDoneMatching: (onDoneMatchingCB) ->
-    onDoneMatching = onDoneMatchingCB
-
-  onTrackMatch: (onTrackMatchCB) ->
-    onTrackMatch = onTrackMatchCB
-
-  setTracksToMatch: (tracks) ->
+  # Setters
+  setTracksToMatch = (tracks) ->
     state.set('tracksToMatch', tracks)
     state.set('trackToMatchIndex', 0)
+    matchesGenres = {}
+    matchesIDs = {}
 
-  setMarketToMatch: (market) ->
-    state.set('marketToMatch', market)
+  setMarketToMatch = (market) -> state.set('marketToMatch', market)
 
-  isDoneMatching: ->
+  onDoneMatching = (onDone) -> onDoneMatching = onDone
+  onTrackMatch = (onMatch) -> onTrackMatch = onMatch
+
+  isDoneMatching = ->
     state.get('trackToMatchIndex') >= state.get('tracksToMatch').length
 
-  isMatchingPaused: ->
+  isMatchingPaused = ->
     state.get('isMatchingPaused')
 
-  startMatching: ->
+  startMatching = ->
     state.set('isMatchingPaused', false)
-    @match()
+    match()
 
-  pauseMatching: ->
+  pauseMatching = ->
     state.set('isMatchingPaused', true)
 
-  isTrackValid: (trackMatch) ->
-    isUnique = matchesIDs[trackMatch.id] is undefined
-    hasMarket = $.inArray(state.get('marketToMatch'), trackMatch.markets) isnt -1
-    isUnique and hasMarket
+  saveMatch = (rawTrackMatch) ->
+    trackMatch = SpotifyTrackPresenter.present(rawTrackMatch)
 
-  saveMatch: (trackMatch) ->
     delete trackMatch.markets # Unnecessary to store this.
 
     state.update 'matches', (v) -> v.unshift(trackMatch); v
 
     matchesIDs[trackMatch.id] = trackMatch
 
+    if trackMatch.genres.length is 0
+      trackMatch.genres.push('Tracks Without Found Genres')
+
     for genre in trackMatch.genres by 1
       matchesGenres[genre] ?= 0
       ++matchesGenres[genre]
 
-  match: ->
-    return if @isMatchingPaused() or @isDoneMatching()
+    onTrackMatch(trackMatch)
 
-    track = state.get('tracksToMatch')[state.get('trackToMatchIndex')]
+  findTrackMatch = (rawTrackMatches) ->
+    deferred = $q.defer()
+    market = state.get('marketToMatch')
 
-    onSuccess = (trackMatch) =>
+    for track in rawTrackMatches by 1
+      # Is the track unique?
+      continue if matchesIDs[track.id]?
+      # Is the track available in the desired market?
+      continue if $.inArray(market, track.available_markets) is -1
+      match = track
+      break
+
+    if match?
+      deferred.resolve(match)
+    else
+      deferred.reject('No track match found.')
+
+    deferred.promise
+
+  findTrackGenres = (rawTrackMatch) ->
+    deferred = $q.defer()
+    artistIDs = rawTrackMatch.artists.map (artist) -> artist.id
+
+    assignGenres = (genres) ->
+      rawTrackMatch.track_genres = genres
+      deferred.resolve(rawTrackMatch)
+    assignGenresError = -> deferred.reject('Could not retrieve genres.')
+
+    SpotifyTrackDownloader.genresFor(artistIDs)
+      .then(assignGenres, assignGenresError)
+
+    deferred.promise
+
+  match = ->
+    return if isMatchingPaused()
+    return onDoneMatching() if isDoneMatching()
+
+    trackToMatch = state.get('tracksToMatch')[state.get('trackToMatchIndex')]
+
+    onError = (err) ->
+      console.log("An error occured for #{trackToMatch.track}, #{trackToMatch.artist}: #{err}")
+
+    onFinally = ->
       state.update 'trackToMatchIndex', (v) -> ++v
+      match()
 
-      if trackMatch?
-        trackMatch = SpotifyTrackPresenter.present(trackMatch)
-        if @isTrackValid(trackMatch)
-          @saveMatch(trackMatch)
-          onTrackMatch(trackMatch)
+    SpotifyTrackDownloader.downloadTrackMatches(trackToMatch.track, trackToMatch.artist)
+      .then(findTrackMatch)
+      .then(findTrackGenres)
+      .then(saveMatch)
+      .catch(onError)
+      .finally(onFinally)
 
-      if @isDoneMatching()
-        onDoneMatching()
-      else
-        @match()
+  getMatches: getMatches
+  getTracksToMatch: getTracksToMatch
+  getMatchesGenres: getMatchesGenres
+  onDoneMatching: onDoneMatching
+  onTrackMatch: onTrackMatch
+  setTracksToMatch: setTracksToMatch
+  setMarketToMatch: setMarketToMatch
+  isDoneMatching: isDoneMatching
+  isMatchingPaused: isMatchingPaused
+  startMatching: startMatching
+  pauseMatching: pauseMatching
 
-    SpotifyTrackDownloader.downloadTrackData(track.track, track.artist).then(onSuccess)
-
-SpotifyTracksMatcher.$inject = ['StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter']
+SpotifyTracksMatcher.$inject = ['$q', 'StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter']
 angular.module('pandify').factory('SpotifyTracksMatcher', SpotifyTracksMatcher)

@@ -2,26 +2,28 @@ SpotifyTrackDownloader = ($q) ->
   spotifyApi = new SpotifyWebApi()
   artistGenreCache = {}
 
-  downloadTrackData = (track, artist) ->
-    onTrackDownload = (trackMatch) -> downloadGenres(trackMatch) if trackMatch?
-    downloadTrack(track, artist).then(onTrackDownload)
+  # Helps to improve the search matches.
+  sanitizeTrackName = (track) ->
+    # Remove any parenthesis
+    track = track.replace(/(\(|\[|\{)(.+)(\)|\]|\})/, '$2')
+
+    # Remove references to a remix
+    track = track.replace(/\s?(remix|mix|rmx)/i, '')
+
+    track
 
   # Exact query for track/ artist combination.
   # https://support.spotify.com/us/learn-more/faq/#!/article/Advanced-search1
   trackQuery = (track, artist) ->
+    track = sanitizeTrackName(track)
     "track:#{track} artist:#{artist}"
 
-  downloadTrack = (track, artist) ->
+  # Downloads the Spotify track matches for a given track and artist.
+  downloadTrackMatches = (track, artist) ->
     deferred = $q.defer()
 
-    onSuccess = (response) ->
-      if response['tracks']['total'] is 0
-        deferred.resolve()
-      else
-        # The first track is the best match.
-        deferred.resolve(response['tracks']['items'][0])
-
-    onFailure = -> alert('Failed to download track: ' + track)
+    onSuccess = (response) -> deferred.resolve(response['tracks']['items'])
+    onFailure = -> deferred.reject('Failed to download track matches for: ' + track)
 
     spotifyApi.searchTracks(
       trackQuery(track, artist)
@@ -29,10 +31,9 @@ SpotifyTrackDownloader = ($q) ->
 
     deferred.promise
 
-  # Adds the track's artists' genres to the trackMatch object via spotify_artists_genres.
-  downloadGenres = (trackMatch) ->
+  # Retrieves the artists' genres.
+  genresFor = (artistIDs) ->
     deferred = $q.defer()
-    artistIDs = trackMatch.artists.map (artist) -> artist.id
     allGenres = []
     idsToQuery = []
 
@@ -43,24 +44,23 @@ SpotifyTrackDownloader = ($q) ->
         idsToQuery.push(id)
 
     if idsToQuery.length is 0
-      trackMatch.spotify_artists_genres = allGenres
-      deferred.resolve(trackMatch)
+      deferred.resolve(allGenres)
     else
       onSuccess = (response) ->
         for artist in response.artists by 1
           artistGenreCache[artist.id] = artist.genres
           $.merge(allGenres, artist.genres)
+        deferred.resolve(allGenres)
 
-        trackMatch.spotify_artists_genres = allGenres
-        deferred.resolve(trackMatch)
-
-      onFailure = -> alert('Failed to download genres for: ' + trackMatch.name)
+      onFailure = ->
+        deferred.reject('Failed to download genres for: ' + angular.toJson(idsToQuery))
 
       spotifyApi.getArtists(idsToQuery).then(onSuccess, onFailure)
 
     deferred.promise
 
-  downloadTrackData: downloadTrackData
+  downloadTrackMatches: downloadTrackMatches
+  genresFor: genresFor
 
 SpotifyTrackDownloader.$inject = ['$q']
 angular.module('pandify').factory('SpotifyTrackDownloader', SpotifyTrackDownloader)
