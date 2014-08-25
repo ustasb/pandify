@@ -14,10 +14,13 @@ SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, SpotifyAuth) ->
     )
 
   setLoginTimeout = ->
-    $timeout(
-      -> $scope.isLoggedIn = false,
-      SpotifyAuth.getTimeUntilExpire()
-    )
+    broadcast = -> $rootScope.$broadcast('spotifyPlaylistFormToggle')
+
+    onTimeout = ->
+      $scope.isLoggedIn = false
+      $timeout(broadcast, 0) # Triggers after the page has been manipulated.
+
+    $timeout(onTimeout, SpotifyAuth.getTimeUntilExpire())
 
   onSpotifyLoggedIn = (event, data) ->
     SpotifyAuth.setAccessToken(data.access_token, data.expires_in)
@@ -27,7 +30,7 @@ SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, SpotifyAuth) ->
 
     setLoginTimeout()
 
-    $rootScope.$broadcast('spotifyPlaylistFormAdded')
+    $rootScope.$broadcast('spotifyPlaylistFormToggle')
 
   exportPlaylist = ->
     $scope.isExportingPlaylist = true

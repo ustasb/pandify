@@ -13,7 +13,7 @@ trackUriWell = ($window, $timeout) ->
       element.height(height)
 
     # The added form resizes the page thus requiring a resize to fit the window.
-    $scope.$on('spotifyPlaylistFormAdded', onResize)
+    $scope.$on('spotifyPlaylistFormToggle', onResize)
     w.resize(onResize)
 
     $timeout(onResize, 0) # Execute when loaded into the DOM.
