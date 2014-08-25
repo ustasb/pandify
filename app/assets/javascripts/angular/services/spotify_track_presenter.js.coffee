@@ -1,12 +1,7 @@
 SpotifyTrackPresenter = ($filter) ->
-  id = 0
-
-  getID = ->
-    # If the page gets refreshed, using Date ensures that unique IDs are generated.
-    (new Date()).getTime() + (id++).toString()
 
   present = (trackMatch) ->
-    id: getID() # URI won't suffice as duplicate track matches are possible.
+    id: trackMatch.id
     album: trackMatch.album.name
     albumArt: trackMatch.album.images.shift()
     artist: trackMatch.artists[0].name
@@ -27,6 +22,11 @@ SpotifyTrackPresenter = ($filter) ->
 
     genres
 
+  ids = (tracks) ->
+    ids = {}
+    ids[track.id] = track for track in tracks by 1
+    ids
+
   humanTime = (tracks) ->
     sum = 0
     sum += track.durationMS for track in tracks by 1
@@ -34,6 +34,7 @@ SpotifyTrackPresenter = ($filter) ->
 
   present: present
   genres: genres
+  ids: ids
   humanTime: humanTime
 
 SpotifyTrackPresenter.$inject = ['$filter']

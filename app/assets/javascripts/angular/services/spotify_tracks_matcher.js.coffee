@@ -6,6 +6,7 @@ SpotifyTracksMatcher = (StateMachine, SpotifyTrackDownloader, SpotifyTrackPresen
     trackToMatchIndex: 0
     marketToMatch: 'US'
   matchesGenres = SpotifyTrackPresenter.genres(state.get('matches'))
+  matchesIDs = SpotifyTrackPresenter.ids(state.get('matches'))
   onDoneMatching = ->
   onTrackMatch = ->
 
@@ -45,12 +46,16 @@ SpotifyTracksMatcher = (StateMachine, SpotifyTrackDownloader, SpotifyTrackPresen
     state.set('isMatchingPaused', true)
 
   isTrackValid: (trackMatch) ->
-    $.inArray(state.get('marketToMatch'), trackMatch.markets) isnt -1
+    isUnique = matchesIDs[trackMatch.id] is undefined
+    hasMarket = $.inArray(state.get('marketToMatch'), trackMatch.markets) isnt -1
+    isUnique and hasMarket
 
   saveMatch: (trackMatch) ->
     delete trackMatch.markets # Unnecessary to store this.
 
     state.update 'matches', (v) -> v.unshift(trackMatch); v
+
+    matchesIDs[trackMatch.id] = trackMatch
 
     for genre in trackMatch.genres by 1
       matchesGenres[genre] ?= 0
