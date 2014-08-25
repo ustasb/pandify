@@ -18,7 +18,7 @@ Config = ($routeProvider) ->
 Run = ($window, $rootScope) ->
   # Handles the Spotify login redirect.
   receiveMessage = (event) ->
-    data = JSON.parse(event.originalEvent.data)
+    data = angular.fromJson(event.originalEvent.data)
     $rootScope.$broadcast('spotifyLoggedIn', data)
 
   $($window).on('message', receiveMessage)

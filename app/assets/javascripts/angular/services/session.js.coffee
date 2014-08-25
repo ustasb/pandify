@@ -11,12 +11,12 @@ Session = ->
 
   get = (key) ->
     key = getKey(key)
-    cache[key] or cache[key] = JSON.parse(localStorage.getItem(key))
+    cache[key] or cache[key] = angular.fromJson(localStorage.getItem(key))
 
   put = (key, value) ->
     key = getKey(key)
     cache[key] = value
-    localStorage.setItem(key, JSON.stringify(value))
+    localStorage.setItem(key, angular.toJson(value))
 
   kill: kill
   get: get
