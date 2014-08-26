@@ -1,4 +1,4 @@
-SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter) ->
+SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter, GenreUid) ->
   state = StateMachine.create 'SpotifyTracksMatcher',
     isMatchingPaused: false
     matches: []
@@ -44,18 +44,20 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
   saveMatch = (rawTrackMatch) ->
     trackMatch = SpotifyTrackPresenter.present(rawTrackMatch)
 
-    delete trackMatch.markets # Unnecessary to store this.
-
-    state.update 'matches', (v) -> v.unshift(trackMatch); v
-
     matchesIDs[trackMatch.id] = trackMatch
 
     if trackMatch.genres.length is 0
       trackMatch.genres.push('Tracks Without Found Genres')
 
+    trackMatch.genres = trackMatch.genres.map (genre) -> GenreUid.getUid(genre)
+
     for genre in trackMatch.genres by 1
       matchesGenres[genre] ?= 0
       ++matchesGenres[genre]
+
+    delete trackMatch.markets # Unnecessary to store this.
+
+    state.update 'matches', (v) -> v.unshift(trackMatch); v
 
     onTrackMatch(trackMatch)
 
@@ -124,5 +126,5 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
   startMatching: startMatching
   pauseMatching: pauseMatching
 
-SpotifyTracksMatcher.$inject = ['$q', 'StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter']
+SpotifyTracksMatcher.$inject = ['$q', 'StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter', 'GenreUid']
 angular.module('pandify').factory('SpotifyTracksMatcher', SpotifyTracksMatcher)
