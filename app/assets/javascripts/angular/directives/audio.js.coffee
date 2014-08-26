@@ -5,12 +5,11 @@ AudioCtrl = ($scope, Audio) ->
     if $scope.isPlaying
       Audio.stop()
     else
-      Audio.play(
+      Audio.play
         source: $scope.source
         onEnd: ->
           $scope.isPlaying = false
           $scope.$digest()
-      )
     $scope.isPlaying = !$scope.isPlaying
 
 audio = ->
