@@ -7,21 +7,26 @@
     line-height: 30px;
     margin: 0;
     padding-right: 5px;
+
+    .item {
+      background-color: $spotify-green;
+      padding-left: 7px;
+      padding-right: 20px !important;
+      margin-right: 5px;
+
+      .remove {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .genre-highlight, .selectize-input .genre-highlight {
+    background-color: $pandora-blue;
+    color: $background-color;
   }
 
   .selectize-dropdown .active {
     background-color: $spotify-green;
-  }
-
-  .selectize-input .item {
-    background-color: $spotify-green;
-    padding-left: 7px;
-    padding-right: 20px !important;
-    margin-right: 5px;
-
-    .remove {
-      font-size: 15px;
-    }
   }
 
   .spotify-match-stats {

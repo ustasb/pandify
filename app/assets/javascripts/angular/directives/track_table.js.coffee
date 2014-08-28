@@ -12,6 +12,9 @@ TrackTableLink = ($scope, element, attrs) ->
   element.on 'mouseleave', '.track', (e) ->
     $(e.currentTarget).removeClass('hovered')
 
+  $scope.getGenreClasses = (track) ->
+    track.genres.join(' ')
+
 TrackTableCtrl = ($scope) ->
   $scope.IMG_SCALE = 1 / 3
 
