@@ -1,5 +1,7 @@
 <div id="customize-menu">
-  <p>Next, filter your Pandora data by genre. Select a filter method:</p>
+  <p>Next, Pandify will match your Pandora tracks on Spotify.</p>
+
+  <p>You can filter your matched tracks by genre. Select a filter method:</p>
 
   <form role="form" name="vm.filterForm" novalidate ng-submit="vm.exportPlaylist()">
     <div class="form-group radio">
@@ -26,7 +28,7 @@
 
   <p class="spotify-match-stats">
     <span class="spotify">{{ vm.spotifyTrackMatches.length }}</span>
-    Spotify matches made out of
+    Spotify matches out of
     <span class="pandora">{{ vm.pandoraTracksCount }}</span>
     Pandora tracks
     <span ng-show="vm.isDoneMatching">– done</span>
