@@ -31,6 +31,7 @@ CustomizeMenuCtrl = ($scope, $location, SpotifyTracksMatcher, TracksGenreFilter)
 
   $scope.$on 'addGenre', onAddGenre
   $scope.$on 'removeGenre', onRemoveGenre
+  $scope.$on '$destroy', pauseMatching
 
   vm.pandoraTracksCount = SpotifyTracksMatcher.getTracksToMatch().length
   vm.spotifyTrackMatches = SpotifyTracksMatcher.getMatches()
