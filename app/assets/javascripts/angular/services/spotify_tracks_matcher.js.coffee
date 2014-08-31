@@ -47,9 +47,13 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
     matchesIDs[trackMatch.id] = trackMatch
 
     if trackMatch.genres.length is 0
-      trackMatch.genres.push('Tracks Without Found Genres')
+      trackMatch.genres.push('tracks without found genres')
 
-    trackMatch.genres = trackMatch.genres.map (genre) -> GenreUid.getUid(genre)
+    trackMatch.genres = trackMatch.genres.map (genre) ->
+      genre = genre.toLowerCase()
+      GenreUid.getUid(genre)
+
+    $.unique(trackMatch.genres)
 
     for genre in trackMatch.genres by 1
       matchesGenres[genre] ?= 0
