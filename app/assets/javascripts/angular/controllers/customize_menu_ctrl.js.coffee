@@ -25,6 +25,7 @@ CustomizeMenuCtrl = ($scope, $location, SpotifyTracksMatcher, TracksGenreFilter)
 
   SpotifyTracksMatcher.onDoneMatching ->
     vm.isDoneMatching = true
+    vm.hasNoMatches = vm.spotifyTrackMatches.length is 0
   SpotifyTracksMatcher.onTrackMatch (trackMatch) ->
     $scope.$broadcast('trackMatch', trackMatch)
     vm.filterTracks()

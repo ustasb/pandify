@@ -43,6 +43,7 @@
     <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="vm.isRetrievingPandoraTracks">
       Retrieve Data
       <div class="preloader" ng-show="vm.isRetrievingPandoraTracks"></div>
+      <div class="preloader-status error" ng-show="vm.noTracksToMatch">No Pandora data found!</div>
     </button>
   </form>
 </div>

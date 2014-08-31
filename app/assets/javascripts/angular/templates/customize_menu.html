@@ -35,7 +35,8 @@
     <span ng-hide="vm.isDoneMatching" track-matching-ctrls></span>
   </p>
 
-  <p playlist-stats tracks="vm.filteredTracks"></p>
+  <p playlist-stats ng-hide="vm.isDoneMatching && vm.hasNoMatches" tracks="vm.filteredTracks"></p>
+  <p class="error" ng-show="vm.isDoneMatching && vm.hasNoMatches">No tracks could be matched on Spotify!</p>
 
   <div track-table tracks="vm.filteredTracks"></div>
 </div>

@@ -9,6 +9,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
 
   vm.retrieveData = ->
     vm.isRetrievingPandoraTracks = true
+    vm.noTracksToMatch = false
 
     storeData = (tracks) ->
       SpotifyTracksMatcher.setTracksToMatch(tracks)
@@ -23,7 +24,9 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
   vm.onSubmit = ->
     StateMachine.destroyAll()
     UserPreferences.set(vm.user)
-    vm.retrieveData().then -> $location.path('/customize')
+    vm.retrieveData().then ->
+      vm.noTracksToMatch = SpotifyTracksMatcher.getTracksToMatch().length is 0
+      $location.path('/customize') unless vm.noTracksToMatch
 
   vm
 
