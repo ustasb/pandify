@@ -5,10 +5,12 @@
 <form role="form" name="createPlaylistForm" novalidate ng-show="isLoggedIn" ng-submit="createPlaylistForm.$valid && exportPlaylist()">
   <p>Name for your new private playlist:</p>
 
-  <div class="form-group">
-    <input type="text" class="form-control short-width" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName" ng-disabled="isExportingPlaylist">
-  </div>
-  <div class="form-group error" ng-show="submitted && createPlaylistForm.playlistName.$error.required">Required</div>
+  <fieldset ng-disabled="isExportingPlaylist">
+    <div class="form-group">
+      <input type="text" class="form-control short-width" name="playlistName" placeholder="e.g. Pandora Likes - Rock" required ng-model="playlistName">
+    </div>
+    <div class="form-group error" ng-show="submitted && createPlaylistForm.playlistName.$error.required">Required</div>
+  </fieldset>
 
   <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="isExportingPlaylist">
     Create Playlist

@@ -1,4 +1,12 @@
 #configure-menu {
+  input[name="pandoraID"] {
+    float: left;
+  }
+
+  #random-email {
+    margin-left: 20px;
+  }
+
   .selectize-control {
     margin-top: 15px;
   }

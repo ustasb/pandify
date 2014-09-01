@@ -1,11 +1,20 @@
-ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences) ->
+ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences, RandomPandoraID) ->
   vm = @
 
   vm.isRetrievingPandoraTracks = false
   vm.user = UserPreferences.getAll()
 
   vm.isFormValid = ->
-    vm.configForm.pandoraID.$valid and (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
+    (vm.user.randomID or vm.configForm.pandoraID.$valid) and
+    (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
+
+  vm.toggleRandomID = ->
+    vm.user.randomID = !vm.user.randomID
+
+    if vm.user.randomID
+      vm.user.pandoraID = RandomPandoraID.get()
+    else
+      vm.user.pandoraID = ''
 
   vm.retrieveData = ->
     vm.isRetrievingPandoraTracks = true
@@ -30,5 +39,5 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
 
   vm
 
-ConfigureMenuCtrl.$inject = ['$location', 'StateMachine', 'PandoraData', 'SpotifyTracksMatcher', 'UserPreferences']
+ConfigureMenuCtrl.$inject = ['$location', 'StateMachine', 'PandoraData', 'SpotifyTracksMatcher', 'UserPreferences', 'RandomPandoraID']
 angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)

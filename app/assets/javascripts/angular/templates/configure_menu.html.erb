@@ -14,31 +14,38 @@
   </p>
 
   <form role="form" name="vm.configForm" novalidate ng-submit="vm.isFormValid() && vm.onSubmit()">
-    <div class="form-group">
-      <input type="email" name="pandoraID" class="form-control short-width" placeholder="Your Pandora.com email" auto-focus ng-model="vm.user.pandoraID" required>
-    </div>
-    <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.required">Required</div>
-    <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.email">Invalid email</div>
+    <fieldset ng-disabled="vm.isRetrievingPandoraTracks">
+      <div class="form-group row" ng-switch="vm.user.randomID">
+        <input ng-switch-when="true" type="text" name="pandoraID" class="form-control short-width" disabled>
+        <input ng-switch-when="false" type="email" name="pandoraID" class="form-control short-width" placeholder="Your Pandora.com email" auto-focus ng-model="vm.user.pandoraID" required>
 
-    <p>What data would you like to retrieve?</p>
+        <label id="random-email" class="btn btn-default" ng-class="{active: vm.user.randomID}" ng-click="vm.toggleRandomID()">
+          Random
+        </label>
+      </div>
+      <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.required">Required</div>
+      <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.email">Invalid email</div>
 
-    <div class="form-group checkbox">
-      <label>
-        <input type="checkbox" ng-model="vm.user.getLikedTracks"> Liked Tracks
-      </label>
-    </div>
-    <div class="form-group checkbox">
-      <label>
-        <input type="checkbox" ng-model="vm.user.getBookmarkedTracks"> Bookmarked Tracks
-      </label>
-    </div>
-    <div class="form-group error" ng-show="!vm.user.getLikedTracks && !vm.user.getBookmarkedTracks">Select at least one</div>
+      <p>What data would you like to retrieve?</p>
 
-    <p>What market should the tracks be playable in?</p>
+      <div class="form-group checkbox">
+        <label>
+          <input type="checkbox" ng-model="vm.user.getLikedTracks"> Liked Tracks
+        </label>
+      </div>
+      <div class="form-group checkbox">
+        <label>
+          <input type="checkbox" ng-model="vm.user.getBookmarkedTracks"> Bookmarked Tracks
+        </label>
+      </div>
+      <div class="form-group error" ng-show="!vm.user.getLikedTracks && !vm.user.getBookmarkedTracks">Select at least one</div>
 
-    <div class="form-group">
-      <div country-select class="short-width" market="vm.user.market"></div>
-    </div>
+      <p>What market should the tracks be playable in?</p>
+
+      <div class="form-group">
+        <div country-select class="short-width" market="vm.user.market" disable="vm.isRetrievingPandoraTracks"></div>
+      </div>
+    </fieldset>
 
     <button type="submit" class="btn btn-primary btn-preloader" ng-click="submitted = true" ng-disabled="vm.isRetrievingPandoraTracks">
       Retrieve Data

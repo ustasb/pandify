@@ -1,6 +1,7 @@
 UserPreferences = (StateMachine) ->
   state = StateMachine.create 'UserPreferences',
     pandoraID: ''
+    randomID: false
     getLikedTracks: true
     getBookmarkedTracks: true
     market: 'US'

@@ -1,5 +1,5 @@
 CountrySelectLink = ($scope, element, attrs) ->
-  select = element.selectize(
+  selectize = element.selectize(
     valueField: 'alpha-2'
     labelField: 'name'
     searchField: 'name'
@@ -7,8 +7,14 @@ CountrySelectLink = ($scope, element, attrs) ->
     onChange: (alpha2) -> $scope.market = alpha2
   )[0].selectize
 
-  select.addOption($scope.countryCodes)
-  select.addItem($scope.market)
+  selectize.addOption($scope.countryCodes)
+  selectize.addItem($scope.market)
+
+  $scope.$watch 'disable', (disabled) ->
+    if disabled
+      selectize.disable()
+    else
+      selectize.enable()
 
 CountrySelectCtrl = ($scope, countryCodes) ->
   $scope.countryCodes = countryCodes
@@ -19,6 +25,7 @@ countrySelect = ->
   template: '<select></select>'
   scope:
     market: '='
+    disable: '='
   link: CountrySelectLink
   controller: CountrySelectCtrl
 
