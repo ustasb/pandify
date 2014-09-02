@@ -6,27 +6,28 @@ HighlightGenre = do ->
     cachedEls = null
     cachedGenre = null
 
-    (genre) ->
-      return cachedEls if genre is cachedGenre
+    (genre, useCache = true) ->
+      return cachedEls if genre is cachedGenre and useCache
       cachedGenre = genre
-      cachedEls = $ ".track-list .#{genre}, .selectize-input div[data-value='#{genre}']"
+      cachedEls = $ ".track-list .#{genre}, .selectize-input > div[data-value='#{genre}']"
 
-  highlight = (genre) ->
-    unhighlight()
-    highlightTargets(genre).addClass(HIGHLIGHT_CLASS)
+  highlight = (genre = current) ->
+    return unless genre?
+    highlightTargets(genre, false).addClass(HIGHLIGHT_CLASS)
     current = genre
 
-  unhighlight = (genre = current) ->
-    return unless genre?
-    highlightTargets(genre).removeClass(HIGHLIGHT_CLASS)
+  unhighlight = ->
+    return unless current?
+    highlightTargets(current).removeClass(HIGHLIGHT_CLASS)
     current = null
 
-  isHighlighted = ->
-    !!current
+  getHighlightGenre = ->
+    current
 
   highlight: highlight
   unhighlight: unhighlight
-  isHighlighted: isHighlighted
+  getHighlightGenre: getHighlightGenre
+  highlightClass: HIGHLIGHT_CLASS
 
 genreSelect = ($document, GenreUid) ->
   restrict: 'A'
@@ -49,17 +50,21 @@ genreSelect = ($document, GenreUid) ->
     onLabelClick = (e) ->
       el = $(e.target)
       if el.hasClass('item') and el.hasClass('active')
+        # Sometimes Selectize fails to remove this...
+        el.removeClass('active')
+
         selectize.close()
 
         genre = el.text().replace(/(.*)\s\(\d+\)×/, '$1')
         genre = GenreUid.getUid(genre)
 
+        HighlightGenre.unhighlight()
         HighlightGenre.highlight(genre)
 
     onDocumentClick = (e) ->
-      return unless HighlightGenre.isHighlighted()
+      return unless HighlightGenre.getHighlightGenre()
       el = $(e.target)
-      unless el.hasClass('item') and el.hasClass('active')
+      unless el.hasClass('item') and el.hasClass(HighlightGenre.highlightClass)
         HighlightGenre.unhighlight()
 
     onTrackMatch = (e, trackMatch) ->
@@ -74,6 +79,9 @@ genreSelect = ($document, GenreUid) ->
           selectize.addOption(label: label, title: title, value: genre)
         else
           selectize.updateOption(genre, label: label, title: title, value: genre)
+
+          if genre is HighlightGenre.getHighlightGenre()
+            HighlightGenre.highlight()
 
       null
 
