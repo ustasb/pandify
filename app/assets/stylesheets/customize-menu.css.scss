@@ -1,8 +1,4 @@
 #customize-menu {
-  form button[type="submit"] {
-    float: right;
-  }
-
   .selectize-input {
     line-height: 30px;
     margin: 0;
@@ -34,6 +30,21 @@
 
     .btn {
       margin-left: 5px;
+    }
+  }
+
+  form button[type='submit'] {
+    float: right;
+  }
+
+  #raw-pandora-data {
+    position: relative;
+    height: 0;
+
+    a {
+      position: absolute;
+      right: 0;
+      bottom: 10px;
     }
   }
 

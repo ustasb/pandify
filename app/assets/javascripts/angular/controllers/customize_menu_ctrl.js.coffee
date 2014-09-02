@@ -23,6 +23,12 @@ CustomizeMenuCtrl = ($scope, $location, SpotifyTracksMatcher, TracksGenreFilter)
     vm.isMatchingPaused = false
     SpotifyTracksMatcher.startMatching()
 
+  saveRawPandoraData = ->
+    pandoraTracks = SpotifyTracksMatcher.getTracksToMatch()
+    pandoraTracks = JSON.stringify(pandoraTracks, undefined, 2)
+    blob = new Blob([pandoraTracks], {type: 'text/plain;charset=utf-8'})
+    saveAs(blob, 'raw_pandora_tracks.txt')
+
   SpotifyTracksMatcher.onDoneMatching ->
     vm.isDoneMatching = true
     vm.hasNoMatches = vm.spotifyTrackMatches.length is 0
@@ -48,6 +54,11 @@ CustomizeMenuCtrl = ($scope, $location, SpotifyTracksMatcher, TracksGenreFilter)
 
   vm.pauseMatching = pauseMatching
   vm.resumeMatching = resumeMatching
+
+  try
+    isFileSaverSupported = !!(new Blob())
+    vm.saveRawPandoraData = saveRawPandoraData if isFileSaverSupported
+  catch
 
   vm.exportPlaylist = -> $location.path('/create')
 

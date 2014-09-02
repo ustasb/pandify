@@ -19,6 +19,10 @@
 
     <p>Add genre filters:</p>
 
+    <div id="raw-pandora-data" ng-show="!!vm.saveRawPandoraData">
+      <a href="#" onClick="return false;" class="underline" ng-click="vm.saveRawPandoraData()">Download Pandora Tracks</a>
+    </div>
+
     <div class="form-group">
       <div placeholder="e.g. classic rock" genre-select genres="vm.trackMatchesGenres" selected-genres="vm.selectedGenres"></div>
     </div>
