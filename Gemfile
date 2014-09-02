@@ -33,13 +33,15 @@ gem 'jasmine'
 gem 'angular-rails-templates'
 
 gem 'autoprefixer-rails'
-gem "selectize-rails"
+gem 'selectize-rails'
 gem 'bootstrap-sass'
 gem 'zeroclipboard-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
 end
+
+gem 'puma'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
