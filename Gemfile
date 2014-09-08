@@ -43,6 +43,8 @@ end
 
 gem 'puma'
 
+gem 'pandata', '~> 0.3.2'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
