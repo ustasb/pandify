@@ -1,14 +1,11 @@
 ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences, RandomPandoraID) ->
   vm = @
 
-  vm.isRetrievingPandoraTracks = false
-  vm.user = UserPreferences.getAll()
-
-  vm.isFormValid = ->
+  isFormValid = ->
     (vm.user.randomID or vm.configForm.pandoraID.$valid) and
     (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
 
-  vm.toggleRandomID = ->
+  toggleRandomID = ->
     vm.user.randomID = !vm.user.randomID
 
     if vm.user.randomID
@@ -16,26 +13,44 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
     else
       vm.user.pandoraID = ''
 
-  vm.retrieveData = ->
+  retrieveData = ->
+    vm.submitStatus = ''
     vm.isRetrievingPandoraTracks = true
-    vm.noTracksToMatch = false
 
-    storeData = (tracks) ->
-      SpotifyTracksMatcher.setTracksToMatch(tracks)
-      SpotifyTracksMatcher.setMarketToMatch(vm.user.market)
-      vm.isRetrievingPandoraTracks = false
-
-    PandoraData.getTracks(
+    PandoraData.getTracks vm.user.pandoraID,
       likedTracks: vm.user.getLikedTracks
       bookmarkedTracks: vm.user.getBookmarkedTracks
-    ).then(storeData)
+    .finally -> vm.isRetrievingPandoraTracks = false
 
-  vm.onSubmit = ->
-    StateMachine.destroyAll()
-    UserPreferences.set(vm.user)
-    vm.retrieveData().then ->
-      vm.noTracksToMatch = SpotifyTracksMatcher.getTracksToMatch().length is 0
-      $location.path('/customize') unless vm.noTracksToMatch
+  onSubmit = ->
+    onRetrieveSuccess = (tracks) ->
+      if tracks.length is 0
+        vm.submitStatus = 'No Pandora data found for that email.'
+      else
+        StateMachine.destroyAll()
+
+        UserPreferences.set(vm.user)
+        SpotifyTracksMatcher.setTracksToMatch(tracks)
+        SpotifyTracksMatcher.setMarketToMatch(vm.user.market)
+
+        $location.path('/customize')
+
+    onRetrieveError = (responseCode) ->
+      if responseCode is 404
+        vm.submitStatus = "Couldn't find a Pandora account associated with that email."
+      else
+        vm.submitStatus = 'Some unexpected error occurred! Try again later...'
+
+    retrieveData()
+    .then(onRetrieveSuccess)
+    .catch(onRetrieveError)
+
+  vm.isFormValid = isFormValid
+  vm.toggleRandomID = toggleRandomID
+  vm.onSubmit = onSubmit
+
+  vm.isRetrievingPandoraTracks = false
+  vm.user = UserPreferences.getAll()
 
   vm
 
