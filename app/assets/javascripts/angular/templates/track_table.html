@@ -3,7 +3,7 @@
     <th></th>
     <th ng-click="predicate = 'track'; reverse =! reverse">Track</th>
     <th ng-click="predicate = 'artist'; reverse =! reverse">Artist</th>
-    <th ng-click="predicate = 'duration_ms'; reverse =! reverse">Time</th>
+    <th ng-click="predicate = 'durationMS'; reverse =! reverse">Time</th>
     <th ng-click="predicate = 'album'; reverse =! reverse">Album</th>
   </tr>
   <tr class="track {{ getGenreClasses(track) }}" ng-repeat="track in tracks | orderBy:predicate:reverse track by track.id">
