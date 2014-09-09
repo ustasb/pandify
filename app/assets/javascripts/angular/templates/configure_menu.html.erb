@@ -51,6 +51,7 @@
       Retrieve Data
       <div class="preloader" ng-show="vm.isRetrievingPandoraTracks"></div>
       <div class="preloader-status error" ng-show="!!vm.submitStatus">{{vm.submitStatus}}</div>
+      <div class="preloader-status unemphasized" ng-hide="vm.isRetrievingPandoraTracks || !!vm.submitStatus">Might take some time...</div>
     </button>
   </form>
 </div>

@@ -7,12 +7,12 @@
 
     <li class="nav-list-item">
       <a href="#/customize" ng-show="vm.hasPandoraTracks" ng-class="{'active-menu-item': vm.activeMenu === 'customize'}">customize</a>
-      <span ng-hide="vm.hasPandoraTracks">customize</span>
+      <span class="unemphasized" ng-hide="vm.hasPandoraTracks">customize</span>
     </li>
 
     <li class="nav-list-item">
       <a href="#/create" ng-show="vm.hasPandoraTracks" ng-class="{'active-menu-item': vm.activeMenu === 'create'}">create</a>
-      <span ng-hide="vm.hasPandoraTracks">create</span>
+      <span class="unemphasized" ng-hide="vm.hasPandoraTracks">create</span>
     </li>
 
   </ul>
