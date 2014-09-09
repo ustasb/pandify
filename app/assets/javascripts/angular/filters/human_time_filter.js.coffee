@@ -1,14 +1,26 @@
 humanTime = ->
-  (timeMS) ->
-    ms = timeMS % 1000
-    timeMS = (timeMS - ms) / 1000
-    secs = timeMS % 60
-    timeMS = (timeMS - secs) / 60
-    mins = timeMS % 60
-    hrs = (timeMS - mins) / 60
 
-    str = ''
-    str += "#{hrs} hours and " if hrs > 0
-    str += "#{mins} minutes"
+  # https://gist.github.com/remino/1563878
+  (ms) ->
+    s = Math.floor(ms / 1000)
+    m = Math.floor(s / 60)
+    h = Math.floor(m / 60)
+    m = m % 60
+    h = h % 24
+
+    if h > 0
+      if h is 1
+        h += ' hour and '
+      else
+        h += ' hours and '
+    else
+      h = ''
+
+    if m is 1
+      m += ' minute'
+    else
+      m += ' minutes'
+
+    h + m
 
 angular.module('pandify').filter('humanTime', humanTime)
