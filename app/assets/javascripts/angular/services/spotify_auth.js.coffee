@@ -20,11 +20,16 @@ popUpWindow = (url, w, h) ->
     "scrollbars=no, resizable=no, copyhistory=no," +
     "width=#{w}, height=#{h}, top=#{top}, left=#{left}"
 
-SpotifyAuth = (StateMachine) ->
+SpotifyAuth = ($location, StateMachine) ->
   MAX_URIS_TO_UPLOAD = 100 # Spotify only allows 100 to be uploaded at once.
   AUTH_URL = 'https://accounts.spotify.com/authorize'
   CLIENT_ID = '03032125d76342e4b2174ae143ca9aa1'
-  REDIRECT_URI = 'http://localhost:3000/spotify_auth_callback.html'
+
+  if $location.host() is 'localhost'
+    REDIRECT_URI = 'http://localhost:3000/spotify_auth_callback.html'
+  else
+    REDIRECT_URI = 'http://pandify.com/spotify_auth_callback.html'
+
   SCOPES = 'playlist-modify-private playlist-read-private'
 
   state = StateMachine.create 'SpotifyAuth',
@@ -99,5 +104,5 @@ SpotifyAuth = (StateMachine) ->
   openLoginWindow: openLoginWindow
   uploadTracks: uploadTracks
 
-SpotifyAuth.$inject = ['StateMachine']
+SpotifyAuth.$inject = ['$location', 'StateMachine']
 angular.module('pandify').factory('SpotifyAuth', SpotifyAuth)
