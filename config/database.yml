@@ -20,6 +20,8 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
+  username: pandify
+  password: pandify
 
 development:
   <<: *default
@@ -81,5 +83,4 @@ test:
 production:
   <<: *default
   database: pandify_com_production
-  username: pandify_com
   password: <%= ENV['PANDIFY_COM_DATABASE_PASSWORD'] %>
