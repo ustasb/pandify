@@ -17,4 +17,5 @@ UserPreferences = (StateMachine) ->
   getAll: getAll
   set: set
 
+UserPreferences.$inject = ['StateMachine']
 angular.module('pandify').factory('UserPreferences', UserPreferences)
