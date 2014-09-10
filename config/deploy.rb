@@ -14,6 +14,32 @@ set :puma_threads, [1, 16]
 set :linked_dirs, %w{log tmp/pids tmp/sockets}
 set :puma_init_active_record, true
 
+# capistrano/nginx
+set :nginx_domains, 'pandify.com'
+set :nginx_service_path, 'service nginx'
+set :nginx_roles, :web
+
+# Path where nginx log file will be stored
+set :nginx_log_path, "#{shared_path}/log"
+
+# Path where nginx is installed
+set :nginx_root_path, '/etc/nginx'
+
+# Path where to look for static files
+set :nginx_static_dir, 'public'
+
+# Path where nginx available site are stored
+set :nginx_sites_available, 'sites-available'
+
+# Path where nginx available site are stored
+set :nginx_sites_enabled, 'sites-enabled'
+
+# Whether you want to server an application through a proxy pass
+set :app_server, true
+
+# Socket file that nginx will use as upstream to serve the application
+set :app_server_socket, "#{shared_path}/tmp/sockets/puma.sock"
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 

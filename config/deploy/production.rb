@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'pandify.com', port: 30004, user: 'deploy', roles: %w{app}
+server 'pandify.com', port: 30004, user: 'deploy', roles: %w{app web}
 
 
 # Custom SSH Options
