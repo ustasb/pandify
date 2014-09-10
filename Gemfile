@@ -45,6 +45,13 @@ gem 'puma'
 
 gem 'pandata', '~> 0.3.2'
 
+group :development do
+  gem 'capistrano-rails', '~> 1.1.1'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-puma'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
