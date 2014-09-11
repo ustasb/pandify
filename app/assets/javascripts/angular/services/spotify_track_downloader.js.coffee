@@ -1,5 +1,6 @@
 SpotifyTrackDownloader = ($q) ->
   spotifyApi = new SpotifyWebApi()
+  spotifyApi.setPromiseImplementation($q)
   artistGenreCache = {}
 
   # Helps to improve the search matches.

@@ -105,7 +105,7 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
     trackToMatch = state.get('tracksToMatch')[state.get('trackToMatchIndex')]
 
     onError = (err) ->
-      console.log("An error occured for #{trackToMatch.track}, #{trackToMatch.artist}: #{err}")
+      console.log("An error occurred for #{trackToMatch.track}, #{trackToMatch.artist}: #{err}")
 
     onFinally = ->
       state.update 'trackToMatchIndex', (v) -> ++v

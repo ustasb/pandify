@@ -3,7 +3,7 @@ SpotifyAuthLoginLink = ($scope, element, attrs) ->
     # Note: Doesn't work if the developer console is open.
     $(element).find('input[name=playlistName]').focus() if newVal?
 
-SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, SpotifyAuth) ->
+SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, $q, SpotifyAuth) ->
   uploadTracks = (onDone) ->
     spotifyApi.setAccessToken(SpotifyAuth.getAccessToken())
     SpotifyAuth.uploadTracks(
@@ -42,6 +42,7 @@ SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, SpotifyAuth) ->
       $scope.$digest()
 
   spotifyApi = new SpotifyWebApi()
+  spotifyApi.setPromiseImplementation($q)
 
   $scope.$on 'spotifyLoggedIn', onSpotifyLoggedIn
   $scope.openLoginWindow = SpotifyAuth.openLoginWindow
@@ -62,5 +63,5 @@ spotifyAuthLogin = ->
   link: SpotifyAuthLoginLink
   controller: SpotifyAuthLoginCtrl
 
-SpotifyAuthLoginCtrl.$inject = ['$rootScope', '$scope', '$timeout', 'SpotifyAuth']
+SpotifyAuthLoginCtrl.$inject = ['$rootScope', '$scope', '$timeout', '$q', 'SpotifyAuth']
 angular.module('pandify').directive('spotifyAuthLogin', spotifyAuthLogin)
