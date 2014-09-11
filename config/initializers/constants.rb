@@ -12,5 +12,4 @@ PANDORA_IDS = [
   'kellypatrickdugan9',
   'buyeshiro',
   'mgsiegler',
-  'joe',
 ]
