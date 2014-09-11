@@ -52,6 +52,7 @@ CustomizeMenuCtrl = ($scope, $timeout, $location, SpotifyTracksMatcher, TracksGe
 
   vm.isMatchingPaused = SpotifyTracksMatcher.isMatchingPaused()
   vm.isDoneMatching = SpotifyTracksMatcher.isDoneMatching()
+  vm.hasNoMatches = vm.spotifyTrackMatches.length is 0
 
   vm.pauseMatching = pauseMatching
   vm.resumeMatching = resumeMatching
