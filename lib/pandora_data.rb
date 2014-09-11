@@ -1,4 +1,5 @@
 require 'pandata'
+require 'pandora_likes'
 
 class PandoraData
   attr_accessor :id, :user, :scraper

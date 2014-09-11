@@ -1,3 +1,5 @@
+require 'pandora_data'
+
 class PandoraDataController < ApplicationController
   def index
     pandora_data = PandoraData.new(params[:pandora_id])
