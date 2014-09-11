@@ -1,0 +1,16 @@
+PANDORA_IDS = [
+  'bjjustas',
+  'tconrad',
+  'chris.newman2',
+  'geek279',
+  'pnoonan61',
+  'rtgiordano',
+  'kristiherwarth',
+  'maya.baratz',
+  'vyoung2',
+  'tjgusa5',
+  'kellypatrickdugan9',
+  'buyeshiro',
+  'mgsiegler',
+  'joe',
+]

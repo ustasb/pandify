@@ -1,0 +1,11 @@
+RandomPandoraID = ->
+
+  ids = <%= PANDORA_IDS %>
+
+  get = ->
+    index = Math.floor(Math.random() * ids.length)
+    ids[index]
+
+  get: get
+
+angular.module('pandify').service('RandomPandoraID', RandomPandoraID)
