@@ -39,7 +39,6 @@ SpotifyAuthLoginCtrl = ($rootScope, $scope, $timeout, $q, SpotifyAuth) ->
     uploadTracks ->
       $scope.isExportingPlaylist = false
       $scope.isExportingFinished = true
-      $scope.$digest()
 
   spotifyApi = new SpotifyWebApi()
   spotifyApi.setPromiseImplementation($q)
