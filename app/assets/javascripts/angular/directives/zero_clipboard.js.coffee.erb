@@ -12,6 +12,8 @@ hasFlash = ->
 ZeroClipboardLink = ($scope, element, attrs) ->
   return element.hide() unless hasFlash()
 
+  ZeroClipboard.config swfPath: '<%= asset_path('zero-clipboard.swf') %>'
+
   client = new ZeroClipboard(element)
   messageLifetime = 2500
 

@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require selectize
-//= require zeroclipboard
 //= require angular
 //= require angular-route
 //= require angular-rails-templates

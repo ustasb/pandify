@@ -1,6 +1,6 @@
 Audio = ->
   player = new Audio5js
-    swf_path: '<%= Rails.public_path %>/audio5js.swf'
+    swf_path: '<%= asset_path('audio5js.swf') %>'
     throw_errors: true
 
   isStopped = true
