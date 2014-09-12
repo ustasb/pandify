@@ -12,6 +12,7 @@
 </head>
 <body id="pandify" ng-app="pandify">
   <%= yield %>
+  <%= jquery_include_tag :google %>
   <%= javascript_include_tag 'application' %>
 
   <!-- Google Analytics -->

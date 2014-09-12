@@ -52,6 +52,8 @@ group :development do
   gem 'capistrano3-nginx', '~> 2.0'
 end
 
+gem 'jquery-rails-cdn'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
