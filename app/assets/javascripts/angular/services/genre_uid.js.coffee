@@ -28,4 +28,3 @@ GenreUid = (StateMachine) ->
 
 GenreUid.$inject = ['StateMachine']
 angular.module('pandify').factory('GenreUid', GenreUid)
-

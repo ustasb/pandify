@@ -8,17 +8,19 @@
   <div class="export-options">
     <div class="disabled-cover" ng-hide="vm.hasFilteredTracks"></div>
 
-    <p>Finally, export your playlist into Spotify. You have two options:</p>
+    <p>Finally, export your playlist into Spotify. <span ng-hide="vm.isIE">You have two options:</span></p>
 
-    <div class="divider"></div>
+    <div ng-hide="vm.isIE">
+      <div class="divider"></div>
 
-    <p>Let Pandify export the playlist for you.</p>
+      <p>Let Pandify export the playlist for you.</p>
 
-    <div spotify-auth-login tracks-uris="vm.filteredTracksURIs"></div>
+      <div spotify-auth-login tracks-uris="vm.filteredTracksURIs"></div>
 
-    <div class="divider"><span>OR</span></div>
+      <div class="divider"><span>OR</span></div>
 
-    <p>Copy and paste the playlist into Spotify yourself.</p>
+      <p>Copy and paste the playlist into Spotify yourself.</p>
+    </div>
 
     <ol>
       <li>Create a new playlist in Spotify.</li>
