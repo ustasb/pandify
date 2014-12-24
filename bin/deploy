@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export RAILS_ENV=production
+export SECRET_KEY_BASE=`rake secret`
+
+rake db:setup
+
+rails server

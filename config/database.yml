@@ -20,8 +20,6 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 16 # Puma will run with 16 threads per server.
-  username: pandify
-  password: pandify
 
 development:
   <<: *default
@@ -83,4 +81,5 @@ test:
 production:
   <<: *default
   database: pandify_com_production
-  password: <%= ENV['PANDIFY_COM_DATABASE_PASSWORD'] %>
+  username: postgres
+  host: db
