@@ -44,14 +44,6 @@ gem 'puma'
 
 gem 'pandata', '~> 0.3.2'
 
-group :development do
-  gem 'capistrano-rails', '~> 1.1.1'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-bundler'
-  gem 'capistrano3-puma'
-  gem 'capistrano3-nginx', '~> 2.0'
-end
-
 gem 'jquery-rails-cdn'
 
 # Use ActiveModel has_secure_password
