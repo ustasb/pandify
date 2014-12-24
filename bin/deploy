@@ -1,8 +1,14 @@
 #!/bin/bash
 
+set -e
+
 export RAILS_ENV=production
 export SECRET_KEY_BASE=`rake secret`
 
 rake db:setup
 
+rake add_pandora_ids_data_to_db
+
 rails server
+
+exec "$@"
