@@ -9,6 +9,8 @@ rake db:setup
 
 rake add_pandora_ids_data_to_db
 
+rake assets:precompile
+
 rails server
 
 exec "$@"
