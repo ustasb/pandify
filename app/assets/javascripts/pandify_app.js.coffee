@@ -16,10 +16,12 @@ Config = ($routeProvider) ->
       redirectTo: '/configure'
 
 Run = ($window, $rootScope) ->
-  # Handles the Spotify login redirect.
   receiveMessage = (event) ->
     data = angular.fromJson(event.originalEvent.data)
-    $rootScope.$broadcast('spotifyLoggedIn', data)
+
+    # Handle the Spotify login redirect.
+    if data.access_token? && data.expires_in?
+      $rootScope.$broadcast('spotifyLoggedIn', data)
 
   $($window).on('message', receiveMessage)
 
