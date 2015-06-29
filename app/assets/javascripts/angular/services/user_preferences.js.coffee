@@ -3,7 +3,7 @@ UserPreferences = (StateMachine) ->
     pandoraID: ''
     randomID: false
     getLikedTracks: true
-    getBookmarkedTracks: true
+    getBookmarkedTracks: false
     market: 'US'
 
   getAll = ->

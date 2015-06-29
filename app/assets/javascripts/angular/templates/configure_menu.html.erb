@@ -8,7 +8,7 @@
   </p>
 
   <p>
-    First, it'll need to retrieve your Pandora data.
+    First, it'll need to retrieve your liked Pandora tracks.
     Ensure that your Pandora profile is
     <a class="underline" href="<%= asset_path 'pandora_account_public.png' %>">public!</a>
   </p>
@@ -26,6 +26,7 @@
       <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.required">Required</div>
       <div class="form-group error" ng-show="submitted && vm.configForm.pandoraID.$error.email">Invalid email</div>
 
+      <!--
       <p>What data would you like to retrieve?</p>
 
       <div class="form-group checkbox">
@@ -38,7 +39,9 @@
           <input type="checkbox" ng-model="vm.user.getBookmarkedTracks"> Bookmarked Tracks
         </label>
       </div>
+
       <div class="form-group error" ng-show="!vm.user.getLikedTracks && !vm.user.getBookmarkedTracks">Select at least one</div>
+      -->
 
       <p>What market should the tracks be playable in?</p>
 
