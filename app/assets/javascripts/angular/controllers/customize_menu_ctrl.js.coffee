@@ -1,4 +1,4 @@
-CustomizeMenuCtrl = ($scope, $timeout, $location, SpotifyTracksMatcher, TracksGenreFilter) ->
+CustomizeMenuCtrl = ($scope, $timeout, $location, SpotifyTracksMatcher, TracksGenreFilter, UserPreferences) ->
   vm = @
 
   filterTracks = (filterMethod) ->
@@ -57,6 +57,8 @@ CustomizeMenuCtrl = ($scope, $timeout, $location, SpotifyTracksMatcher, TracksGe
   vm.pauseMatching = pauseMatching
   vm.resumeMatching = resumeMatching
 
+  vm.usingRandomPandoraID = UserPreferences.getAll().randomID
+
   try
     isFileSaverSupported = !!(new Blob())
     vm.saveRawPandoraData = saveRawPandoraData if isFileSaverSupported
@@ -69,5 +71,5 @@ CustomizeMenuCtrl = ($scope, $timeout, $location, SpotifyTracksMatcher, TracksGe
 
   vm
 
-CustomizeMenuCtrl.$inject = ['$scope', '$timeout', '$location', 'SpotifyTracksMatcher', 'TracksGenreFilter']
+CustomizeMenuCtrl.$inject = ['$scope', '$timeout', '$location', 'SpotifyTracksMatcher', 'TracksGenreFilter', 'UserPreferences']
 angular.module('pandify').controller('CustomizeMenuCtrl', CustomizeMenuCtrl)

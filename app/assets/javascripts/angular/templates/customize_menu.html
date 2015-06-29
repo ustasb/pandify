@@ -39,6 +39,13 @@
     <span ng-hide="vm.isDoneMatching" track-matching-ctrls></span>
   </p>
 
+  <p class="unemphasized" ng-hide="vm.usingRandomPandoraID">
+    <a class="underline" href="https://github.com/ustasb/pandata#q-pandata-is-not-grabbing-all-my-liked-tracks-on-pandora-whats-up-with-that">
+      Read this
+    </a>
+    if you have more liked tracks than stated above.
+  </p>
+
   <p playlist-stats ng-hide="vm.isDoneMatching && vm.hasNoMatches" tracks="vm.filteredTracks"></p>
   <p class="error" ng-show="vm.isDoneMatching && vm.hasNoMatches">No tracks could be matched on Spotify!</p>
 
