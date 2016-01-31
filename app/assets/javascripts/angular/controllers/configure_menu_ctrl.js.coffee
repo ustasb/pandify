@@ -2,8 +2,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
   vm = @
 
   isFormValid = ->
-    (vm.user.randomID or vm.configForm.pandoraID.$valid) and
-    (vm.user.getLikedTracks or vm.user.getBookmarkedTracks)
+    vm.user.randomID or vm.configForm.pandoraID.$valid
 
   toggleRandomID = ->
     vm.user.randomID = !vm.user.randomID
@@ -17,9 +16,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
     vm.submitStatus = ''
     vm.isRetrievingPandoraTracks = true
 
-    PandoraData.getTracks vm.user.pandoraID,
-      likedTracks: vm.user.getLikedTracks
-      bookmarkedTracks: vm.user.getBookmarkedTracks
+    PandoraData.getTracks(vm.user.pandoraID)
     .finally -> vm.isRetrievingPandoraTracks = false
 
   onSubmit = ->

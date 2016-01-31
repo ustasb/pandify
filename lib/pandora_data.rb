@@ -19,10 +19,6 @@ class PandoraData
     PandoraLikes.new(scraper).get_likes_for(user)
   end
 
-  def get_bookmarked_tracks
-    scraper.bookmarks(:tracks)
-  end
-
   private
 
   def user

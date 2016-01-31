@@ -2,7 +2,7 @@ PandoraData = ($q, $http) ->
 
   JSON_API = 'pandora_data/'
 
-  getTracks = (pandoraID, dataToGet) ->
+  getTracks = (pandoraID) ->
     deferred = $q.defer()
 
     onSuccess = (data, status, headers, config) ->
@@ -16,8 +16,6 @@ PandoraData = ($q, $http) ->
       method: 'GET'
       params:
         pandora_id: pandoraID
-        liked_tracks: dataToGet.likedTracks
-        bookmarked_tracks: dataToGet.bookmarkedTracks
     ).success(onSuccess).error(onError)
 
     deferred.promise
