@@ -69,14 +69,14 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitest (5.3.5)
     multi_json (1.10.1)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
-    pandata (0.3.4)
-      nokogiri (~> 1.6.3)
-      ruby-progressbar (~> 1.2.0)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    pandata (2.0.0)
+      nokogiri (~> 1.6.7)
+      ruby-progressbar (~> 1.5.1)
     pg (0.17.1)
     phantomjs (1.9.7.1)
     polyglot (0.3.5)
@@ -119,7 +119,7 @@ GEM
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
     rspec-support (3.0.2)
-    ruby-progressbar (1.2.0)
+    ruby-progressbar (1.5.1)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -165,7 +165,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-rails-cdn
-  pandata (~> 0.3.2)
+  pandata (~> 2.0.0)
   pg
   puma
   rails (= 4.1.1)
@@ -175,3 +175,6 @@ DEPENDENCIES
   selectize-rails
   spring
   uglifier (>= 1.3.0)
+
+BUNDLED WITH
+   1.10.6
