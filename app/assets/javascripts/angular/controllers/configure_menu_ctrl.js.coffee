@@ -17,7 +17,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
     vm.isRetrievingPandoraTracks = true
 
     PandoraData.getTracks(vm.user.pandoraID)
-    .finally -> vm.isRetrievingPandoraTracks = false
+      .finally -> vm.isRetrievingPandoraTracks = false
 
   onSubmit = ->
     onRetrieveSuccess = (tracks) ->
@@ -39,8 +39,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
         vm.submitStatus = 'Some unexpected error occurred! Try again later...'
 
     retrieveData()
-    .then(onRetrieveSuccess)
-    .catch(onRetrieveError)
+      .then(onRetrieveSuccess, onRetrieveError)
 
   vm.isFormValid = isFormValid
   vm.toggleRandomID = toggleRandomID

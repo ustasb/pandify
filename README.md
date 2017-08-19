@@ -8,19 +8,38 @@ It relies on [Pandata][2].
 
 Logo by Tahni Pierzga
 
-## Docker Production Deploy
+## Usage
 
-Build the Pandify.com image:
+First build the Pandify.com image:
 
     docker build -t ustasb/pandify .
 
-Run a PostgreSQL container:
+Then run a PostgreSQL container:
 
-    docker run -d --name pandify_postgres postgres:9.4.0
+    docker run --name pandify_postgres postgres:9.4.0
 
-Run the Pandify.com container:
+## Docker Development
 
-    docker run -p 3000:3000 --link=pandify_postgres:db --name pandify -d ustasb/pandify
+    docker run \
+        -p 3000:3000 \
+        --link=pandify_postgres:db \
+        -v $(pwd):/srv/www/pandify.com \
+        -e RAILS_ENV=development \
+        -e SPOTIFY_CLIENT_ID=<fill-in> \
+        -e SPOTIFY_CLIENT_SECRET=<fill-in> \
+        --name pandify \
+        ustasb/pandify
+
+## Docker Production
+
+    docker run \
+        -p 3000:3000 \
+        --link=pandify_postgres:db \
+        -e RAILS_ENV=production \
+        -e SPOTIFY_CLIENT_ID=<fill-in> \
+        -e SPOTIFY_CLIENT_SECRET=<fill-in> \
+        --name pandify \
+        ustasb/pandify
 
 [1]: http://pandify.com
 [2]: http://github.com/ustasb/pandata

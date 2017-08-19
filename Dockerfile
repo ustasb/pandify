@@ -1,24 +1,25 @@
-FROM ruby:2.1
+FROM ruby:2.4.1-alpine3.6
+MAINTAINER Brian Ustas <brianustas@gmail.com>
 
-# throw errors if Gemfile has been modified since Gemfile.lock
-RUN bundle config --global frozen 1
+ARG APP_PATH="/srv/www/pandify.com"
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN apk add --update \
+  build-base \
+  nodejs \
+  ruby-dev \
+  tzdata \
+  postgresql-dev \
+  && rm -rf /var/cache/apk/*
 
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
+WORKDIR $APP_PATH
+
+COPY Gemfile $APP_PATH
+COPY Gemfile.lock $APP_PATH
 RUN bundle install
 
-COPY . /usr/src/app
-VOLUME /usr/src/app
-
-RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y mysql-client postgresql-client sqlite3 --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
-ENV RAILS_ENV=production
-
+COPY . $APP_PATH
+VOLUME $APP_PATH
 EXPOSE 3000
 
-ENTRYPOINT ["bin/deploy"]
+ENTRYPOINT ["sh", "bin/deploy"]
 CMD ["rails", "server", "-b", "0.0.0.0"]

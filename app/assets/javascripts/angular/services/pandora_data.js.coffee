@@ -5,18 +5,18 @@ PandoraData = ($q, $http) ->
   getTracks = (pandoraID) ->
     deferred = $q.defer()
 
-    onSuccess = (data, status, headers, config) ->
-      deferred.resolve(data['tracks'])
+    onSuccess = (resp) ->
+      deferred.resolve(resp.data.tracks)
 
-    onError = (data, status, headers, config) ->
-      deferred.reject(status)
+    onError = (resp) ->
+      deferred.reject(resp.status)
 
     $http(
       url: JSON_API
       method: 'GET'
       params:
         pandora_id: pandoraID
-    ).success(onSuccess).error(onError)
+    ).then(onSuccess, onError)
 
     deferred.promise
 

@@ -1,5 +1,6 @@
 SpotifyTrackDownloader = ($q) ->
   spotifyApi = new SpotifyWebApi()
+  spotifyApi.setAccessToken(document.getElementById('master-container').dataset.spotifyAccessToken)
   spotifyApi.setPromiseImplementation($q)
   artistGenreCache = {}
 

@@ -2,13 +2,14 @@
 
 set -e
 
-export RAILS_ENV=production
-export SECRET_KEY_BASE=`rake secret`
-
 rake db:setup
 
-rake add_pandora_ids_data_to_db
+if [ $RAILS_ENV == 'production' ]; then
+  export SECRET_KEY_BASE=$(rake secret)
 
-rake assets:precompile
+  rake assets:precompile
+
+  rake add_pandora_ids_data_to_db
+fi
 
 exec "$@"
