@@ -1,16 +1,18 @@
 # Pandify
 
-[pandify.com][1]
+[pandify.com](http://pandify.com)
 
 A tool for creating a Spotify playlist from your favorite Pandora.com tracks.
 
-It relies on [Pandata][2].
+It relies on [Pandata](http://github.com/ustasb/pandata).
 
-Logo by Tahni Pierzga
+The logo was created by Tahni Pierzga.
+
+Initial release: 09/13/2014
 
 ## Usage
 
-First build the Pandify.com image:
+First build the Pandify image:
 
     docker build -t ustasb/pandify .
 
@@ -23,7 +25,7 @@ Then run a PostgreSQL container:
     docker run \
         -p 3000:3000 \
         --link=pandify_postgres:db \
-        -v $(pwd):/srv/www/pandify.com \
+        -v $(pwd):/opt/pandify \
         -e RAILS_ENV=development \
         -e SPOTIFY_CLIENT_ID=<fill-in> \
         -e SPOTIFY_CLIENT_SECRET=<fill-in> \
@@ -40,6 +42,3 @@ Then run a PostgreSQL container:
         -e SPOTIFY_CLIENT_SECRET=<fill-in> \
         --name pandify \
         ustasb/pandify
-
-[1]: http://pandify.com
-[2]: http://github.com/ustasb/pandata

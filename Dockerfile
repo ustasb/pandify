@@ -1,7 +1,7 @@
 FROM ruby:2.4.1-alpine3.6
 MAINTAINER Brian Ustas <brianustas@gmail.com>
 
-ARG APP_PATH="/srv/www/pandify.com"
+ARG APP_PATH="/opt/pandify"
 
 RUN apk add --update \
   build-base \
@@ -13,6 +13,7 @@ RUN apk add --update \
 
 WORKDIR $APP_PATH
 
+# Add Gemfile and Gemfile.lock first for caching.
 COPY Gemfile $APP_PATH
 COPY Gemfile.lock $APP_PATH
 RUN bundle install
