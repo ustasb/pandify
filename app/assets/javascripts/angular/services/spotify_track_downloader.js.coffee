@@ -24,8 +24,20 @@ SpotifyTrackDownloader = ($q) ->
   downloadTrackMatches = (track, artist) ->
     deferred = $q.defer()
 
-    onSuccess = (response) -> deferred.resolve(response['tracks']['items'])
-    onFailure = -> deferred.reject('Failed to download track matches for: ' + track)
+    onSuccess = (response, wasRetry) ->
+      if wasRetry
+        deferred.resolve(response)
+      else
+        deferred.resolve(response['tracks']['items'])
+    onFailure = (response) ->
+      if response.status is 429
+        console.warn("Too many requests made. Waiting....")
+        retry = ()-> downloadTrackMatches(track, artist).then(
+          (response) -> deferred.resolve(onSuccess(response, true))
+        ).catch(onFailure)
+        setTimeout( retry,3000)
+      else
+        deferred.reject('Failed to download track matches for: ' + track)
 
     spotifyApi.searchTracks(
       trackQuery(track, artist)
