@@ -1,4 +1,4 @@
-SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter, GenreUid) ->
+SpotifyTracksMatcher = ($q, $timeout, StateMachine, SpotifyTrackDownloader, SpotifyTrackPresenter, GenreUid) ->
   state = StateMachine.create 'SpotifyTracksMatcher',
     isMatchingPaused: false
     matches: []
@@ -109,7 +109,7 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
 
     onFinally = ->
       state.update 'trackToMatchIndex', (v) -> ++v
-      match()
+      $timeout(match, 100) # Prevents Spotify API throttling.
 
     SpotifyTrackDownloader.downloadTrackMatches(trackToMatch.track, trackToMatch.artist)
       .then(findTrackMatch)
@@ -130,5 +130,5 @@ SpotifyTracksMatcher = ($q, StateMachine, SpotifyTrackDownloader, SpotifyTrackPr
   startMatching: startMatching
   pauseMatching: pauseMatching
 
-SpotifyTracksMatcher.$inject = ['$q', 'StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter', 'GenreUid']
+SpotifyTracksMatcher.$inject = ['$q', '$timeout', 'StateMachine', 'SpotifyTrackDownloader', 'SpotifyTrackPresenter', 'GenreUid']
 angular.module('pandify').factory('SpotifyTracksMatcher', SpotifyTracksMatcher)
