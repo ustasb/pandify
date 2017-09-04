@@ -18,7 +18,7 @@ First build the Pandify image:
 
 Then run a PostgreSQL container:
 
-    docker run --name pandify_postgres postgres:9.4.0
+    docker run --name pandify_postgres postgres:9.6.5-alpine
 
 ## Docker Development
 
