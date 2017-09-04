@@ -2,7 +2,8 @@
 
 set -e
 
-rake db:setup
+# https://stackoverflow.com/a/40019538
+rake db:migrate 2>/dev/null || rake db:setup
 
 if [ $RAILS_ENV == 'production' ]; then
   export SECRET_KEY_BASE=$(rake secret)
