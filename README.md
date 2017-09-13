@@ -1,14 +1,14 @@
 # Pandify
 
-[pandify.com](http://pandify.com)
+- [pandify.com](http://pandify.com)
+- Initial release: 09/13/2014
+- Author: [Brian Ustas](http://brianustas.com)
 
 A tool for creating a Spotify playlist from your favorite Pandora.com tracks.
 
 It relies on [Pandata](http://github.com/ustasb/pandata).
 
 The logo was created by Tahni Pierzga.
-
-Initial release: 09/13/2014
 
 ## Usage
 
