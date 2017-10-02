@@ -8,6 +8,8 @@ A tool for creating a Spotify playlist from your favorite Pandora.com tracks.
 
 It relies on [Pandata](http://github.com/ustasb/pandata).
 
+It was featured on [Product Hunt on 10/08/2015](https://www.producthunt.com/posts/pandify).
+
 The logo was created by Tahni Pierzga.
 
 ## Usage
