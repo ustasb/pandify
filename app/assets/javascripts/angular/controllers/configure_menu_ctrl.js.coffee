@@ -1,4 +1,4 @@
-ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences, RandomPandoraID) ->
+ConfigureMenuCtrl = ($location, $sce, StateMachine, PandoraData, SpotifyTracksMatcher, UserPreferences, RandomPandoraID) ->
   vm = @
 
   isFormValid = ->
@@ -14,6 +14,7 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
 
   retrieveData = ->
     vm.submitStatus = ''
+    vm.projectStatus = ''
     vm.isRetrievingPandoraTracks = true
 
     PandoraData.getTracks(vm.user.pandoraID)
@@ -37,6 +38,12 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
         vm.submitStatus = "Couldn't find a Pandora account associated with that email."
       else
         vm.submitStatus = 'Some unexpected error occurred! Try again later...'
+        vm.projectStatus = $sce.trustAsHtml(
+          "<p>Unfortunately, this project is a few years old and I no longer have time to maintain it.</p>" +
+          "<p>Pandora changed its website a bit which is probably why Pandify is not working.</p>" +
+          "<p>Pandify depends on a tool called <a class=\"underline\" href=\"https://github.com/ustasb/pandata\">Pandata</a> that scrapes Pandora. Feel free to contribute – both <a class=\"underline\" href=\"https://github.com/ustasb/pandify\">Pandify</a> and <a class=\"underline\" href=\"https://github.com/ustasb/pandata\">Pandata</a> are open source.</p>" +
+          "<p>Apologies for the inconvenience!</p>"
+        )
 
     retrieveData()
       .then(onRetrieveSuccess, onRetrieveError)
@@ -50,5 +57,5 @@ ConfigureMenuCtrl = ($location, StateMachine, PandoraData, SpotifyTracksMatcher,
 
   vm
 
-ConfigureMenuCtrl.$inject = ['$location', 'StateMachine', 'PandoraData', 'SpotifyTracksMatcher', 'UserPreferences', 'RandomPandoraID']
+ConfigureMenuCtrl.$inject = ['$location', '$sce', 'StateMachine', 'PandoraData', 'SpotifyTracksMatcher', 'UserPreferences', 'RandomPandoraID']
 angular.module('pandify').controller('ConfigureMenuCtrl', ConfigureMenuCtrl)

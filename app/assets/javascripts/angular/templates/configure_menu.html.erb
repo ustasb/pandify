@@ -40,4 +40,5 @@
       <div class="preloader-status unemphasized" ng-hide="vm.isRetrievingPandoraTracks || !!vm.submitStatus">Might take some time...</div>
     </button>
   </form>
+  <div class="project-status error" ng-show="!!vm.projectStatus" ng-bind-html="vm.projectStatus">{{vm.projectStatus}}</div>
 </div>
