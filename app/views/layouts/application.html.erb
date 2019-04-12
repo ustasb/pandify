@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta property="og:locale" content="en_US" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="author" content="Brian Ustas">
-  <meta name="description" content="A tool for creating a Spotify playlist from your favorite Pandora.com tracks.">
-  <meta name="keywords" content="Spotify, Pandora, playlist, likes, download, convert, tracks">
+
+  <title>Pandify</title>
+  <meta property="og:title" content="Pandify" />
+  <meta name="author" content="Brian Ustas" />
+  <meta name="keywords" content="Spotify, Pandora, playlist, likes, download, convert, tracks" />
+
+  <meta name="description" content="A tool for creating a Spotify playlist from your favorite Pandora.com tracks." />
+  <meta property="og:description" content="A tool for creating a Spotify playlist from your favorite Pandora.com tracks." />
 
   <meta property="og:url" content="http://pandify.com" />  <!-- Preserve Facebook likes from the non-HTTPS URL. -->
   <link rel="canonical" href="https://pandify.com">
 
-  <title>Pandify</title>
+  <meta property="og:image" content="https://brianustas.com/assets/images/thumbnails/pandify.jpg" />
+  <meta property="og:type" content="website" />
+
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" type="text/css">
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= csrf_meta_tags %>
